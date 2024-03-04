@@ -38,7 +38,7 @@ const Header = () => {
                                 </li>
                             </>) : (<>
                                 <li className="nav-item dropdown">
-                                    <NavLink classNam="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >
+                                    <NavLink className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >
                                         {auth?.user.name}
                                     </NavLink>
                                     <ul className="dropdown-menu">
