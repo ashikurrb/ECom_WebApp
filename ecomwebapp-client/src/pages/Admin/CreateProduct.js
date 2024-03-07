@@ -50,7 +50,7 @@ const CreateProduct = () => {
  
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-product`, productData);
             if (data?.success) {
-                toast.scuccess(data?.message);
+                toast.success(data?.message);
             } else {
                 toast.success("Product Created Successfully");
                 navigate("/dashboard/admin/products");
