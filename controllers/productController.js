@@ -148,9 +148,9 @@ export const updateProductController = async (req, res) => {
                 return res.status(500).send({ error: "Shipping is required" })
         }
         const products = await productModel.findByIdAndUpdate(req.params.pid,
-            {...req.fields,slug:slugify(name)},
-            {new: true}
-            )
+            { ...req.fields, slug: slugify(name) },
+            { new: true }
+        )
         if (photo) {
             products.photo.data = fs.readFileSync(photo.path)
             products.photo.contentType = photo.type;

@@ -3,11 +3,11 @@ import mongoose from "mongoose";
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true
+        require: true,
     },
     slug: {
         type: String,
-        require: true
+        require: true,
     },
     description: {
         type: String,
