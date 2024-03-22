@@ -31,7 +31,7 @@ const Products = () => {
                         <AdminMenu></AdminMenu>
                     </div>
                     <div className="col-md-9">
-                        <h1 className="text-center">  All Products</h1>
+                        <h1 className="text-center">All Products</h1>
                         <div className="products-container">
                             {products?.map(p => (
                                 <Link
@@ -46,13 +46,12 @@ const Products = () => {
                                             <p className="card-text">{p.description}</p>
                                             <h6 className="card-text">Price: ${p.price}</h6>
                                             <p className="card-text">Stock: {p.quantity} unit</p>
-                                            <p className="card-text">Free Shipping: {p.shipping? "Yes":"No"} </p>
+                                            <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
                                         </div>
                                     </div>
                                 </Link>
                             ))}
                         </div>
-
                     </div>
                 </div>
             </div>
