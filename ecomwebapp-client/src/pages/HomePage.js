@@ -3,9 +3,11 @@ import Layout from '../components/Layout/Layout'
 import axios from 'axios';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
+import { useNavigate } from 'react-router-dom';
 
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
     const [catagories, setCatagories] = useState([]);
     const [checked, setChecked] = useState([]);
@@ -146,27 +148,27 @@ const HomePage = () => {
                                         <h5 className="card-title">{p.name}</h5>
                                         <p className="card-text">{p.description.substring(0, 30)}</p>
                                         <h6 className="card-text">Price: ${p.price}</h6>
-                                        <button className='btn btn-primary ms-1'>More Details</button>
+                                        <button className='btn btn-primary ms-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
                                         <button className='btn btn-secondary ms-1'>Add to Cart </button>
                                     </div>
                                 </div>
                             ))}
                         </div>
                         <div className="m-2 p-3 text-center">
-                        {products && products.length < total &&  (
-                            <button
-                                className="btn btn-warning"
-                                onClick={(e) => {
-                                    e.preventDefault();
-                                    setPage(page + 1);
-                                }}
-                            >
-                                {loading ? "Loading ..." : "Load More"}
-                            </button>
-                        )} 
+                            {products && products.length < total && (
+                                <button
+                                    className="btn btn-warning"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setPage(page + 1);
+                                    }}
+                                >
+                                    {loading ? "Loading ..." : "Load More"}
+                                </button>
+                            )}
+                        </div>
                     </div>
-                    </div>
-                    
+
                 </div>
             </div>
         </Layout >
