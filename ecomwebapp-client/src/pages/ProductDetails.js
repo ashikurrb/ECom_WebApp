@@ -57,7 +57,7 @@ const ProductDetails = () => {
                 <hr />
                 <div className="row">
                     <h3>Similar Products</h3>
-                    {relatedProducts?.length < 1 && (<p>No Similar Product Found</p>)}
+                    {relatedProducts?.length < 1 && (<p className="text-center">No Similar Product Found</p>)}
                     <div className="d-flex flex-wrap">
                         {relatedProducts?.map(p => (
                             <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
