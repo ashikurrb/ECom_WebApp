@@ -4,9 +4,11 @@ import { GiShoppingCart } from 'react-icons/gi'
 import { useAuth } from '../context/auth';
 import { toast } from 'react-hot-toast';
 import SearchInput from '../Form/SearchInput';
+import useCatagory from '../../hooks/useCatagory';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
+    const catagories = useCatagory();
     const handleLogout = () => {
         setAuth({
             ...auth, user: null, token: ''
@@ -23,15 +25,35 @@ const Header = () => {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                         <Link to="/" className="navbar-brand"> <GiShoppingCart /> ECom_WebApp</Link>
-                        <SearchInput/>
+                        <SearchInput />
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                  
+
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link">Home</NavLink>
                             </li>
-                            <li className="nav-item">
-                                <NavLink to="/catagory" className="nav-link">Catagory</NavLink>
+                            <li className="nav-item dropdown">
+                                <Link className="nav-link dropdown-toggle" to={"/catagories"} role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Catagories
+                                </Link>
+                                <ul className="dropdown-menu">
+                                    <li>
+                                        <Link className="dropdown-item" to={"/categories"}>
+                                            All Catagories
+                                        </Link>
+                                    </li>
+                                    {catagories?.map((c) => (
+                                        <li>
+                                            <Link
+                                                className="dropdown-item"
+                                                to={`/category/${c.slug}`}
+                                            >
+                                                {c.name}
+                                            </Link>
+                                        </li>
+                                    ))}
+                                </ul>
                             </li>
+
                             {!auth.user ? (<>
                                 <li className="nav-item">
                                     <NavLink to="/register" className="nav-link">Register</NavLink>
