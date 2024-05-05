@@ -2,9 +2,12 @@ import React from 'react';
 import { useSearch } from '../components/context/search';
 import Layout from '../components/Layout/Layout';
 import { useNavigate } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useCart } from '../components/context/cart';
 
 const Search = () => {
     const navigate = useNavigate();
+    const [cart, setCart] = useCart();
     const [values, setValues] = useSearch();
     return (
         <Layout title={'Search Result'}>
@@ -21,7 +24,12 @@ const Search = () => {
                                     <p className="card-text">{p.description.substring(0, 30)}</p>
                                     <h6 className="card-text">Price: ${p.price}</h6>
                                     <button className='btn btn-primary ms-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                    <button className='btn btn-secondary ms-1'>Add to Cart </button>
+                                    <button className='btn btn-secondary ms-1'
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                toast.success(`${p.name} Added to Cart`)
+                                            }}>
+                                            Add to Cart </button>
                                 </div>
                             </div>
                         ))}

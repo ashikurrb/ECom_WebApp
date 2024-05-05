@@ -48,8 +48,10 @@ const Login = () => {
                     <div className="mb-3">
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                     </div>
-                    <button type="button" className="btn btn-primary" onClick={() => { navigate('/forgot-password') }}>Forgot password?</button> <br /> <br />
                     <button type="submit" className="btn btn-primary">Log In</button>
+                    <br /> <br />
+                    <button onClick={() => { navigate('/forgot-password') }}>Forgot password?</button> 
+                 
                 </form>
             </div>
         </Layout>

@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout/Layout';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { useCart } from '../components/context/cart';
 
 const ProductDetails = () => {
     const navigate = useNavigate();
     const params = useParams();
+    const [cart, setCart] = useCart();
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
 
@@ -51,7 +54,12 @@ const ProductDetails = () => {
                             <p className="card-text">Stock: {product.quantity} unit</p>
                             <p className="card-text">Free Shipping: {product.shipping ? "Yes" : "No"} </p>
                         </div>
-                        <button className='btn btn-secondary mt-2'>Add to Cart </button>
+                        <button className='btn btn-secondary ms-1'
+                                            onClick={() => {
+                                                setCart([...cart, product])
+                                                toast.success(`${product.name} Added to Cart`)
+                                            }}>
+                                            Add to Cart </button>
                     </div>
                 </div>
                 <hr />
@@ -64,10 +72,16 @@ const ProductDetails = () => {
                                 <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name}/>
                                 <div className="card-body">
                                     <h5 className="card-title">{p.name}</h5>
-                                    <p className="card-text">{p.description.substring(0, 30)}</p>
+                                    <p className="card-text">{p.description.substring(0, 50)}...</p>
                                     <h6 className="card-text">Price: ${p.price}</h6>
                                     <button className='btn btn-primary ms-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                    <button className='btn btn-secondary ms-1'>Add to Cart </button>
+                                    <button className='btn btn-secondary ms-1'
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                toast.success(`${p.name} Added to Cart`)
+                                            }}>
+                                            Add to Cart </button>
+                            
                                 </div>
                             </div>
                         ))}

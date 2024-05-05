@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout/Layout';
 import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useCart } from '../components/context/cart';
 
 const CatagoryProduct = () => {
     const params = useParams();
     const navigate = useNavigate();
+    const [cart, setCart] = useCart();
     const [products, setProducts] = useState([]);
     const [catagory, setCatagory] = useState([]);
 
@@ -38,7 +41,12 @@ const CatagoryProduct = () => {
                                     <p className="card-text">{p.description.substring(0, 30)}</p>
                                     <h6 className="card-text">Price: ${p.price}</h6>
                                     <button className='btn btn-primary ms-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                    <button className='btn btn-secondary ms-1'>Add to Cart </button>
+                                    <button className='btn btn-secondary ms-1'
+                                        onClick={() => {
+                                            setCart([...cart, p])
+                                            toast.success(`${p.name} Added to Cart`)
+                                        }}>
+                                        Add to Cart </button>
                                 </div>
                             </div>
                         ))}

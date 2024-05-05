@@ -4,10 +4,13 @@ import axios from 'axios';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
 import { useNavigate } from 'react-router-dom';
+import { useCart } from '../components/context/cart';
+import toast from 'react-hot-toast';
 
 
 const HomePage = () => {
     const navigate = useNavigate();
+    const [cart, setCart] = useCart();
     const [products, setProducts] = useState([]);
     const [catagories, setCatagories] = useState([]);
     const [checked, setChecked] = useState([]);
@@ -146,10 +149,16 @@ const HomePage = () => {
                                     <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
                                     <div className="card-body">
                                         <h5 className="card-title">{p.name}</h5>
-                                        <p className="card-text">{p.description.substring(0, 30)}</p>
+                                        <p className="card-text">{p.description.substring(0, 50)}...</p>
                                         <h6 className="card-text">Price: ${p.price}</h6>
                                         <button className='btn btn-primary ms-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                        <button className='btn btn-secondary ms-1'>Add to Cart </button>
+                                        <button className='btn btn-secondary ms-1'
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                localStorage.setItem('cart', JSON.stringify([...cart, p]))
+                                                toast.success(`${p.name} Added to Cart`)
+                                            }}>
+                                            Add to Cart </button>
                                     </div>
                                 </div>
                             ))}
