@@ -40,14 +40,14 @@ export const registerController = async (req, res) => {
         const user = await new userModel({ name, email, phone, address, password: hashedPassword, answer }).save();
         res.status(201).send({
             success: true,
-            message: 'User Registerd Succesfully',
+            message: 'User Registered Successfully',
             user
         })
     } catch (error) {
         console.log(error);
         res.status(500).send({
             success: false,
-            message: 'Error in Regestration',
+            message: 'Error in Registration',
             error
         })
     }
@@ -61,7 +61,7 @@ export const loginController = async (req, res) => {
         if (!email || !password) {
             return res.status(404).send({
                 success: false,
-                message: "Invalid Email or Password" //dont declare specificly which is wrong , email or password. for security.//
+                message: "Invalid Email or Password" //don't declare specifically which is wrong , email or password. for security.//
             })
         }
         //check user
@@ -69,7 +69,7 @@ export const loginController = async (req, res) => {
         if (!user) {
             return res.status(404).send({
                 success: false,
-                message: 'Email not registerd'
+                message: 'Email not registered'
             })
         }
         const match = await comparePassword(password, user.password)
@@ -84,7 +84,7 @@ export const loginController = async (req, res) => {
         const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
         res.status(200).send({
             success: true,
-            message: 'Login Succesfully',
+            message: 'Login Successfully',
             user: {
                 name: user.name,
                 email: user.email,
@@ -132,7 +132,7 @@ export const forgotPasswordController = async (req, res) => {
         await userModel.findByIdAndUpdate(user._id,{password:hashed})
         res.status(200).send({
             success: true,
-            message: 'Password Reset Succesfully'
+            message: 'Password Reset Successfully'
         })
 
     } catch (error) {
