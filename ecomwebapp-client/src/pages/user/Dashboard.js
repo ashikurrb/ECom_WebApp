@@ -14,8 +14,8 @@ const Dashboard = () => {
                     </div>
                     <div className="col-md-9">
                         <div className="card p-4">
-                            <h3>Name: {auth?.user?.name}</h3>
-                            <p>Email: {auth?.user?.email}</p>
+                            <h5>Name: {auth?.user?.name}</h5>
+                            <p>Email: <i>{auth?.user?.email}</i></p>
                             <p>Phone: {auth?.user?.phone}</p>
                             <p>Address: {auth?.user?.address}</p>
                         </div>
