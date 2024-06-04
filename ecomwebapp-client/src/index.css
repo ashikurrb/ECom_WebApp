@@ -125,3 +125,7 @@ color: white;
 .breadcrumbs .crumb:last-child:after {
   display: none;
 }
+
+.imgFit{
+  object-fit:cover;
+}

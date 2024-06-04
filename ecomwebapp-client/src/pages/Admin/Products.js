@@ -47,6 +47,8 @@ const Products = () => {
                                             <h6 className="card-text">Price: ${p.price}</h6>
                                             <p className="card-text">Stock: {p.quantity} unit</p>
                                             <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
+                                            <p className="card-text">Created: {p.createdAt}</p>
+                                            <p className="card-text">Updated: {p.updatedAt}</p>
                                         </div>
                                     </div>
                                 </Link>

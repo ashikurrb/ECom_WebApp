@@ -72,7 +72,7 @@ const CreateCatagory = () => {
         try {
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/catagory/delete-catagory/${pId}`);
             if (data.success) {
-                toast.success(`Catagory deleted succesfully`);
+                toast.success(`Catagory deleted successfully`);
                 getAllCatagory();
             } else {
                 toast.error(data.message)

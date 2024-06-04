@@ -80,8 +80,6 @@ const Profile = () => {
 
                                 <button type="submit" className="btn btn-primary">Update</button>
                             </form>
-
-
                         </div>
                     </div>
                 </div>

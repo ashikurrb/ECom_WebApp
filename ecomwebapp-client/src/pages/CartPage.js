@@ -58,7 +58,7 @@ const CartPage = () => {
                                 cart?.map(p => (
                                     <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }}>
                                         <div className="col-md-4">
-                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className=" card-img-top" alt={p.name} width={"30px"} height={"100px"} />
+                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit card-img-top" alt={p.name} width={"30px"} height={"100px"} />
                                         </div>
                                         <div className="col-md-8">
                                             <h5 class="card-title">{p.name}</h5>

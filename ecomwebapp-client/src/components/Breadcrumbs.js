@@ -1,12 +1,10 @@
 import React from 'react';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Breadcrumbs = () => {
     const location = useLocation();
-
-    let currentLink = ''
+    let currentLink = '';
     const crumbs = location.pathname.split('/')
-
         .filter(crumb => crumb !== '')
         .map(crumb => {
             currentLink += `/${crumb}`
@@ -16,9 +14,8 @@ const Breadcrumbs = () => {
                 </div>
             )
         })
-    const params = window.history;
-    const newLoc = params.pathname;
-    console.log(params);
+
+
     return (
         <div className='breadcrumbs'>
 
