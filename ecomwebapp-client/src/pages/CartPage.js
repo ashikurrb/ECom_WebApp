@@ -1,21 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout/Layout';
 import { useCart } from '../components/context/cart';
 import { useAuth } from '../components/context/auth';
 import { useNavigate } from 'react-router-dom';
+import DropIn from "braintree-web-drop-in-react";
+import axios from 'axios';
+import toast from 'react-hot-toast';
 
 const CartPage = () => {
-    const navigate = useNavigate();
     const [auth, setAuth] = useAuth();
     const [cart, setCart] = useCart();
+    const [clientToken, setClientToken] = useState("");
+    const [instance, setInstance] = useState("");
+    const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const totalPrice = () => {
         try {
             let total = 0;
-            cart?.map(item => { total = total + item.price })
+            cart?.map((item) => { total = total + item.price })
             return total.toLocaleString("en-US", {
                 style: "currency",
-                currency: "BDT"
+                currency: "USD"
             })
         } catch (error) {
             console.log(error);
@@ -34,6 +41,40 @@ const CartPage = () => {
             console.log(error);
         }
     }
+
+    //get payment gateway token
+    const getToken = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/braintree/token`);
+            setClientToken(data?.clientToken)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getToken();
+    }, [auth?.token])
+
+    //handle Payment
+    const handlePayment = async () => {
+        try {
+            setLoading(true)
+            const { nonce } = await instance.requestPaymentMethod();
+            const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, {
+                nonce, cart,
+            });
+      
+            setLoading(false);
+            localStorage.removeItem('cart');
+            setCart([]);
+            navigate("/dashboard/user/orders");
+            toast.success("Payment Completed Successfully")
+        } catch (error) {
+            setLoading(false);
+        }
+    }
+
     return (
         <Layout>
             <div className="container">
@@ -88,13 +129,35 @@ const CartPage = () => {
                                     auth?.token ? (
                                         <button className='btn btn-outline-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
                                     ) : (
-                                        <button className='btn btn-warning' onClick={() => navigate("/login",{
+                                        <button className='btn btn-warning' onClick={() => navigate("/login", {
                                             state: "/cart"
                                         })}>Please Login to Checkout</button>
                                     )
                                 }
                             </div>
                         )}
+
+                        <div className="mt-2">
+                            {
+                                !clientToken || !cart?.length ? ("") : (
+                                    <>
+
+                                        <DropIn
+                                            options={{
+                                                authorization: clientToken,
+                                                paypal: {
+                                                    flow: "vault",
+                                                },
+                                            }}
+                                            onInstance={(instance) => setInstance(instance)}
+                                        />
+                                        <button className='btn btn-warning' onClick={handlePayment} disabled={loading || !instance || !auth?.user?.address}>
+                                            {loading ? "Processing" : "Make Payment"}
+                                        </button>
+                                    </>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </div>

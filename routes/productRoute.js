@@ -4,6 +4,8 @@ import {
     requireSignIn
 } from '../middlewares/authMiddleware.js';
 import {
+    brainTreePaymentController,
+    braintreeTokenController,
     createProductController,
     deleteProductController,
     getProductController,
@@ -59,5 +61,11 @@ router.get('/related-product/:pid/:cid', relatedProductController);
 
 //catagory wise product
 router.get("/product-catagory/:slug", productCatagoryController)
+
+//payment route
+//token
+router.get("/braintree/token", braintreeTokenController)
+
+router.post("/braintree/payment",requireSignIn, brainTreePaymentController)
 
 export default router;
