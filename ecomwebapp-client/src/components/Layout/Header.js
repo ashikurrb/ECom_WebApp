@@ -6,7 +6,7 @@ import { toast } from 'react-hot-toast';
 import SearchInput from '../Form/SearchInput';
 import useCatagory from '../../hooks/useCatagory';
 import { useCart } from '../context/cart';
-import {  Badge } from 'antd';
+import { Badge } from 'antd';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
@@ -23,13 +23,18 @@ const Header = () => {
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
                 <div className="container-fluid">
-                <Link to="/" className="navbar-brand"> <GiShoppingCart /> ECom_WebApp</Link>
+                    <Link to="/" className="navbar-brand"> <GiShoppingCart /> ECom_WebApp</Link>
 
-                    <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                    <button className="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon" />
                     </button>
+                    <div className="d-lg-none">
+                        <Badge count={cart?.length}>
+                            <Link to="/cart" className="nav-link">&nbsp; <GiShoppingCart />Cart </Link>
+                        </Badge>
+                    </div>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                     <div className="ms-auto">   <SearchInput /></div>
+                        <div className="me-auto">   <SearchInput /></div>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link">Home</NavLink>
@@ -79,11 +84,10 @@ const Header = () => {
                                     </ul>
                                 </li>
                             </>)}
-                            <li className="nav-item">
+                            <li className="nav-item d-none d-lg-block">
                                 <Badge count={cart?.length}>
                                     <NavLink to="/cart" className="nav-link">Cart </NavLink>
                                 </Badge>
-
                             </li>
                         </ul>
                     </div>

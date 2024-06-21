@@ -109,6 +109,9 @@ const HomePage = () => {
 
     return (
         <Layout title={"All Products - Best offers"}>
+            <div className='text-center'>
+            <img src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg" className='imgCover'  alt="" />
+            </div>
             <div className="container">
                 <div className="row m-3">
                     <div className="col-md-3">

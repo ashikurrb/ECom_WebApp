@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../components/Layout/Layout';
 import useCatagory from '../hooks/useCatagory';
 import { Link } from 'react-router-dom';
+import GoBackButton from '../components/GoBackButton';
 
 const Catagories = () => {
     const catagories = useCatagory();
@@ -9,6 +10,7 @@ const Catagories = () => {
     return (
         <Layout title={"All Categories"}>
             <div className="container">
+                <GoBackButton/>
                 <div className="row">
                     {catagories.map(c => (
                         <div className="col-md-6" key={c._id}>

@@ -4,6 +4,8 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import moment from "moment";
+
 
 const Users = () => {
     const [auth, setAuth] = useAuth();
@@ -58,6 +60,7 @@ const Users = () => {
                                         <th scope='col'>Address</th>
                                         <th scope='col'>Fvt Food</th>
                                         <th scope='col'>Role</th>
+                                        <th scope='col'>Time</th>
                                         <th scope='col'>Action</th>
                                     </tr>
                                 </thead>
@@ -74,6 +77,7 @@ const Users = () => {
                                                     <td>{u.address}</td>
                                                     <td>{u.answer}</td>
                                                     <td >{u.role}</td>
+                                                    <td>{moment(u?.createdAt).fromNow()}</td>
                                                     <td>
                                                         {
                                                             u.role == "1" ? "Admin" : (
