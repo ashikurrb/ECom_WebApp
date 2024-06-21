@@ -18,6 +18,7 @@ const Dashboard = () => {
                             <p>Email: <i>{auth?.user?.email}</i></p>
                             <p>Phone: {auth?.user?.phone}</p>
                             <p>Address: {auth?.user?.address}</p>
+                            <p>Token: {auth?.token}</p>
                         </div>
                     </div>
                 </div>
