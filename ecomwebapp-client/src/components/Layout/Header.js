@@ -34,7 +34,7 @@ const Header = () => {
                         </Badge>
                     </div>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <div className="me-auto">   <SearchInput /></div>
+                        <div className="ms-auto">   <SearchInput /></div>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link">Home</NavLink>
