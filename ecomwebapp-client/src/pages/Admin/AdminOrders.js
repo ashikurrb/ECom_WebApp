@@ -38,8 +38,8 @@ const AdminOrder = () => {
         }
     }
 
-     //delete orders
-     const handleDelete = async (oId) => {
+    //delete orders
+    const handleDelete = async (oId) => {
         try {
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-order/${oId}`);
             if (data.success) {
@@ -55,7 +55,7 @@ const AdminOrder = () => {
 
 
     return (
-        <Layout title={"Admin- - All Orders"}>
+        <Layout title={"Admin - All Orders"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3">
@@ -91,7 +91,9 @@ const AdminOrder = () => {
                                                 </td>
                                                 <td>{o?.buyer?.name}</td>
                                                 <td>{moment(o?.createdAt).fromNow()}</td>
-                                                <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                                                <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
+                                                    {o?.payment.success ? "Success" : "Failed"}
+                                                </td>
                                                 <td><b>{o?.payment?.transaction?.id}</b></td>
                                                 <td>{o?.products?.length}</td>
                                                 <td><button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button></td>
@@ -99,26 +101,26 @@ const AdminOrder = () => {
                                         </tbody>
                                     </table>
                                     <div className="container">
-                                       <div className="d-flex flex-wrap">
-                                       {o?.products?.map((p, i) => (
-                                            <div className="row m-2 p-3 card flex-row" key={p._id}>
-                                                <div className="col-md-4">
-                                                    <img
-                                                        src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                                        className="card-img-top"
-                                                        alt={p.name}
-                                                        width="100px"
-                                                        height={"100px"}
-                                                    />
+                                        <div className="d-flex flex-wrap">
+                                            {o?.products?.map((p, i) => (
+                                                <div className="row m-2 p-3 card flex-row" key={p._id}>
+                                                    <div className="col-md-4">
+                                                        <img
+                                                            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                                            className="card-img-top"
+                                                            alt={p.name}
+                                                            width="100px"
+                                                            height={"100px"}
+                                                        />
+                                                    </div>
+                                                    <div className="col-md-8">
+                                                        <p>{p.name}</p>
+                                                        <p>{p.description.substring(0, 30)}</p>
+                                                        <p>Price : {p.price}</p>
+                                                    </div>
                                                 </div>
-                                                <div className="col-md-8">
-                                                    <p>{p.name}</p>
-                                                    <p>{p.description.substring(0, 30)}</p>
-                                                    <p>Price : {p.price}</p>
-                                                </div>
-                                            </div>
-                                        ))}
-                                       </div>
+                                            ))}
+                                        </div>
                                     </div>
                                 </div>
                             );
