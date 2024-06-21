@@ -129,3 +129,12 @@ color: white;
 .imgFit{
   object-fit:cover;
 }
+
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}

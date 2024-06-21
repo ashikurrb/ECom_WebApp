@@ -48,7 +48,7 @@ const AdminOrder = () => {
                         <h2 className="text-center">All Orders</h2>
                         {orders?.map((o, i) => {
                             return (
-                                <div className="border shadow">
+                                <div className="border m-2 table-container">
                                     <table className="table">
                                         <thead>
                                             <tr>
@@ -78,8 +78,9 @@ const AdminOrder = () => {
                                         </tbody>
                                     </table>
                                     <div className="container">
-                                        {o?.products?.map((p, i) => (
-                                            <div className="row mb-2 p-3 card flex-row" key={p._id}>
+                                       <div className="d-flex flex-wrap">
+                                       {o?.products?.map((p, i) => (
+                                            <div className="row m-2 p-3 card flex-row" key={p._id}>
                                                 <div className="col-md-4">
                                                     <img
                                                         src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
@@ -96,6 +97,7 @@ const AdminOrder = () => {
                                                 </div>
                                             </div>
                                         ))}
+                                       </div>
                                     </div>
                                 </div>
                             );

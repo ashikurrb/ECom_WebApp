@@ -33,7 +33,7 @@ const Order = () => {
               <h1 className="text-center">All Orders</h1>
               {orders?.map((o, i) => {
                 return (
-                  <div className="border shadow">
+                  <div className="card mt-3 p-4 table-container">
                     <table className="table">
                       <thead>
                         <tr>
@@ -57,8 +57,9 @@ const Order = () => {
                       </tbody>
                     </table>
                     <div className="container">
+                      <div className="d-flex flex-wrap">
                       {o?.products?.map((p, i) => (
-                        <div className="row mb-2 p-3 card flex-row" key={p._id}>
+                        <div className="row m-2 p-3 card flex-row" key={p._id}>
                           <div className="col-md-4">
                             <img
                               src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
@@ -69,12 +70,13 @@ const Order = () => {
                             />
                           </div>
                           <div className="col-md-8">
-                            <p>{p.name}</p>
+                            <p><b>{p.name}</b></p>
                             <p>{p.description.substring(0, 30)}</p>
                             <p>Price : {p.price}</p>
                           </div>
                         </div>
                       ))}
+                      </div>
                     </div>
                   </div>
                 );

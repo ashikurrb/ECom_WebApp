@@ -1,5 +1,5 @@
 import express from "express";
-import { forgotPasswordController, getAllOrdersController, getOrdersController, loginController, orderStatusController, registerController, testController, updateProfileController } from '../controllers/authController.js'
+import { deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getOrdersController, loginController, orderStatusController, registerController, testController, updateProfileController, updateUserController } from '../controllers/authController.js'
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
@@ -31,6 +31,15 @@ router.get('/admin-auth', requireSignIn, isAdmin, (req, res) => {
 
 //update profile
 router.put('/profile-update', requireSignIn, updateProfileController)
+
+//all user list
+router.get("/all-users", requireSignIn, isAdmin, getAllUsersController)
+
+//update profile by Admin
+router.put('/user-update', requireSignIn, isAdmin, updateUserController)
+
+//delete user by admin
+router.delete('/delete-user/:id', requireSignIn, isAdmin, deleteUserController)
 
 //order
 router.get("/orders", requireSignIn, getOrdersController)
