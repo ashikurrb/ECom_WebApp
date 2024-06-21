@@ -24,7 +24,7 @@ const Order = () => {
 
     return (
         <Layout title={"Your Orders"}>
-        <div className="container-flui p-3 m-3 dashboard">
+        <div className=" p-3 m-3 dashboard">
           <div className="row">
             <div className="col-md-3">
               <UserMenu />
@@ -35,23 +35,25 @@ const Order = () => {
                 return (
                   <div className="card mt-3 p-4 table-container">
                     <table className="table">
-                      <thead>
+                    <thead className='table-dark'>
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Status</th>
                           <th scope="col">Buyer</th>
-                          <th scope="col"> date</th>
+                          <th scope="col">Time</th>
                           <th scope="col">Payment</th>
+                          <th scope="col">Trx ID</th>
                           <th scope="col">Quantity</th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{i + 1}</td>
+                          <th scope='row'>{i + 1}</th>
                           <td>{o?.status}</td>
                           <td>{o?.buyer?.name}</td>
                           <td>{moment(o?.createdAt).fromNow()}</td>
                           <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                          <td><b>{o?.payment?.transaction?.id}</b></td>
                           <td>{o?.products?.length}</td>
                         </tr>
                       </tbody>
