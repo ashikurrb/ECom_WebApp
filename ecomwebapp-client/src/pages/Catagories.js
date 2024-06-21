@@ -10,15 +10,17 @@ const Catagories = () => {
     return (
         <Layout title={"All Categories"}>
             <div className="container">
-                <GoBackButton/>
+                <GoBackButton />
                 <div className="row">
-                    {catagories.map(c => (
-                        <div className="col-md-6" key={c._id}>
-                            <button className='btn btn-warning m-2 product-link'><Link to={`/catagory/${c.slug}`}>{c.name}</Link></button>
-                        </div>
-                    ))}
+                    <div className="d-flex flex-wrap">
+                        {catagories.map(c => (
+                            <div className="col-md-2 card catagory-btn border-dark p-3 m-2" key={c._id}>
 
-                    <div className="col-md-6"></div>
+                                <Link className='catagory-link' to={`/catagory/${c.slug}`}>{c.name}</Link>
+
+                            </div>
+                        ))}
+                    </div>
                 </div>
             </div>
 

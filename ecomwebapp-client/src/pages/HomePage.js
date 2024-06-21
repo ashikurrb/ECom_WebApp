@@ -3,7 +3,7 @@ import Layout from '../components/Layout/Layout'
 import axios from 'axios';
 import { Checkbox, Radio } from 'antd';
 import { Prices } from '../components/Prices';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../components/context/cart';
 import toast from 'react-hot-toast';
 
@@ -110,36 +110,39 @@ const HomePage = () => {
     return (
         <Layout title={"All Products - Best offers"}>
             <div className='text-center'>
-            <img src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg" className='imgCover'  alt="" />
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg" className='imgCover' alt="" />
             </div>
             <div className="container">
-                <div className="row m-3">
+                <div className="row m-3 ">
                     <div className="col-md-3">
-                        <h5 className="text-center"> Filter by Catagory</h5>
-                        <div className="d-flex flex-column">
-                            {catagories?.map(c => (
-                                <Checkbox
-                                    key={c._id}
-                                    onChange={(e) => handleFilter(e.target.checked, c._id)}
-                                >
-                                    {c.name}
-                                </Checkbox>
-                            ))}
-                        </div>
-                        <h5 className="text-center"> Filter by Price</h5>
-                        <div className="d-flex flex-column">
-                            <Radio.Group onChange={e => setRadio(e.target.value)}>
-                                {Prices?.map(p => (
-                                    <div key={p._id}>
-                                        <Radio value={p.array}>
-                                            {p.name}
-                                        </Radio>
-                                    </div>
+                            <p className="text-center fw-bold fs-5"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
+                            <div id="collapseExample">
+                            <h5 className="text-center"> Filter by Catagory</h5>
+                            <div className="d-flex flex-column">
+                                {catagories?.map(c => (
+                                    <Checkbox
+                                        key={c._id}
+                                        onChange={(e) => handleFilter(e.target.checked, c._id)}
+                                    >
+                                        {c.name}
+                                    </Checkbox>
                                 ))}
-                            </Radio.Group>
-                        </div>
-                        <div className="d-flex flex-column">
-                            <button className='btn btn-danger mt-3' onClick={() => window.location.reload()}>Reset Filter</button>
+                            </div>
+                            <h5 className="text-center"> Filter by Price</h5>
+                            <div className="d-flex flex-column">
+                                <Radio.Group onChange={e => setRadio(e.target.value)}>
+                                    {Prices?.map(p => (
+                                        <div key={p._id}>
+                                            <Radio value={p.array}>
+                                                {p.name}
+                                            </Radio>
+                                        </div>
+                                    ))}
+                                </Radio.Group>
+                            </div>
+                            <div className="d-flex flex-column">
+                                <button className='btn btn-danger mt-3' onClick={() => window.location.reload()}>Reset Filter</button>
+                            </div>
                         </div>
                     </div>
                     <div className="col-md-9">

@@ -86,7 +86,7 @@ const Header = () => {
                             </>)}
                             <li className="nav-item d-none d-lg-block">
                                 <Badge count={cart?.length}>
-                                    <NavLink to="/cart" className="nav-link">Cart </NavLink>
+                                    <NavLink to="/cart" className="nav-link">&nbsp; <GiShoppingCart />Cart </NavLink>
                                 </Badge>
                             </li>
                         </ul>

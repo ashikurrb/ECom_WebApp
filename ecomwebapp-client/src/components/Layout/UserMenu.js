@@ -1,11 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import GoBackButton from '../GoBackButton';
 
 const UserMenu = () => {
     return (
         <>
             <div className="text-center">
                 <div className="list-group ">
+                    <GoBackButton/>
                     <NavLink to="/dashboard/user" className="product-link">
                         <h4>User Menu</h4>
                     </NavLink>

@@ -58,7 +58,7 @@ const Users = () => {
                                         <th scope='col'>Email</th>
                                         <th scope='col'>Phone</th>
                                         <th scope='col'>Address</th>
-                                        <th scope='col'>Fvt Food</th>
+                                        <th scope='col'>Security Ans</th>
                                         <th scope='col'>Role</th>
                                         <th scope='col'>Time</th>
                                         <th scope='col'>Action</th>
@@ -91,6 +91,7 @@ const Users = () => {
                                     }
                                 </tbody>
                             </table>
+                            
                         </div>
 
                     </div>
