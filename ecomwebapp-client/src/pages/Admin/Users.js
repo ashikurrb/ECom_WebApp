@@ -46,45 +46,49 @@ const Users = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center'>All User's List</h2>  
+                        <h2 className='text-center'>All User's List</h2>
                         <div className="a table-container">
-                        <table className='table'>
-                            <thead>
-                                <tr>
-                                    <th scope='col'>#</th>
-                                    <th scope='col'>Name</th>
-                                    <th scope='col'>Email</th>
-                                    <th scope='col'>Phone</th>
-                                    <th scope='col'>Address</th>
-                                    <th scope='col'>Fvt Food</th>
-                                    <th scope='col'>Role</th>
-                                    <th scope='col'>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
+                            <table className='table'>
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>#</th>
+                                        <th scope='col'>Name</th>
+                                        <th scope='col'>Email</th>
+                                        <th scope='col'>Phone</th>
+                                        <th scope='col'>Address</th>
+                                        <th scope='col'>Fvt Food</th>
+                                        <th scope='col'>Role</th>
+                                        <th scope='col'>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                {
-                                    users.map((u, i) => {
-                                        return (
-                                            <tr>
-                                                <th scope='row'>{i + 1}</th>
-                                                <td>{u.name}</td>
-                                                <td>{u.email}</td>
-                                                <td>{u.phone}</td>
-                                                <td>{u.address}</td>
-                                                <td>{u.answer}</td>
-                                                <td >{u.role}</td>
-                                                <td>
-                                                    <button className="btn btn-danger ms-1" onClick={() => { handleDelete(u._id) }}>Delete</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                                    {
+                                        users.map((u, i) => {
+                                            return (
+                                                <tr>
+                                                    <th scope='row'>{i + 1}</th>
+                                                    <td>{u.name}</td>
+                                                    <td>{u.email}</td>
+                                                    <td>{u.phone}</td>
+                                                    <td>{u.address}</td>
+                                                    <td>{u.answer}</td>
+                                                    <td >{u.role}</td>
+                                                    <td>
+                                                        {
+                                                            u.role == "1" ? "Admin" : (
+                                                                <button className="btn btn-danger ms-1" onClick={() => handleDelete(u._id)}>Delete</button>
+                                                            )
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
