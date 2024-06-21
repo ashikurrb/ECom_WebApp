@@ -5,6 +5,7 @@ import moment from "moment";
 import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import { Select } from "antd";
+import toast from 'react-hot-toast';
 const { Option } = Select;
 
 
@@ -37,6 +38,22 @@ const AdminOrder = () => {
         }
     }
 
+     //delete orders
+     const handleDelete = async (oId) => {
+        try {
+            const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-order/${oId}`);
+            if (data.success) {
+                toast.success(`Order deleted successfully`);
+                getOrders();
+            } else {
+                toast.error(data.message)
+            }
+        } catch (error) {
+            toast.error('Something wrong while Delete')
+        }
+    }
+
+
     return (
         <Layout title={"Admin- - All Orders"}>
             <div className="container-fluid mt-3 p-3">
@@ -55,13 +72,15 @@ const AdminOrder = () => {
                                                 <th scope="col">#</th>
                                                 <th scope="col">Status</th>
                                                 <th scope="col">Buyer</th>
-                                                <th scope="col"> date</th>
+                                                <th scope="col">Date</th>
                                                 <th scope="col">Payment</th>
+                                                <th scope="col">Trx Id</th>
                                                 <th scope="col">Quantity</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr className='fw-bold'>
+                                            <tr>
                                                 <td>{i + 1}</td>
                                                 <td>
                                                     <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
@@ -73,7 +92,9 @@ const AdminOrder = () => {
                                                 <td>{o?.buyer?.name}</td>
                                                 <td>{moment(o?.createdAt).fromNow()}</td>
                                                 <td>{o?.payment.success ? "Success" : "Failed"}</td>
+                                                <td><b>{o?.payment?.transaction?.id}</b></td>
                                                 <td>{o?.products?.length}</td>
+                                                <td><button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button></td>
                                             </tr>
                                         </tbody>
                                     </table>

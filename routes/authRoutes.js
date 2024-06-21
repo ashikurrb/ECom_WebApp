@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getOrdersController, loginController, orderStatusController, registerController, testController, updateProfileController, updateUserController } from '../controllers/authController.js'
+import { deleteOrderController, deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getOrdersController, loginController, orderStatusController, registerController, testController, updateProfileController } from '../controllers/authController.js'
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
@@ -35,9 +35,6 @@ router.put('/profile-update', requireSignIn, updateProfileController)
 //all user list
 router.get("/all-users", requireSignIn, isAdmin, getAllUsersController)
 
-//update profile by Admin
-router.put('/user-update', requireSignIn, isAdmin, updateUserController)
-
 //delete user by admin
 router.delete('/delete-user/:id', requireSignIn, isAdmin, deleteUserController)
 
@@ -49,5 +46,8 @@ router.get("/all-orders", requireSignIn, isAdmin, getAllOrdersController)
 
 //order update status
 router.put("/order-status/:orderId", requireSignIn, isAdmin, orderStatusController)
+
+//delete order by admin
+router.delete('/delete-order/:id', requireSignIn, isAdmin, deleteOrderController)
 
 export default router;

@@ -39,7 +39,6 @@ const Order = () => {
                         <tr>
                           <th scope="col">#</th>
                           <th scope="col">Status</th>
-                          <th scope="col">Buyer</th>
                           <th scope="col">Time</th>
                           <th scope="col">Payment</th>
                           <th scope="col">Trx ID</th>
@@ -50,7 +49,6 @@ const Order = () => {
                         <tr>
                           <th scope='row'>{i + 1}</th>
                           <td>{o?.status}</td>
-                          <td>{o?.buyer?.name}</td>
                           <td>{moment(o?.createdAt).fromNow()}</td>
                           <td>{o?.payment.success ? "Success" : "Failed"}</td>
                           <td><b>{o?.payment?.transaction?.id}</b></td>
