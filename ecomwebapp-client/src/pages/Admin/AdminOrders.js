@@ -50,7 +50,7 @@ const AdminOrder = () => {
                             return (
                                 <div className="border m-2 table-container">
                                     <table className="table">
-                                        <thead>
+                                        <thead className='table-dark'>
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Status</th>
@@ -61,7 +61,7 @@ const AdminOrder = () => {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
+                                            <tr className='fw-bold'>
                                                 <td>{i + 1}</td>
                                                 <td>
                                                     <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
