@@ -3,7 +3,6 @@ import Header from './Header';
 import Footer from './Footer';
 import { Helmet } from 'react-helmet';
 import { Toaster } from 'react-hot-toast';
-import Breadcrumbs from '../Breadcrumbs';
 
 const Layout = ({ children, title, description, keywords, author }) => {
     return (
@@ -15,9 +14,8 @@ const Layout = ({ children, title, description, keywords, author }) => {
                 <meta name="author" content={author} />
                 <title>{title}</title>
             </Helmet>
-
             <Header />
-            <Breadcrumbs></Breadcrumbs>
+
             <main style={{ minHeight: '73vh' }}>
                 <Toaster />
                 {children}

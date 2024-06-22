@@ -4,6 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useCart } from '../components/context/cart';
+import GoBackButton from '../components/GoBackButton';
 
 const CatagoryProduct = () => {
     const params = useParams();
@@ -28,9 +29,9 @@ const CatagoryProduct = () => {
     return (
         <Layout>
             <div className="container">
-                <h4 className='text-center'>{catagory?.name} </h4>
+                <h4 className='text-center mt-3'>{catagory?.name} </h4>
                 <h6 className='text-center'>{products?.length} products found</h6>
-                <h1> </h1>
+                <GoBackButton />
                 <div className="row">
                     <div className="d-flex flex-wrap">
                         {products?.map(p => (

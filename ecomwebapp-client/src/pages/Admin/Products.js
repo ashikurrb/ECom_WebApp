@@ -3,6 +3,7 @@ import AdminMenu from '../../components/Layout/AdminMenu';
 import Layout from '../../components/Layout/Layout';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import moment from "moment";
 import { Link } from 'react-router-dom';
 
 const Products = () => {
@@ -47,8 +48,8 @@ const Products = () => {
                                             <h6 className="card-text">Price: ${p.price}</h6>
                                             <p className="card-text">Stock: {p.quantity} unit</p>
                                             <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
-                                            <p className="card-text">Created: {p.createdAt}</p>
-                                            <p className="card-text">Updated: {p.updatedAt}</p>
+                                            <p className="card-text fw-bold">Created: {moment(p?.createdAt).fromNow()} </p>
+                                            <p className="card-text fw-bold">Updated: {moment(p?.updatedAt).fromNow()}</p>
                                         </div>
                                     </div>
                                 </Link>

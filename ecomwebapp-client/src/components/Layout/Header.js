@@ -40,26 +40,7 @@ const Header = () => {
                                 <NavLink to="/" className="nav-link">Home</NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <Link className="nav-link dropdown-toggle" to={"/catagories"} role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Catagories
-                                </Link>
-                                <ul className="dropdown-menu">
-                                    <li>
-                                        <Link className="dropdown-item" to={"/catagories"}>
-                                            All Catagories
-                                        </Link>
-                                    </li>
-                                    {catagories?.map((c) => (
-                                        <li>
-                                            <Link
-                                                className="dropdown-item"
-                                                to={`/catagory/${c.slug}`}
-                                            >
-                                                {c.name}
-                                            </Link>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <NavLink to="/catagories" className="nav-link">Catagories</NavLink>
                             </li>
 
                             {!auth.user ? (<>

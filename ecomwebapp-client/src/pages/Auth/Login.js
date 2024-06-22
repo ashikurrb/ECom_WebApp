@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import '../../style/AuthStyle.css';
@@ -38,22 +38,33 @@ const Login = () => {
 
     return (
         <Layout title={"Log In"}>
-            <div className="form-container ">
-                <form onSubmit={handleSubmit}>
-                    <h4 className="title">Login Here</h4>
-
-                    <div className="mb-3">
-                        <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+            <div className="form-container">
+                <div className="container d-md-flex">
+                    <div className="row">
+                        <div className="col-md-7">
+                            <div className="text-center">
+                                <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
+                            </div>
+                        </div>
                     </div>
-                    <div className="mb-3">
-                        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                    <div className="col-md-5">
+                            <form className='m-md-5' onSubmit={handleSubmit}>
+                                <h4 className="title">Login Here</h4>
+                                <div className="mb-3">
+                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                                </div>
+                                <div className="mb-3">
+                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                                </div>
+                                <div className="text-center">
+                                    <button type="submit" className="btn btn-primary">Log In</button>
+                                    <br /> <br />
+                                    <Link to="/forgot-password">Forgot Password ?</Link>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                    <button type="submit" className="btn btn-primary">Log In</button>
-                    <br /> <br />
-                    <button onClick={() => { navigate('/forgot-password') }}>Forgot password?</button> 
-                 
-                </form>
-            </div>
+                </div>
         </Layout>
     );
 };
