@@ -33,7 +33,7 @@ const CatagoryProduct = () => {
                 <h6 className='text-center'>{products?.length} products found</h6>
                 <GoBackButton />
                 <div className="row">
-                    <div className="d-flex flex-wrap">
+                    <div className="d-flex flex-wrap justify-content-center">
                         {products?.map(p => (
                             <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
                                 <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />

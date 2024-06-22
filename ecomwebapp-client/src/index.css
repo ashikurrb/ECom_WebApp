@@ -96,12 +96,6 @@ color: white;
   color: black !important;
 }
 
-.products-container{
-  margin: 50px;
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .cardImg{
   height: 150px;
   object-fit:contain;

@@ -33,7 +33,7 @@ const Products = () => {
                     </div>
                     <div className="col-md-9">
                         <h1 className="text-center">All Products({products.length})</h1>
-                        <div className="products-container">
+                        <div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <Link
                                     key={p._id}
@@ -44,7 +44,7 @@ const Products = () => {
                                         <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="card-img-top cardImg" alt={p.name} />
                                         <div className="card-body">
                                             <h5 className="card-title">{p.name}</h5>
-                                            <p className="card-text">{p.description.substring(0,30)}</p>
+                                            <p className="card-text">{p.description.substring(0, 30)}</p>
                                             <h6 className="card-text">Price: ${p.price}</h6>
                                             <p className="card-text">Stock: {p.quantity} unit</p>
                                             <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
