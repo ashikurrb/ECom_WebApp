@@ -69,8 +69,8 @@ const CreateProduct = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h1>Create Product</h1>
-                        <div className="m-1 w-75">
+                        <h3 className='text-center mb-3'>Create Product</h3>
+                        <div className="m-1  w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
                                 size='large' showSearch
@@ -144,9 +144,9 @@ const CreateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
-                            <div className="mb-3">
-                                <button className="btn btn-primary" onClick={handleCreate}>
-                                    CREATE PRODUCT
+                            <div className="mb-3 text-center">
+                                <button className="btn btn-warning fw-bold " onClick={handleCreate}>
+                                    Create Product
                                 </button>
                             </div>
                         </div>

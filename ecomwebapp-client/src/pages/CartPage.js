@@ -65,7 +65,7 @@ const CartPage = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, {
                 nonce, cart,
             });
-      
+
             setLoading(false);
             localStorage.removeItem('cart');
             setCart([]);
@@ -82,14 +82,14 @@ const CartPage = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                    <div className="row align-items-center bg-light my-2">
+                        <div className="row align-items-center bg-light my-2">
                             <div className="col-auto">
-                               <GoBackButton/>
+                                <GoBackButton />
                             </div>
                             <div className="col">
-                            <h3 className='text-center mb-0 me-5  p-3'>
-                            {`Hello ${auth?.token && auth?.user.name}`}
-                        </h3>
+                                <h3 className='text-center mb-0 me-5  p-3'>
+                                    {`Hello ${auth?.token && auth?.user.name}`}
+                                </h3>
                             </div>
                         </div>
                         <h4 className='text-center'>
@@ -129,7 +129,7 @@ const CartPage = () => {
                             <>
                                 <div className="mb-3">
                                     <h6>Current Address: {auth?.user?.address}</h6>
-                                    <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                    <button className='btn btn-warning my-2' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
                                 </div>
                             </>
                         ) : (
@@ -160,9 +160,11 @@ const CartPage = () => {
                                             }}
                                             onInstance={(instance) => setInstance(instance)}
                                         />
-                                        <button className='btn btn-warning' onClick={handlePayment} disabled={loading || !instance || !auth?.user?.address}>
-                                            {loading ? "Processing" : "Make Payment"}
-                                        </button>
+                                        <div className="text-center">
+                                            <button className='btn btn-warning mb-3' onClick={handlePayment} disabled={loading || !instance || !auth?.user?.address}>
+                                                {loading ? "Processing" : "Make Payment"}
+                                            </button>
+                                        </div>
                                     </>
                                 )
                             }

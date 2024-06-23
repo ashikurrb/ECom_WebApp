@@ -62,7 +62,7 @@ const AdminOrder = () => {
                         <AdminMenu />
                     </div>
                     <div className="col-md-9">
-                        <h2 className="text-center">All Orders</h2>
+                        <h2 className="text-center my-3">All Orders ({orders.length})</h2>
                         {orders?.map((o, i) => {
                             return (
                                 <div className="border m-2 table-container">
@@ -81,7 +81,7 @@ const AdminOrder = () => {
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td>{i + 1}</td>
+                                                <th scope='row'>{i + 1}</th>
                                                 <td>
                                                     <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
                                                         {status.map((s, i) => (

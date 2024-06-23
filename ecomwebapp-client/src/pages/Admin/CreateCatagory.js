@@ -90,11 +90,11 @@ const CreateCatagory = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h1>Catagory Creation</h1>
+                        <h3 className='text-center pt-3'>Catagory Creation</h3>
                         <div className="p-3 w-50">
                             <CatagoryForm handleSubmit={handleSubmit} value={name} setValue={setName} />
                         </div>
-                        <div className='w-75 '>
+                        <div>
                             <table className="table">
                                 <thead>
                                     <tr>
@@ -107,7 +107,7 @@ const CreateCatagory = () => {
                                         <>
                                             <tr>
                                                 <td key={c._id}>{c.name}</td>
-                                                <td>
+                                                <td className='d-flex'>
                                                     <button className="btn btn-primary ms-1" onClick={() => { setVisible(true); setUpdatedName(c.name); setSelected(c); }}>Edit</button>
                                                     <button className="btn btn-danger ms-1" onClick={() => { handleDelete(c._id) }}>Delete</button>
                                                 </td>

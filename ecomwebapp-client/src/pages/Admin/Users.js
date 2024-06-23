@@ -48,7 +48,7 @@ const Users = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center'>All User's List ({users?.length})</h2>
+                        <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
                         <div className="a table-container">
                             <table className='table'>
                                 <thead>

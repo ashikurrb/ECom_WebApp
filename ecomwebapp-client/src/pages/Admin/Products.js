@@ -69,7 +69,7 @@ const Products = () => {
                         <AdminMenu></AdminMenu>
                     </div>
                     <div className="col-md-9">
-                        <h1 className="text-center">All Products({total})</h1>
+                        <h2 className="text-center my-3">All Products({total})</h2>
                         <div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <Link
