@@ -81,13 +81,13 @@ const CartPage = () => {
         <Layout>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-12">
+                   <div className="col-md-12">
                         <div className="row align-items-center bg-light my-2">
                             <div className="col-auto">
                                 <GoBackButton />
                             </div>
                             <div className="col">
-                                <h3 className='text-center mb-0 me-5  p-3'>
+                                <h3 className='text-center mb-0 me-5 p-3'>
                                     Hello  <span className='text-success'> {` ${auth?.token && auth?.user.name}`}</span>
                                 </h3>
                             </div>
@@ -98,7 +98,8 @@ const CartPage = () => {
                             ${auth?.token ? "" : "Please Log in to Checkout"}`
                                 : "Your Cart is Empty"}
                         </h4>
-                    </div>
+                    
+                   </div>
                 </div>
 
                 <div className="row">
@@ -122,7 +123,7 @@ const CartPage = () => {
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <div className="card p-4 mb-3 sticky-card">
+                        <div className="card p-4 mb-3">
                             <h3 className='text-center'>Cart Summary</h3>
                         <hr />
                         <h4>Total: {totalPrice()} </h4>
