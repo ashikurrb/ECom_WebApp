@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout'
 import UserMenu from '../../components/Layout/UserMenu';
 import { useAuth } from '../../components/context/auth';
+import FloatingCartButton from '../../components/FloatingCartButton';
 
 const Dashboard = () => {
     const [auth] = useAuth();
@@ -24,6 +25,7 @@ const Dashboard = () => {
                     </div>
                 </div>
             </div>
+            <FloatingCartButton/>
         </Layout>
     );
 };

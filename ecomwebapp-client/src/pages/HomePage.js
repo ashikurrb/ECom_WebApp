@@ -6,6 +6,7 @@ import { Prices } from '../components/Prices';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCart } from '../components/context/cart';
 import toast from 'react-hot-toast';
+import FloatingCartButton from '../components/FloatingCartButton';
 
 
 const HomePage = () => {
@@ -18,13 +19,6 @@ const HomePage = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [showCheckoutButton, setShowCheckoutButton] = useState(false);
-
-    useEffect(() => {
-        setShowCheckoutButton(cart.length > 0);
-    }, [cart]);
-
-
 
     //get all catagory
     const getAllCatagory = async () => {
@@ -211,16 +205,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            {showCheckoutButton && (
-                    <button
-                        className="btn fa-solid fa-cart-shopping btn-info floating-checkout-button"
-                        onClick={() => navigate('/cart')}
-                    >
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {cart.length}
-                        </span>
-                    </button>
-            )}
+            <FloatingCartButton/>
         </Layout >
     );
 };

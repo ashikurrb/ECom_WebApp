@@ -3,6 +3,7 @@ import Layout from '../components/Layout/Layout';
 import useCatagory from '../hooks/useCatagory';
 import { Link } from 'react-router-dom';
 import GoBackButton from '../components/GoBackButton';
+import FloatingCartButton from '../components/FloatingCartButton';
 
 const Catagories = () => {
     const catagories = useCatagory();
@@ -28,6 +29,7 @@ const Catagories = () => {
                     </div>
                 </div>
             </div>
+            <FloatingCartButton/>
         </Layout>
     );
 };
