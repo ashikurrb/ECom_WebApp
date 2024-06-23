@@ -67,7 +67,6 @@ export const getProductController = async (req, res) => {
       .find({})
       .populate("catagory")
       .select("-photo")
-      .limit(12)
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
@@ -79,7 +78,7 @@ export const getProductController = async (req, res) => {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Erorr in getting products",
+      message: "Error in getting products",
       error: error.message,
     });
   }
@@ -124,7 +123,7 @@ export const productPhotoController = async (req, res) => {
   }
 };
 
-//delete controller
+//delete product controller
 export const deleteProductController = async (req, res) => {
   try {
     await productModel.findByIdAndDelete(req.params.pid).select("-photo");
@@ -217,7 +216,7 @@ export const productFilterController = async (req, res) => {
 //Product Count
 export const productCountController = async (req, res) => {
   try {
-    const total = await productModel.find({}).estimatedDocumentCount();
+    const total = await productModel.find({}).estimatedDocumentCount({});
     res.status(200).send({
       success: true,
       total

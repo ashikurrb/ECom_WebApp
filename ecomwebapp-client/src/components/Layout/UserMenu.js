@@ -7,9 +7,15 @@ const UserMenu = () => {
         <>
             <div className="text-center">
                 <div className="list-group ">
-                    <GoBackButton/>
                     <NavLink to="/dashboard/user" className="product-link">
-                        <h4>User Menu</h4>
+                    <div className="row align-items-center">
+                            <div className="col-auto">
+                               <GoBackButton/>
+                            </div>
+                            <div className="col">
+                                <h4 className="mb-0 me-5 text-center">User Menu</h4>
+                            </div>
+                        </div>
                     </NavLink>
                     <NavLink to="/dashboard/user/profile" className="list-group-item list-group-item-action">
                         Update Profile

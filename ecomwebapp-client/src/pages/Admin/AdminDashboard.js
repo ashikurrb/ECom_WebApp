@@ -2,6 +2,7 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import { useAuth } from '../../components/context/auth';
+import GoBackButton from '../../components/GoBackButton';
 
 const AdminDashboard = () => {
     const [auth] = useAuth();
@@ -13,7 +14,7 @@ const AdminDashboard = () => {
                         <AdminMenu></AdminMenu>
                     </div>
                     <div className="col-md-9">
-                        <h4 className='text-center my-3'>Admin Profile</h4>
+                            <h4 className='text-center my-3'>Admin Profile</h4>
                         <div className="row m-2">
                             <div className="col-md-6 mb-2">
                                 <div className='card h-100 p-3'>

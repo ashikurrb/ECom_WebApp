@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import GoBackButton from '../GoBackButton';
 
 const AdminMenu = () => {
@@ -8,8 +8,16 @@ const AdminMenu = () => {
             <div className="text-center">
                 <div className="list-group">
                     <NavLink to="/dashboard/admin" className="product-link">
-                    <GoBackButton/>
-                        <h4>Admin Panel</h4>
+
+                    <div className="row align-items-center">
+                            <div className="col-auto">
+                               <GoBackButton/>
+                            </div>
+                            <div className="col">
+                                <h4 className="mb-0 me-5 text-center">Admin Menu</h4>
+                            </div>
+                        </div>
+
                     </NavLink>
                     <NavLink to="/dashboard/admin/create-catagory" className="list-group-item list-group-item-action">
                         Create Catagory
@@ -21,7 +29,7 @@ const AdminMenu = () => {
                         All Products
                     </NavLink>
                     <NavLink to="/dashboard/admin/all-users" className="list-group-item list-group-item-action">
-                       All Users
+                        All Users
                     </NavLink>
                     <NavLink to="/dashboard/admin/orders" className="list-group-item list-group-item-action">
                         All Orders

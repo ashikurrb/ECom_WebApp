@@ -4,26 +4,77 @@ import Layout from '../../components/Layout/Layout';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import moment from "moment";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Products = () => {
+    const navigate = useNavigate();
     const [products, setProducts] = useState([]);
-    //get all products
-    const getAllProducts = async () => {
+    const [catagories, setCatagories] = useState([]);
+    const [total, setTotal] = useState(0);
+    const [page, setPage] = useState(1);
+    const [loading, setLoading] = useState(false);
+
+    const getAllCatagory = async () => {
         try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product`);
-            setProducts(data.products)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/catagory/get-catagory`);
+            if (data?.success) {
+                setCatagories(data?.catagory)
+            }
         } catch (error) {
             console.log(error);
-            toast.error('Something Went Wrong')
         }
     }
 
+    useEffect(() => {
+        getAllCatagory();
+        getTotal();
+    }, [])
+
+    //get all products
+    const getAllProducts = async () => {
+        try {
+            setLoading(true)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
+            setLoading(false);
+            setProducts(data.products);
+        } catch (error) {
+            setLoading(false);
+            console.log(error);
+        }
+    }
     //lifecycle
     useEffect(() => {
         getAllProducts();
     }, [])
 
+
+    //get total count
+    const getTotal = async () => {
+        try {
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-count`);
+            setTotal(data?.total)
+
+        } catch (error) {
+            console.log(error);
+        }
+    }
+    useEffect(() => {
+        if (page === 1) return
+        loadMore();
+    }, [page])
+
+    //load More
+    const loadMore = async () => {
+        try {
+            setLoading(true)
+            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/product-list/${page}`);
+            setLoading(false)
+            setProducts([...products, ...data?.products])
+        } catch (error) {
+            console.log(error);
+            setLoading(false)
+        }
+    }
     return (
         <Layout>
             <div className="container-fluid mt-3 p-3">
@@ -32,7 +83,7 @@ const Products = () => {
                         <AdminMenu></AdminMenu>
                     </div>
                     <div className="col-md-9">
-                        <h1 className="text-center">All Products({products.length})</h1>
+                        <h1 className="text-center">All Products({total})</h1>
                         <div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <Link
@@ -54,6 +105,19 @@ const Products = () => {
                                     </div>
                                 </Link>
                             ))}
+                        </div>
+                        <div className="m-2 p-3 text-center">
+                            {products && products.length < total && (
+                                <button
+                                    className="btn btn-warning"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        setPage(page + 1);
+                                    }}
+                                >
+                                    {loading ? "Loading ..." : "Load More"}
+                                </button>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -9,8 +9,15 @@ const Catagories = () => {
     return (
         <Layout title={"All Categories"}>
             <div className="container">
-            <h4 className='text-center mt-3'>All Cataogries</h4>
-                <GoBackButton />
+            <div className="row align-items-center">
+                            <div className="col-auto">
+                               <GoBackButton/>
+                            </div>
+                            <div className="col">
+                                <h4 className="mb-0 me-5 p-3 text-center">Available Catagories</h4>
+                            </div>
+                        </div>
+             
                 <div className="row">
                 <div className="d-flex flex-wrap justify-content-center">
                         {catagories.map(c => (

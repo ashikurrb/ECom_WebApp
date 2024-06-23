@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import DropIn from "braintree-web-drop-in-react";
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import GoBackButton from '../components/GoBackButton';
 
 const CartPage = () => {
     const [auth, setAuth] = useAuth();
@@ -81,9 +82,16 @@ const CartPage = () => {
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">
-                        <h3 className='text-center bg-light p-2'>
+                    <div className="row align-items-center bg-light my-2">
+                            <div className="col-auto">
+                               <GoBackButton/>
+                            </div>
+                            <div className="col">
+                            <h3 className='text-center mb-0 me-5  p-3'>
                             {`Hello ${auth?.token && auth?.user.name}`}
                         </h3>
+                            </div>
+                        </div>
                         <h4 className='text-center'>
                             {cart?.length
                                 ? `You have ${cart.length} items in your cart. 

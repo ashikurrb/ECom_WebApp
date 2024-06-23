@@ -32,12 +32,11 @@ const HomePage = () => {
     }
 
     useEffect(() => {
-
         getAllCatagory();
         getTotal();
     }, [])
 
-    //get products
+    //get all products
     const getAllProducts = async () => {
         try {
             setLoading(true)
@@ -49,6 +48,7 @@ const HomePage = () => {
             console.log(error);
         }
     }
+
     //get total count
     const getTotal = async () => {
         try {
@@ -109,14 +109,33 @@ const HomePage = () => {
 
     return (
         <Layout title={"All Products - Best offers"}>
-            <div className='text-center'>
-                <img src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg" className='imgCover' alt="" />
+            <div id="carouselExampleAutoplaying" className="carousel slide" data-bs-ride="carousel">
+                <div className="carousel-inner">
+                    <div className="carousel-item active">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/004/707/493/small/online-shopping-on-phone-buy-sell-business-digital-web-banner-application-money-advertising-payment-ecommerce-illustration-search-vector.jpg" className="d-block w-100" alt="..." />
+                    </div>
+                    <div className="carousel-item">
+                        <img src="https://mindstacktechnologies.com/wordpress/wp-content/uploads/2018/01/ecommerce-banner.jpg" className="d-block w-100" alt="..." />
+                    </div>
+                    <div className="carousel-item">
+                        <img src="https://lh4.googleusercontent.com/proxy/vz5Ot36FANK3wReWsVkbItR05KQR4WgRK7w9FBLDrT6aduv2-sjFDPUXPyWGJsK1NY5j7iQozdGJ_FdkyRb-dyPbpRGiI9euOG8Qqr_Jav_7mTOyqgaUqf21IX-dr2MZPg1mhHAkQ2XZ_o7tNWwZ5ydK" className="d-block w-100" alt="..." />
+                    </div>
+                </div>
+                <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                    <span className="carousel-control-prev-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Previous</span>
+                </button>
+                <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                    <span className="carousel-control-next-icon" aria-hidden="true" />
+                    <span className="visually-hidden">Next</span>
+                </button>
             </div>
+
             <div className="container">
                 <div className="row m-3 ">
                     <div className="col-md-3">
-                            <p className="text-center fw-bold fs-5"  data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
-                            <div id="collapseExample">
+                        <p className="text-center fw-bold fs-5" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
+                        <div id="collapseExample">
                             <h5 className="text-center"> Filter by Catagory</h5>
                             <div className="d-flex flex-column">
                                 {catagories?.map(c => (
@@ -183,7 +202,6 @@ const HomePage = () => {
                             )}
                         </div>
                     </div>
-
                 </div>
             </div>
         </Layout >
