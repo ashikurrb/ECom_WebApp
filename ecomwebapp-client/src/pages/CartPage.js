@@ -80,8 +80,8 @@ const CartPage = () => {
     return (
         <Layout>
             <div className="container">
-                <div className="row">
-                   <div className="col-md-12">
+                <div className="row ">
+                    <div className="col-md-12">
                         <div className="row align-items-center bg-light my-2">
                             <div className="col-auto">
                                 <GoBackButton />
@@ -92,14 +92,13 @@ const CartPage = () => {
                                 </h3>
                             </div>
                         </div>
-                        <h4 className='text-center my-4'>
+                        <h5 className='text-center my-4'>
                             {cart?.length
                                 ? `You have ${cart.length} items in your cart. 
                             ${auth?.token ? "" : "Please Log in to Checkout"}`
                                 : "Your Cart is Empty"}
-                        </h4>
-                    
-                   </div>
+                        </h5>
+                    </div>
                 </div>
 
                 <div className="row">
@@ -125,53 +124,53 @@ const CartPage = () => {
                     <div className="col-md-4">
                         <div className="card p-4 mb-3">
                             <h3 className='text-center'>Cart Summary</h3>
-                        <hr />
-                        <h4>Total: {totalPrice()} </h4>
-                        <h6>Total Item: {cart.length}  </h6>
-                        {auth?.user?.address ? (
-                            <>
+                            <hr />
+                            <h4>Total: {totalPrice()} </h4>
+                            <h6>Total Item: {cart.length}  </h6>
+                            {auth?.user?.address ? (
+                                <>
+                                    <div className="mb-3">
+                                        <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
+                                        <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                    </div>
+                                </>
+                            ) : (
                                 <div className="mb-3">
-                                    <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
-                                    <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                    {
+                                        auth?.token ? (
+                                            <button className='btn btn-outline-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                        ) : (
+                                            <button className='btn btn-warning' onClick={() => navigate("/login", {
+                                                state: "/cart"
+                                            })}>Please Login to Checkout</button>
+                                        )
+                                    }
                                 </div>
-                            </>
-                        ) : (
-                            <div className="mb-3">
+                            )}
+
+                            <div className="mt-2">
                                 {
-                                    auth?.token ? (
-                                        <button className='btn btn-outline-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
-                                    ) : (
-                                        <button className='btn btn-warning' onClick={() => navigate("/login", {
-                                            state: "/cart"
-                                        })}>Please Login to Checkout</button>
+                                    !clientToken || !cart?.length ? ("") : (
+                                        <>
+
+                                            <DropIn
+                                                options={{
+                                                    authorization: clientToken,
+                                                    paypal: {
+                                                        flow: "vault",
+                                                    },
+                                                }}
+                                                onInstance={(instance) => setInstance(instance)}
+                                            />
+                                            <div className="text-center">
+                                                <button className='btn btn-warning mb-3' onClick={handlePayment} disabled={loading || !instance || !auth?.user?.address}>
+                                                    {loading ? "Processing" : "Make Payment"}
+                                                </button>
+                                            </div>
+                                        </>
                                     )
                                 }
                             </div>
-                        )}
-
-                        <div className="mt-2">
-                            {
-                                !clientToken || !cart?.length ? ("") : (
-                                    <>
-
-                                        <DropIn
-                                            options={{
-                                                authorization: clientToken,
-                                                paypal: {
-                                                    flow: "vault",
-                                                },
-                                            }}
-                                            onInstance={(instance) => setInstance(instance)}
-                                        />
-                                        <div className="text-center">
-                                            <button className='btn btn-warning mb-3' onClick={handlePayment} disabled={loading || !instance || !auth?.user?.address}>
-                                                {loading ? "Processing" : "Make Payment"}
-                                            </button>
-                                        </div>
-                                    </>
-                                )
-                            }
-                        </div>
                         </div>
                     </div>
                 </div>
