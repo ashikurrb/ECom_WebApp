@@ -9,26 +9,10 @@ import { Link, useNavigate } from 'react-router-dom';
 const Products = () => {
     const navigate = useNavigate();
     const [products, setProducts] = useState([]);
-    const [catagories, setCatagories] = useState([]);
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
 
-    const getAllCatagory = async () => {
-        try {
-            const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/catagory/get-catagory`);
-            if (data?.success) {
-                setCatagories(data?.catagory)
-            }
-        } catch (error) {
-            console.log(error);
-        }
-    }
-
-    useEffect(() => {
-        getAllCatagory();
-        getTotal();
-    }, [])
 
     //get all products
     const getAllProducts = async () => {
@@ -45,6 +29,7 @@ const Products = () => {
     //lifecycle
     useEffect(() => {
         getAllProducts();
+        getTotal();
     }, [])
 
 
@@ -62,6 +47,7 @@ const Products = () => {
         if (page === 1) return
         loadMore();
     }, [page])
+
 
     //load More
     const loadMore = async () => {
