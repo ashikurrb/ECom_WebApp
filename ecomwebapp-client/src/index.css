@@ -151,3 +151,12 @@ table {
 .catagory-link:hover{
  color: white;
 }
+
+.floating-checkout-button {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000;
+  font-size: 16px;
+  border-radius: 5px;
+}

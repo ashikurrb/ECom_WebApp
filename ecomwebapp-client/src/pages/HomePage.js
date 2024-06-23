@@ -18,6 +18,13 @@ const HomePage = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [showCheckoutButton, setShowCheckoutButton] = useState(false);
+
+    useEffect(() => {
+        setShowCheckoutButton(cart.length > 0);
+    }, [cart]);
+
+
 
     //get all catagory
     const getAllCatagory = async () => {
@@ -165,7 +172,7 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className="col-md-9">
-                        <h3 className="text-center">
+                        <h3 className="text-center my-3">
                             All Products
                         </h3>
                         <div className="d-flex flex-wrap justify-content-center">
@@ -204,6 +211,16 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
+            {showCheckoutButton && (
+                    <button
+                        className="btn fa-solid fa-cart-shopping btn-info floating-checkout-button"
+                        onClick={() => navigate('/cart')}
+                    >
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {cart.length}
+                        </span>
+                    </button>
+            )}
         </Layout >
     );
 };

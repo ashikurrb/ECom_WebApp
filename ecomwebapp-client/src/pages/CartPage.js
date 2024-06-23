@@ -88,11 +88,11 @@ const CartPage = () => {
                             </div>
                             <div className="col">
                                 <h3 className='text-center mb-0 me-5  p-3'>
-                                    {`Hello ${auth?.token && auth?.user.name}`}
+                                Hello  <span className='text-success'> {` ${auth?.token && auth?.user.name}`}</span>
                                 </h3>
                             </div>
                         </div>
-                        <h4 className='text-center'>
+                        <h4 className='text-center my-4'>
                             {cart?.length
                                 ? `You have ${cart.length} items in your cart. 
                             ${auth?.token ? "" : "Please Log in to Checkout"}`
@@ -125,11 +125,12 @@ const CartPage = () => {
                         <h3 className='text-center'>Cart Summary</h3>
                         <hr />
                         <h4>Total: {totalPrice()} </h4>
+                        <h6>Total Item: {cart.length}  </h6>
                         {auth?.user?.address ? (
                             <>
                                 <div className="mb-3">
-                                    <h6>Current Address: {auth?.user?.address}</h6>
-                                    <button className='btn btn-warning my-2' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                    <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
+                                    <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
                                 </div>
                             </>
                         ) : (

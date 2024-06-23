@@ -12,6 +12,8 @@ const Header = () => {
     const [auth, setAuth] = useAuth();
     const [cart] = useCart();
     const catagories = useCatagory();
+
+
     const handleLogout = () => {
         setAuth({
             ...auth, user: null, token: ''
@@ -19,19 +21,21 @@ const Header = () => {
         localStorage.removeItem('auth');
         toast.success('Logout Successfully');
     }
+
     return (
         <>
             <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
                 <div className="container-fluid">
                     <Link to="/" className="navbar-brand"> <GiShoppingCart /> ECom_WebApp</Link>
-
-                    <button className="navbar-toggler ms-auto my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon" />
+                    <button className="navbar-toggler ms-auto mx-2 my-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon" /> 
                     </button>
                     <div className="d-lg-none">
-                        <Badge count={cart?.length}>
-                            <Link to="/cart" className="nav-link">&nbsp; <GiShoppingCart />Cart </Link>
-                        </Badge>
+                        <NavLink to="/cart" className="nav-link position-relative "><i className='fa-solid fa-cart-shopping'></i> Cart
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                {cart.length}
+                            </span>
+                        </NavLink>
                     </div>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
                         <div className="ms-auto">   <SearchInput /></div>
@@ -52,7 +56,7 @@ const Header = () => {
                                 </li>
                             </>) : (<>
                                 <li className="nav-item dropdown">
-                                    <NavLink className="nav-link dropdown-toggle" role="button" data-bs-toggle="dropdown" >
+                                    <NavLink className="nav-link dropdown-toggle mx-2" role="button" data-bs-toggle="dropdown" >
                                         {auth?.user.name}
                                     </NavLink>
                                     <ul className="dropdown-menu">
@@ -66,9 +70,11 @@ const Header = () => {
                                 </li>
                             </>)}
                             <li className="nav-item d-none d-lg-block">
-                                <Badge count={cart?.length}>
-                                    <NavLink to="/cart" className="nav-link">&nbsp; <GiShoppingCart />Cart </NavLink>
-                                </Badge>
+                                <NavLink to="/cart" className="nav-link position-relative"> <i className='fa-solid fa-cart-shopping'></i> Cart
+                                    <span class="position-absolute start-100 translate-middle badge rounded-pill bg-danger">
+                                        {cart.length}
+                                    </span>
+                                </NavLink>
                             </li>
                         </ul>
                     </div>
@@ -80,3 +86,4 @@ const Header = () => {
 };
 
 export default Header;
+
