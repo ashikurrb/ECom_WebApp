@@ -6,13 +6,11 @@ import { toast } from 'react-hot-toast';
 import SearchInput from '../Form/SearchInput';
 import useCatagory from '../../hooks/useCatagory';
 import { useCart } from '../context/cart';
-import { Badge } from 'antd';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
     const [cart] = useCart();
     const catagories = useCatagory();
-
 
     const handleLogout = () => {
         setAuth({
@@ -42,7 +40,9 @@ const Header = () => {
                         </NavLink>
                     </div>
                     <div className="collapse navbar-collapse" id="navbarTogglerDemo01">
-                        <div className="ms-auto">   <SearchInput /></div>
+                        <div className="ms-auto">
+                            <SearchInput />
+                        </div>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
                                 <NavLink to="/" className="nav-link">Home</NavLink>
@@ -60,7 +60,7 @@ const Header = () => {
                                 </li>
                             </>) : (<>
                                 <li className="nav-item dropdown">
-                                    <NavLink className="nav-link dropdown-toggle mx-2" role="button" data-bs-toggle="dropdown" >
+                                    <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
                                         {auth?.user.name}
                                     </NavLink>
                                     <ul className="dropdown-menu">
@@ -74,7 +74,7 @@ const Header = () => {
                                 </li>
                             </>)}
                             <li className="nav-item d-none d-lg-block">
-                                <NavLink to="/cart" className="nav-link position-relative">
+                                <NavLink to="/cart" className="nav-link position-relative mx-1">
                                     <i className='fa-solid fa-cart-shopping'></i> Cart
                                     {
                                         cart?.length > 0 ?

@@ -88,7 +88,7 @@ const CartPage = () => {
                             </div>
                             <div className="col">
                                 <h3 className='text-center mb-0 me-5  p-3'>
-                                Hello  <span className='text-success'> {` ${auth?.token && auth?.user.name}`}</span>
+                                    Hello  <span className='text-success'> {` ${auth?.token && auth?.user.name}`}</span>
                                 </h3>
                             </div>
                         </div>
@@ -122,7 +122,8 @@ const CartPage = () => {
                         </div>
                     </div>
                     <div className="col-md-4">
-                        <h3 className='text-center'>Cart Summary</h3>
+                        <div className="card p-4 mb-3 sticky-card">
+                            <h3 className='text-center'>Cart Summary</h3>
                         <hr />
                         <h4>Total: {totalPrice()} </h4>
                         <h6>Total Item: {cart.length}  </h6>
@@ -169,6 +170,7 @@ const CartPage = () => {
                                     </>
                                 )
                             }
+                        </div>
                         </div>
                     </div>
                 </div>

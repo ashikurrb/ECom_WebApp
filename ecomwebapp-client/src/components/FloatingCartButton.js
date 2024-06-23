@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from './context/cart';
 import { useNavigate } from 'react-router-dom';
+import { FloatButton } from 'antd';
 
 const FloatingCartButton = () => {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ const FloatingCartButton = () => {
 
     return (
         <div>
+            
             {showCheckoutButton && (
                 <button
                     className="btn btn-info floating-checkout-button"
@@ -21,7 +23,6 @@ const FloatingCartButton = () => {
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {cart.length}
                     </span>
-
                 </button>
             )}
         </div>
