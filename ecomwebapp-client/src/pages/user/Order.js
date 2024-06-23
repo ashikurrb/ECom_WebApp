@@ -42,6 +42,7 @@ const Order = () => {
                         <th scope="col">Time</th>
                         <th scope="col">Payment</th>
                         <th scope="col">Trx ID</th>
+                        <th scope="col">Amount</th>
                         <th scope="col">Quantity</th>
                       </tr>
                     </thead>
@@ -54,6 +55,7 @@ const Order = () => {
                           {o?.payment.success ? "Success" : "Failed"}
                         </td>
                         <td><b>{o?.payment?.transaction?.id}</b></td>
+                        <td>Tk. {o?.payment?.transaction?.amount}</td>
                         <td>{o?.products?.length}</td>
                       </tr>
                     </tbody>

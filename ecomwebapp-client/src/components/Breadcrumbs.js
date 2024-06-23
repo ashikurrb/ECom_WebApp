@@ -14,7 +14,7 @@ const Breadcrumbs = () => {
                 </div>
             )
         })
-
+      
 
     return (
         <div className='breadcrumbs'>

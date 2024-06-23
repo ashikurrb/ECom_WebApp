@@ -75,6 +75,7 @@ const AdminOrder = () => {
                                                 <th scope="col">Date</th>
                                                 <th scope="col">Payment</th>
                                                 <th scope="col">Trx Id</th>
+                                                <th scope="col">Amount</th>
                                                 <th scope="col">Quantity</th>
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -95,6 +96,7 @@ const AdminOrder = () => {
                                                     {o?.payment.success ? "Success" : "Failed"}
                                                 </td>
                                                 <td><b>{o?.payment?.transaction?.id}</b></td>
+                                                <td>Tk. {o?.payment?.transaction?.amount} </td>
                                                 <td>{o?.products?.length}</td>
                                                 <td><button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button></td>
                                             </tr>
