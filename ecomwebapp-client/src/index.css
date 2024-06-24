@@ -82,15 +82,6 @@ background-color: black;
 color: white;
 }
 
-.contactus {
-  margin: 0;
-  padding: 0;
-  height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: justify;
-}
 
 .product-link{
   text-decoration: none !important;
@@ -164,4 +155,10 @@ table {
 .drop-in{
   margin-left: -20px;
   margin-right: -20px;
+}
+
+.justify-text{
+  text-align: justify;
+  padding-right: 5%;
+  padding-left: 5%;
 }
