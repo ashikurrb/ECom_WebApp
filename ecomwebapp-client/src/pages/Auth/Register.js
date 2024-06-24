@@ -46,7 +46,7 @@ const Register = () => {
                         <div className="col-md-6">
                             <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
                         </div>
-                        <div className="col-md-6">
+                        <div className="col-md-6 p-3">
                             <form className='m-md-5' onSubmit={handleSubmit}>
                                 <h4 className="title">REGISTER FORM</h4>
                                 <div className="mb-3">

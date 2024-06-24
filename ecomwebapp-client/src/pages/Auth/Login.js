@@ -41,7 +41,7 @@ const Login = () => {
             <div className="form-container">
                 <div className="container d-md-flex">
                     <div className="row">
-                        <div className="col-md-7">
+                        <div className="col-md-7 mx-md-5">
                             <div className="text-center">
                                 <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
                             </div>
