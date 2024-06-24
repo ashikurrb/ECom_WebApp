@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../components/context/cart';
 import GoBackButton from '../components/GoBackButton';
+import FloatingCartButton from '../components/FloatingCartButton';
 
 const ProductDetails = () => {
     const navigate = useNavigate();
@@ -89,6 +90,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
+            <FloatingCartButton/>
         </Layout>
     );
 };

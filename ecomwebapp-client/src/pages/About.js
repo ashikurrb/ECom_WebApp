@@ -5,8 +5,9 @@ import GoBackButton from '../components/GoBackButton';
 const About = () => {
     return (
         <Layout title={"About - EComWebApp"}>
-            <div className="row contactus">
-            <div className="row align-items-center">
+       <div className="container">
+       <div className="row contactus">
+            <div className="d-flex align-items-center">
                         <div className="col-auto">
                             <GoBackButton />
                         </div>
@@ -21,6 +22,7 @@ const About = () => {
                     <p className="text-justify">Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus tenetur porro consequuntur doloremque. Ex ab molestiae quas, vitae beatae minima saepe nulla ad dicta laudantium odio dolorem non vero voluptatum minus similique, assumenda quibusdam neque earum tempore cupiditate. Amet et, esse voluptatibus sed assumenda, commodi voluptatem magni culpa deleniti consectetur cum possimus quae nihil atque in dolore corporis doloribus aliquam omnis ea nulla ipsa ullam! Harum recusandae quae dolorum. Provident facilis vero, pariatur eaque omnis earum dignissimos facere illum culpa animi ipsam delectus iusto blanditiis. Molestiae odio optio quis exercitationem ratione animi illum! Porro magnam ratione sapiente aliquid voluptas quod!</p>
                 </div>
             </div>
+       </div>
         </Layout>
     );
 };

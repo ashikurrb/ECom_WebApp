@@ -7,7 +7,7 @@ const Contact = () => {
     return (
         <Layout title={"Contact Us - EComWebApp"}>
             <div className="row contactus">
-            <div className="row align-items-center">
+            <div className="d-flex align-items-center">
                             <div className="col-auto">
                                <GoBackButton/>
                             </div>

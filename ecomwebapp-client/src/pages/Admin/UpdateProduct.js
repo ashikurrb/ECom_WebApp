@@ -107,7 +107,7 @@ const UpdateProduct = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h1>Update Product</h1>
+                        <h3 className='text-center mb-4'>Update Product</h3>
                         <div className="m-1 w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
@@ -188,13 +188,12 @@ const UpdateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
-                            <div className="mb-3">
-                                <button className="btn btn-primary" onClick={handleUpdate}>
+                            <div className="d-flex">
+                                <button className="btn btn-primary m-1" onClick={handleUpdate}>
                                     Update Product
                                 </button>
-                            </div>
-                            <div className="mb-3">
-                                <button className="btn btn-danger" onClick={handleDelete}>
+                            
+                                <button className="btn btn-danger m-1" onClick={handleDelete}>
                                     Delete Product
                                 </button>
                             </div>
