@@ -24,6 +24,7 @@ import Catagories from './pages/Catagories';
 import CatagoryProduct from './pages/CatagoryProduct';
 import CartPage from './pages/CartPage';
 import AdminOrder from './pages/Admin/AdminOrders';
+import { SpeedInsights } from "@vercel/speed-insights/react"
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
         <Route path='/policy' element={<Policy />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
+      <SpeedInsights/>
     </>
   );
 }

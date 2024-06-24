@@ -8,7 +8,6 @@ import { AuthProvider } from './components/context/auth';
 import { SearchProvider } from './components/context/search';
 import { CartProvider } from './components/context/cart';
 import 'antd/dist/reset.css';
-import { SpeedInsights } from "@vercel/speed-insights/react"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -18,7 +17,6 @@ root.render(
       <CartProvider>
         <BrowserRouter>
           <App />
-          <SpeedInsights/>
         </BrowserRouter>
       </CartProvider>
     </SearchProvider>
