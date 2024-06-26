@@ -45,18 +45,19 @@ const Header = () => {
                         </div>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink to="/" className="nav-link"> <i class="fa-solid fa-house"></i> Home</NavLink>
+                                <NavLink to="/" className="nav-link"> Home</NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink to="/catagories" className="nav-link"><i class="fa-solid fa-list"></i> Catagories</NavLink>
+                                <NavLink to="/catagories" className="nav-link">Catagories</NavLink>
                             </li>
 
                             {!auth.user ? (<>
                                 <li className="nav-item">
-                                    <NavLink to="/register" className="nav-link">Register</NavLink>
+                                    <NavLink to="/register" className="nav-link">
+                                    Register</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/login" className="nav-link">Log in</NavLink>
+                                    <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
                                 </li>
                             </>) : (<>
                                 <li className="nav-item dropdown">

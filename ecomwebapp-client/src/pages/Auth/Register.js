@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import '../../style/AuthStyle.css';
@@ -48,7 +48,7 @@ const Register = () => {
                         </div>
                         <div className="col-md-6 p-3">
                             <form className='m-lg-5' onSubmit={handleSubmit}>
-                                <h4 className="title">REGISTER FORM</h4>
+                                <h4 className="title"><i class="fa-solid fa-user-plus"></i> &nbsp; REGISTER FORM</h4>
                                 <div className="mb-3">
                                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' required />
                                 </div>
@@ -70,6 +70,7 @@ const Register = () => {
                                 <div className="text-center">
                                     <button type="submit" className="btn btn-primary">REGISTER</button>
                                 </div>
+                                <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
                             </form>
                         </div>
                     </div>

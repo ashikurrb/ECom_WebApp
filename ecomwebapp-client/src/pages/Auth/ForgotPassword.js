@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Layout from '../../components/Layout/Layout';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import '../../style/AuthStyle.css';
@@ -39,12 +39,13 @@ const ForgotPassword = () => {
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
                     </div>
                     <div className="mb-3">
-                        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='What is your favourite food?' required />
+                        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='What is your favorite food?' required />
                     </div>
                     <div className="mb-3">
                         <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Enter New Password' required />
                     </div>
-                    <button type="submit" className="btn btn-primary"> Reset Password </button>
+                    <button type="submit" className="btn "> Reset Password </button>
+                    <div className="text-center mt-3"><Link to="/login">Back to Log In</Link></div>
                 </form>
             </div>
         </Layout>

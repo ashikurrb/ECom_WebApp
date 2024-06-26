@@ -49,7 +49,7 @@ const Login = () => {
                     </div>
                     <div className="col-md-5">
                         <form className='m-lg-5 mb-2' onSubmit={handleSubmit}>
-                            <h4 className="title">Login Here</h4>
+                            <h4 className="title"><i class="fa-solid fa-right-to-bracket"></i> &nbsp; Login Here</h4>
                             <div className="mb-3">
                                 <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
                             </div>
@@ -58,9 +58,8 @@ const Login = () => {
                             </div>
                             <div className="text-center">
                                 <button type="submit" className="btn btn-primary">Log In</button>
-                                <br /> <br />
-                                <Link to="/forgot-password">Forgot Password ?</Link>
                             </div>
+                            <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>
                         </form>
                     </div>
                 </div>
