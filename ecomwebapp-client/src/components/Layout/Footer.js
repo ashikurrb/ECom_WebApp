@@ -8,11 +8,11 @@ const Footer = () => {
                 <div className="row">
                     <div className="col-md-4">
                         <h4>We are: </h4>
-                        <p>
+                        <p className='d-flex'>
                             <Link to="/about">About Us</Link>
-                            |
+                            
                             <Link to="/contact">Contact</Link>
-                            |
+                            
                             <Link to="/policy">Privacy Policy</Link>
                         </p>
                     </div>
