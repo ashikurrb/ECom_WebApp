@@ -45,10 +45,10 @@ const Header = () => {
                         </div>
                         <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                             <li className="nav-item">
-                                <NavLink to="/" className="nav-link">Home</NavLink>
+                                <NavLink to="/" className="nav-link"> <i class="fa-solid fa-house"></i> Home</NavLink>
                             </li>
                             <li className="nav-item dropdown">
-                                <NavLink to="/catagories" className="nav-link">Catagories</NavLink>
+                                <NavLink to="/catagories" className="nav-link"><i class="fa-solid fa-list"></i> Catagories</NavLink>
                             </li>
 
                             {!auth.user ? (<>
@@ -61,14 +61,14 @@ const Header = () => {
                             </>) : (<>
                                 <li className="nav-item dropdown">
                                     <NavLink className="nav-link dropdown-toggle mx-1" role="button" data-bs-toggle="dropdown" >
-                                        {auth?.user.name}
+                                        <img style={{ width: "25px" }} className=' img-thumbnail rounded-circle' src="https://cdn-icons-png.flaticon.com/512/21/21104.png" alt="dp" />     {auth?.user.name}
                                     </NavLink>
                                     <ul className="dropdown-menu">
                                         <li>
-                                            <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="dropdown-item">Dashboard</NavLink>
+                                            <NavLink to={`/dashboard/${auth?.user?.role === 1 ? "admin" : "user"}`} className="dropdown-item"> <i class="fa-solid fa-user"></i> Dashboard </NavLink>
                                         </li>
                                         <li>
-                                            <NavLink onClick={handleLogout} to="/login" className="dropdown-item">Logout</NavLink>
+                                            <NavLink onClick={handleLogout} to="/login" className="dropdown-item"><i class="fa-solid fa-right-from-bracket"></i>  Logout </NavLink>
                                         </li>
                                     </ul>
                                 </li>

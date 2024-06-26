@@ -29,9 +29,17 @@ const CatagoryProduct = () => {
     return (
         <Layout>
             <div className="container">
-                <h4 className='text-center mt-3'>{catagory?.name} </h4>
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                    <div className="col">
+                        <h4 className="mb-0 me-5 p-3 text-center">{catagory?.name} </h4>
+                    </div>
+                </div>
+        
                 <h6 className='text-center'>{products?.length} products found</h6>
-                <GoBackButton />
+          
                 <div className="row">
                     <div className="d-flex flex-wrap justify-content-center">
                         {products?.map(p => (

@@ -42,8 +42,14 @@ const ProductDetails = () => {
     return (
         <Layout>
             <div className="container">
-                <h3 className='text-center'>Product Details</h3>
-                <GoBackButton />
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                    <div className="col">
+                        <h4 className="mb-0 me-5 p-3 text-center">Product Details</h4>
+                    </div>
+                </div>
                 <div className="row mt-5">
                     <div className="col-md-4">
                         <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
@@ -90,7 +96,7 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
-            <FloatingCartButton/>
+            <FloatingCartButton />
         </Layout>
     );
 };

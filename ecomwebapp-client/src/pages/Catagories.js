@@ -10,17 +10,17 @@ const Catagories = () => {
     return (
         <Layout title={"All Categories"}>
             <div className="container">
-            <div className="row align-items-center">
-                            <div className="col-auto">
-                               <GoBackButton/>
-                            </div>
-                            <div className="col">
-                                <h4 className="mb-0 me-5 p-3 text-center">Available Catagories</h4>
-                            </div>
-                        </div>
-             
+                <div className="row align-items-center">
+                    <div className="col-auto">
+                        <GoBackButton />
+                    </div>
+                    <div className="col">
+                        <h4 className="mb-0 me-5 p-3 text-center">Available Catagories</h4>
+                    </div>
+                </div>
+
                 <div className="row">
-                <div className="d-flex flex-wrap justify-content-center">
+                    <div className="d-flex flex-wrap justify-content-center">
                         {catagories.map(c => (
                             <div className="col-md-2 card catagory-btn border-dark p-3 m-2" key={c._id}>
                                 <Link className='catagory-link' to={`/catagory/${c.slug}`}>{c.name}</Link>
@@ -29,7 +29,7 @@ const Catagories = () => {
                     </div>
                 </div>
             </div>
-            <FloatingCartButton/>
+            <FloatingCartButton />
         </Layout>
     );
 };
