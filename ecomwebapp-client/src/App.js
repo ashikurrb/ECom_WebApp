@@ -24,8 +24,6 @@ import Catagories from './pages/Catagories';
 import CatagoryProduct from './pages/CatagoryProduct';
 import CartPage from './pages/CartPage';
 import AdminOrder from './pages/Admin/AdminOrders';
-import { SpeedInsights } from "@vercel/speed-insights/react"
-
 
 function App() {
   return (
@@ -49,7 +47,7 @@ function App() {
           <Route path="admin/product/:slug" element={<UpdateProduct />} />
           <Route path="admin/products" element={<Products />} />
           <Route path="admin/all-users" element={<Users />} />
-          <Route path="admin/orders" element={<AdminOrder/>} />
+          <Route path="admin/orders" element={<AdminOrder />} />
         </Route>
         <Route path='/register' element={<Register />} />
         <Route path='/login' element={<Login />} />
@@ -59,7 +57,6 @@ function App() {
         <Route path='/policy' element={<Policy />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
-      <SpeedInsights/>
     </>
   );
 }

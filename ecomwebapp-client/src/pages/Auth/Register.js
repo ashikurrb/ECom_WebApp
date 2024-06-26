@@ -47,7 +47,7 @@ const Register = () => {
                             <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
                         </div>
                         <div className="col-md-6 p-3">
-                            <form className='m-md-5' onSubmit={handleSubmit}>
+                            <form className='m-lg-5' onSubmit={handleSubmit}>
                                 <h4 className="title">REGISTER FORM</h4>
                                 <div className="mb-3">
                                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' required />

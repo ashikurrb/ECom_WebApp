@@ -40,31 +40,31 @@ const Login = () => {
         <Layout title={"Log In"}>
             <div className="form-container">
                 <div className="container d-md-flex">
-                    <div className="row">
-                        <div className="col-md-7 mx-md-5">
+                    <div className="row m-3">
+                        <div className="col-md-7 mb-5 mx-md-5">
                             <div className="text-center">
                                 <img src="/images/loginImg.png" style={{ width: "100%" }} alt="" />
                             </div>
                         </div>
                     </div>
                     <div className="col-md-5">
-                            <form className='m-md-5' onSubmit={handleSubmit}>
-                                <h4 className="title">Login Here</h4>
-                                <div className="mb-3">
-                                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
-                                </div>
-                                <div className="mb-3">
-                                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
-                                </div>
-                                <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">Log In</button>
-                                    <br /> <br />
-                                    <Link to="/forgot-password">Forgot Password ?</Link>
-                                </div>
-                            </form>
-                        </div>
+                        <form className='m-lg-5 mb-2' onSubmit={handleSubmit}>
+                            <h4 className="title">Login Here</h4>
+                            <div className="mb-3">
+                                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
+                            </div>
+                            <div className="mb-3">
+                                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
+                            </div>
+                            <div className="text-center">
+                                <button type="submit" className="btn btn-primary">Log In</button>
+                                <br /> <br />
+                                <Link to="/forgot-password">Forgot Password ?</Link>
+                            </div>
+                        </form>
                     </div>
                 </div>
+            </div>
         </Layout>
     );
 };
