@@ -30,11 +30,11 @@ const Order = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <h1 className="text-center">All Orders</h1>
+            <h3 className="text-center my-3">All Orders</h3>
             {orders?.map((o, i) => {
               return (
                 <div className="card mt-3 p-4 table-container">
-                  <table className="table">
+                  <table data-bs-toggle="collapse" href={`#${o?._id}`}  className="table">
                     <thead className='table-dark'>
                       <tr>
                         <th scope="col">#</th>
@@ -60,7 +60,7 @@ const Order = () => {
                       </tr>
                     </tbody>
                   </table>
-                  <div className="container">
+                  <div className="container collapse show" id={o?._id}>
                     <div className="d-flex flex-wrap">
                       {o?.products?.map((p, i) => (
                         <div className="row m-2 p-3 card flex-row" key={p._id}>

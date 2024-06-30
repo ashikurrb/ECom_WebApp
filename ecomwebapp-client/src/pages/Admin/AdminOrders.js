@@ -66,7 +66,7 @@ const AdminOrder = () => {
                         {orders?.map((o, i) => {
                             return (
                                 <div className="border m-2 table-container">
-                                    <table className="table">
+                           <table data-bs-toggle="collapse" href={`#${o?._id}`}  className="table">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -102,26 +102,34 @@ const AdminOrder = () => {
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <div className="container">
+                                    <div className="container collapse " id={o?._id}>
                                         <div className="d-flex flex-wrap">
-                                            {o?.products?.map((p, i) => (
-                                                <div className="row m-2 p-3 card flex-row" key={p._id}>
-                                                    <div className="col-md-4">
-                                                        <img
+                                            <table className="table shadow">
+                                            <thead className='table-info'>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Photo</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                {o?.products?.map((p, i) => (
+                                               <tr>
+                                                <td>{i+1}</td>
+                                                <td>   <img
                                                             src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                                            className="card-img-top"
+                                                            className="img-thumbnail"
                                                             alt={p.name}
                                                             width="100px"
                                                             height={"100px"}
-                                                        />
-                                                    </div>
-                                                    <div className="col-md-8">
-                                                        <p className='fw-bold'>{p.name}</p>
-                                                        <p>{p.description.substring(0, 30)}</p>
-                                                        <p>Price : {p.price}</p>
-                                                    </div>
-                                                </div>
+                                                        /></td>
+                                                <td>{p?.name}</td>
+                                                <td>{p?.price}</td>
+                                               </tr>
                                             ))}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

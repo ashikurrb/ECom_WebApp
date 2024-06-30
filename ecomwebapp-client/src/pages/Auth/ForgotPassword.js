@@ -33,8 +33,7 @@ const ForgotPassword = () => {
         <Layout title={"Log In"}>
             <div className="form-container ">
                 <form onSubmit={handleSubmit}>
-                    <h4 className="title">Reset Password</h4>
-
+                    <h4 className="title"> <i class="fa-solid fa-lock"></i> Reset Password</h4>
                     <div className="mb-3">
                         <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className="form-control" id="exampleInputEmail" placeholder='Email' required />
                     </div>
@@ -44,8 +43,12 @@ const ForgotPassword = () => {
                     <div className="mb-3">
                         <input type="password" value={newPassword} onChange={(e) => setNewPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Enter New Password' required />
                     </div>
-                    <button type="submit" className="btn "> Reset Password </button>
-                    <div className="text-center mt-3"><Link to="/login">Back to Log In</Link></div>
+                    <div className="text-center">
+                    <button type="submit" className="btn"> Reset Password </button>
+                    </div>
+                    <div className="text-center mt-3">
+                        <Link to="/login">Back to Log In</Link>
+                    </div>
                 </form>
             </div>
         </Layout>

@@ -135,10 +135,10 @@ const HomePage = () => {
             <div className="container">
                 <div className="row m-3 ">
                     <div className="col-md-3">
-                        <p className="text-center fw-bold fs-5" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
-                        <div id="collapseExample">
+                        <p className="text-center fw-bold fs-5 " data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
+                        <div className=' collapse show' id="collapseExample">
                             <h5 className="text-center"> Filter by Catagory</h5>
-                            <div className="d-flex flex-column">
+                            <div className="d-flex flex-column ">
                                 {catagories?.map(c => (
                                     <Checkbox
                                         key={c._id}
