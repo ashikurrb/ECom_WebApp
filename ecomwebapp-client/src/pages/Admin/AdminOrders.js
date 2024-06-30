@@ -6,6 +6,7 @@ import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import { Select } from "antd";
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 
@@ -14,6 +15,7 @@ const AdminOrder = () => {
     const [changeStatus, setChangeStatus] = useState("");
     const [auth, setAuth] = useAuth();
     const [orders, setOrders] = useState([]);
+    const navigate = useNavigate();
 
     const getOrders = async () => {
         try {
@@ -66,7 +68,7 @@ const AdminOrder = () => {
                         {orders?.map((o, i) => {
                             return (
                                 <div className="border m-2 table-container">
-                           <table data-bs-toggle="collapse" href={`#${o?._id}`}  className="table">
+                                    <table data-bs-toggle="collapse" href={`#${o?._id}`} className="table">
                                         <thead className='table-dark'>
                                             <tr>
                                                 <th scope="col">#</th>
@@ -105,7 +107,7 @@ const AdminOrder = () => {
                                     <div className="container collapse " id={o?._id}>
                                         <div className="d-flex flex-wrap">
                                             <table className="table shadow">
-                                            <thead className='table-info'>
+                                                <thead className='table-info'>
                                                     <tr>
                                                         <th>#</th>
                                                         <th>Photo</th>
@@ -114,20 +116,22 @@ const AdminOrder = () => {
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                {o?.products?.map((p, i) => (
-                                               <tr>
-                                                <td>{i+1}</td>
-                                                <td>   <img
-                                                            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                                            className="img-thumbnail"
-                                                            alt={p.name}
-                                                            width="100px"
-                                                            height={"100px"}
-                                                        /></td>
-                                                <td>{p?.name}</td>
-                                                <td>{p?.price}</td>
-                                               </tr>
-                                            ))}
+                                                    {o?.products?.map((p, i) => (
+                                                        <tr>
+                                                            <td>{i + 1}</td>
+                                                            <td onClick={() => navigate(`/product/${p.slug}`)}>
+                                                                <img
+                                                                    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                                                    className="img-thumbnail"
+                                                                    alt={p.name}
+                                                                    width="100px"
+                                                                    height={"100px"}
+                                                                />
+                                                            </td>
+                                                            <td>{p?.name}</td>
+                                                            <td>{p?.price}</td>
+                                                        </tr>
+                                                    ))}
                                                 </tbody>
                                             </table>
                                         </div>

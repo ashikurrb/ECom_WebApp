@@ -4,10 +4,12 @@ import UserMenu from '../../components/Layout/UserMenu';
 import axios from 'axios';
 import { useAuth } from '../../components/context/auth';
 import moment from "moment";
+import { useNavigate } from 'react-router-dom';
 
 const Order = () => {
   const [auth, setAuth] = useAuth();
   const [orders, setOrders] = useState([]);
+  const navigate = useNavigate();
 
   const getOrders = async () => {
     try {
@@ -63,7 +65,7 @@ const Order = () => {
                   <div className="container collapse show" id={o?._id}>
                     <div className="d-flex flex-wrap">
                       {o?.products?.map((p, i) => (
-                        <div className="row m-2 p-3 card flex-row" key={p._id}>
+                        <div className="row m-2 p-3 card flex-row" key={p._id} onClick={() => navigate(`/product/${p.slug}`)}>
                           <div className="col-md-4">
                             <img
                               src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
