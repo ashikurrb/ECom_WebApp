@@ -117,9 +117,9 @@ const AdminOrder = () => {
                                                 </thead>
                                                 <tbody>
                                                     {o?.products?.map((p, i) => (
-                                                        <tr>
+                                                        <tr onClick={() => navigate(`/product/${p.slug}`)}>
                                                             <td>{i + 1}</td>
-                                                            <td onClick={() => navigate(`/product/${p.slug}`)}>
+                                                            <td >
                                                                 <img
                                                                     src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                                                                     className="img-thumbnail"
