@@ -2,7 +2,6 @@ import React from 'react';
 import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import { useAuth } from '../../components/context/auth';
-import GoBackButton from '../../components/GoBackButton';
 
 const AdminDashboard = () => {
     const [auth] = useAuth();

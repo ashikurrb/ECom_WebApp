@@ -6,7 +6,7 @@ import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import { Select } from "antd";
 import toast from 'react-hot-toast';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 const { Option } = Select;
 
 
@@ -43,6 +43,8 @@ const AdminOrder = () => {
     //delete orders
     const handleDelete = async (oId) => {
         try {
+            let answer = window.confirm("Are you sure want to delete this product?")
+            if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/auth/delete-order/${oId}`);
             if (data.success) {
                 toast.success(`Order deleted successfully`);
@@ -54,7 +56,6 @@ const AdminOrder = () => {
             toast.error('Something wrong while Delete')
         }
     }
-
 
     return (
         <Layout title={"Admin - All Orders"}>
@@ -68,8 +69,8 @@ const AdminOrder = () => {
                         {orders?.map((o, i) => {
                             return (
                                 <div className="border m-2 table-container">
-                                    <table data-bs-toggle="collapse" href={`#${o?._id}`} className="table">
-                                        <thead className='table-dark'>
+                                    <table className="table">
+                                        <thead className='table-dark' >
                                             <tr>
                                                 <th scope="col">#</th>
                                                 <th scope="col">Status</th>
@@ -92,7 +93,9 @@ const AdminOrder = () => {
                                                         ))}
                                                     </Select>
                                                 </td>
-                                                <td>{o?.buyer?.name}</td>
+                                                <td data-bs-toggle="collapse" href={`#${o?._id}`}>
+                                                    <i class="fa-solid fa-chevron-down"></i> &nbsp; {o?.buyer?.name}
+                                                </td>
                                                 <td>{moment(o?.createdAt).fromNow()}</td>
                                                 <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                     {o?.payment.success ? "Success" : "Failed"}
@@ -100,8 +103,13 @@ const AdminOrder = () => {
                                                 <td><b>{o?.payment?.transaction?.id}</b></td>
                                                 <td>Tk. {o?.payment?.transaction?.amount} </td>
                                                 <td>{o?.products?.length}</td>
-                                                <td><button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button></td>
+                                                <td>
+                                                    <button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button>
+                                                </td>
+
                                             </tr>
+                                            <div>
+                                            </div>
                                         </tbody>
                                     </table>
                                     <div className="container collapse " id={o?._id}>
@@ -117,9 +125,9 @@ const AdminOrder = () => {
                                                 </thead>
                                                 <tbody>
                                                     {o?.products?.map((p, i) => (
-                                                        <tr onClick={() => navigate(`/product/${p.slug}`)}>
+                                                        <tr>
                                                             <td>{i + 1}</td>
-                                                            <td >
+                                                            <td onClick={() => navigate(`/product/${p.slug}`)}>
                                                                 <img
                                                                     src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                                                                     className="img-thumbnail"

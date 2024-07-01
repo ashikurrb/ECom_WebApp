@@ -36,7 +36,7 @@ const Order = () => {
             {orders?.map((o, i) => {
               return (
                 <div className="card mt-3 p-4 table-container">
-                  <table data-bs-toggle="collapse" href={`#${o?._id}`}  className="table">
+                  <table data-bs-toggle="collapse" href={`#${o?._id}`} className="table">
                     <thead className='table-dark'>
                       <tr>
                         <th scope="col">#</th>
@@ -51,7 +51,9 @@ const Order = () => {
                     <tbody>
                       <tr>
                         <th scope='row'>{i + 1}</th>
-                        <td>{o?.status}</td>
+                        <td>
+                        <i class="fa-solid fa-chevron-down"></i> &nbsp;  {o?.status}
+                        </td>
                         <td>{moment(o?.createdAt).fromNow()}</td>
                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                           {o?.payment.success ? "Success" : "Failed"}
