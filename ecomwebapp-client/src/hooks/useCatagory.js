@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function useCatagory() {
     const [catagories, setCatagories] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     //get catagory
     const getCatagories = async () => {
@@ -15,12 +15,12 @@ export default function useCatagory() {
             console.log(error);
         }
         finally {
-            setLoading(false)
+            setSpinnerLoading(false)
         }
     }
     useEffect(() => {
         getCatagories();
     }, [])
 
-    return { catagories, loading };
+    return { catagories, spinnerLoading };
 }

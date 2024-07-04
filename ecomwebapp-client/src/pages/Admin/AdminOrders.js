@@ -70,8 +70,8 @@ const AdminOrder = () => {
                     </div>
                     <div className="col-md-9">
                         <h2 className="text-center my-3">All Orders ({orders.length})</h2>
-                        {orders?.length < 1 ? <h5 className='text-center'>No Pending Order</h5> : <>
-                            {spinnerLoading ? <Spinner /> : <>
+                        {spinnerLoading ? <Spinner /> : <>
+                            {orders?.length < 1 ? <h5 className='text-center'>No Pending Order</h5> : <>
                                 {orders?.map((o, i) => {
                                     return (
                                         <div className="border m-2 table-container">

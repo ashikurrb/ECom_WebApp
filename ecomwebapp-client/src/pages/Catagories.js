@@ -7,7 +7,7 @@ import FloatingCartButton from '../components/FloatingCartButton';
 import Spinner from '../components/Spinner';
 
 const Catagories = () => {
-    const {catagories,loading} = useCatagory();
+    const {catagories,spinnerLoading} = useCatagory();
     
     return (
         <Layout title={"All Categories"}>
@@ -21,7 +21,7 @@ const Catagories = () => {
                     </div>
                 </div>
 
-               {loading?<Spinner/>: <div className="row">
+               {spinnerLoading?<Spinner/>: <div className="row">
                     <div className="d-flex flex-wrap justify-content-center">
                         {catagories.map(c => (
                             <div className="col-md-2 card catagory-btn border-dark p-3 m-2" key={c._id}>

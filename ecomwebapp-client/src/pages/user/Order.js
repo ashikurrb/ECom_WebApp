@@ -38,8 +38,8 @@ const Order = () => {
           </div>
           <div className="col-md-9">
             <h2 className="text-center my-3">All Orders ({orders.length})</h2>
-            {orders?.length < 1 ? <h5 className='text-center'>You don't have any pending. Visit <Link to="/">Home</Link> to order.</h5> : <>
-              {spinnerLoading ? <Spinner /> : <>
+            {spinnerLoading ? <Spinner /> : <>
+              {orders?.length < 1 ? <h5 className='text-center'>You don't have any pending. Visit <Link to="/">Home</Link> to order.</h5> : <>
                 {orders?.map((o, i) => {
                   return (
                     <div className="card mt-3 p-4 table-container">
@@ -96,8 +96,7 @@ const Order = () => {
                     </div>
                   );
                 })}
-              </>}
-            </>}
+              </>}</>}
           </div>
         </div>
       </div>
