@@ -5,12 +5,13 @@ import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import moment from "moment";
+import Spinner from '../../components/Spinner';
 
 
 const Users = () => {
     const [auth, setAuth] = useAuth();
     const [users, setUsers] = useState([]);
-
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     //get all users
     const getAllUsers = async () => {
@@ -19,6 +20,8 @@ const Users = () => {
             setUsers(data)
         } catch (error) {
             console.log(error);
+        } finally {
+            setSpinnerLoading(false)
         }
     }
 
@@ -51,7 +54,7 @@ const Users = () => {
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
                         <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
-                        <div className="a table-container">
+                        {spinnerLoading ? <Spinner /> : <div className="table-container">
                             <table className='table'>
                                 <thead>
                                     <tr>
@@ -93,9 +96,8 @@ const Users = () => {
                                     }
                                 </tbody>
                             </table>
-                            
-                        </div>
 
+                        </div>}
                     </div>
                 </div>
             </div>

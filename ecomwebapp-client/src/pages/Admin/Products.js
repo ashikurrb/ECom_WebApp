@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import moment from "moment";
 import { Link, useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 
 const Products = () => {
     const navigate = useNavigate();
@@ -12,6 +13,8 @@ const Products = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
+
 
 
     //get all products
@@ -24,6 +27,8 @@ const Products = () => {
         } catch (error) {
             setLoading(false);
             console.log(error);
+        }finally{
+            setSpinnerLoading(false)
         }
     }
     //lifecycle
@@ -70,6 +75,7 @@ const Products = () => {
                     </div>
                     <div className="col-md-9">
                         <h2 className="text-center my-3">All Products({total})</h2>
+                       {spinnerLoading?<Spinner/>:<>
                         <div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <Link
@@ -104,7 +110,7 @@ const Products = () => {
                                     {loading ? "Loading ..." : "Load More"}
                                 </button>
                             )}
-                        </div>
+                        </div></>}
                     </div>
                 </div>
             </div>

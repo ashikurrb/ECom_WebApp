@@ -5,11 +5,14 @@ import axios from 'axios';
 import { useAuth } from '../../components/context/auth';
 import moment from "moment";
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 
 const Order = () => {
   const [auth, setAuth] = useAuth();
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
+  const [spinnerLoading, setSpinnerLoading] = useState(true);
+
 
   const getOrders = async () => {
     try {
@@ -17,6 +20,8 @@ const Order = () => {
       setOrders(data)
     } catch (error) {
       console.log(error);
+    }finally{
+      setSpinnerLoading(false)
     }
   }
 
@@ -33,6 +38,7 @@ const Order = () => {
           </div>
           <div className="col-md-9">
             <h3 className="text-center my-3">All Orders</h3>
+           {spinnerLoading?<Spinner/>:<>
             {orders?.map((o, i) => {
               return (
                 <div className="card mt-3 p-4 table-container">
@@ -89,6 +95,7 @@ const Order = () => {
                 </div>
               );
             })}
+           </>}
           </div>
         </div>
       </div>
