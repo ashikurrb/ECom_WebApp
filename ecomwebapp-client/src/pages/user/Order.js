@@ -57,9 +57,9 @@ const Order = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope='row'>{i + 1}</th>
+                            <th scope='row'>{i + 1}&nbsp;<i class="fa-solid fa-chevron-down"></i> </th>
                             <td>
-                              <i class="fa-solid fa-chevron-down"></i> &nbsp;  {o?.status}
+                              {o?.status}
                             </td>
                             <td>{moment(o?.createdAt).fromNow()}</td>
                             <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
