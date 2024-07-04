@@ -48,7 +48,7 @@ const Users = () => {
 
 
     return (
-        <Layout title={"User's List"}>
+        <Layout title={"Admin - User's List"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>

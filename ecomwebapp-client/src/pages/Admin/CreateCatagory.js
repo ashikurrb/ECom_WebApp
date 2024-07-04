@@ -85,7 +85,7 @@ const CreateCatagory = () => {
 
 
     return (
-        <Layout title={"Dashboard - Create Catagory"}>
+        <Layout title={"Admin - Create Catagory"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
