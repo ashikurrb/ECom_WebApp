@@ -143,7 +143,7 @@ const HomePage = () => {
                 <div className="row m-3 ">
                     <div className="col-md-3">
                         <div className="text-center d-md-none border rounded mb-3">
-                            <button className='btn ' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                            <button className='btn' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                                 <i className="fa-solid fa-bars"> </i>  <b>&nbsp; View Filters</b>
                             </button>
                         </div>

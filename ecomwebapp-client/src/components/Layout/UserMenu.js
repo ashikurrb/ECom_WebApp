@@ -7,22 +7,31 @@ const UserMenu = () => {
         <>
             <div className="text-center">
                 <div className="list-group ">
-                    <NavLink to="/dashboard/user" className="product-link">
-                    <div className="row align-items-center">
+                    <div className='border-bottom'>
+                        <div className="row align-items-center">
                             <div className="col-auto">
-                               <GoBackButton/>
+                                <GoBackButton />
                             </div>
                             <div className="col">
-                                <h4 className="mb-0 me-5 text-center">User Menu</h4>
+                                <NavLink to="/dashboard/user" className="product-link">
+                                    <h4 className="mb-0 me-5">User Menu</h4>
+                                </NavLink>
+                            </div>
+                            <div className="col-auto">
+                                <button className='btn d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                                    <i className="fa-solid fa-bars"> </i>
+                                </button>
                             </div>
                         </div>
-                    </NavLink>
-                    <NavLink to="/dashboard/user/profile" className="list-group-item list-group-item-action">
-                        Update Profile
-                    </NavLink>
-                    <NavLink to="/dashboard/user/orders" className="list-group-item list-group-item-action">
-                        Orders
-                    </NavLink>
+                    </div>
+                    <div className='d-md-collapse show rounded' id="collapseExample">
+                        <NavLink to="/dashboard/user/profile" className="list-group-item list-group-item-action">
+                            Update Profile
+                        </NavLink>
+                        <NavLink to="/dashboard/user/orders" className="list-group-item list-group-item-action">
+                            Orders
+                        </NavLink>
+                    </div>
                 </div>
             </div>
 
