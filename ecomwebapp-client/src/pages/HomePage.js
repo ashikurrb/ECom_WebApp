@@ -139,12 +139,12 @@ const HomePage = () => {
             <div className="container">
                 <div className="row m-3 ">
                     <div className="col-md-3">
-                       <div className="text-center border">
-                       <button className='btn d-md-none' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                       <div className="text-center d-md-none border rounded mb-3">
+                       <button className='btn ' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
                             <i className="fa-solid fa-bars"> </i>  <b>&nbsp; View Filters</b>
                         </button>
                        </div>
-                        <div className='d-md-collapse show' id="collapseExample">
+                        <div className='collapse d-md-block' id="collapseExample">
                             <h5 className="text-center"> Filter by Catagory</h5>
                             <div className="d-flex flex-column ">
                                 {catagories?.map(c => (
