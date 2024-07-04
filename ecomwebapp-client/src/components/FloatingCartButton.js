@@ -26,8 +26,6 @@ const FloatingCartButton = () => {
     }
     totalPrice();
 
-    console.log(cart);
-
     return (
         <div>
 

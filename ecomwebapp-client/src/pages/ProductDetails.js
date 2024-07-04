@@ -6,6 +6,7 @@ import toast from 'react-hot-toast';
 import { useCart } from '../components/context/cart';
 import GoBackButton from '../components/GoBackButton';
 import FloatingCartButton from '../components/FloatingCartButton';
+import Spinner from '../components/Spinner';
 
 const ProductDetails = () => {
     const navigate = useNavigate();
@@ -13,6 +14,8 @@ const ProductDetails = () => {
     const [cart, setCart] = useCart();
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
+
 
     //initial p data
     useEffect(() => {
@@ -27,6 +30,9 @@ const ProductDetails = () => {
             getSimilarProduct(data?.product._id, data?.product.catagory._id);
         } catch (error) {
             console.log(error);
+        }
+        finally {
+            setSpinnerLoading(false)
         }
     }
     //get similar product
@@ -50,7 +56,7 @@ const ProductDetails = () => {
                         <h4 className="mb-0 me-5 p-3 text-center">Product Details</h4>
                     </div>
                 </div>
-                <div className="row mt-5">
+                {spinnerLoading ? <Spinner /> : <div className="row mt-5">
                     <div className="col-md-4">
                         <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
                     </div>
@@ -70,7 +76,7 @@ const ProductDetails = () => {
                             }}>
                             Add to Cart </button>
                     </div>
-                </div>
+                </div>}
                 <hr />
                 <div className="row">
                     <h3>Similar Products</h3>

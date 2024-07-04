@@ -5,6 +5,7 @@ import axios from 'axios';
 import toast from 'react-hot-toast';
 import { useCart } from '../components/context/cart';
 import GoBackButton from '../components/GoBackButton';
+import Spinner from '../components/Spinner';
 
 const CatagoryProduct = () => {
     const params = useParams();
@@ -12,6 +13,8 @@ const CatagoryProduct = () => {
     const [cart, setCart] = useCart();
     const [products, setProducts] = useState([]);
     const [catagory, setCatagory] = useState([]);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
+
 
     useEffect(() => {
         if (params?.slug) getProductByCat();
@@ -25,6 +28,9 @@ const CatagoryProduct = () => {
         } catch (error) {
             console.log(error);
         }
+        finally {
+            setSpinnerLoading(false)
+        }
     }
     return (
         <Layout>
@@ -37,10 +43,9 @@ const CatagoryProduct = () => {
                         <h4 className="mb-0 me-5 p-3 text-center">{catagory?.name} </h4>
                     </div>
                 </div>
-        
-                <h6 className='text-center'>{products?.length} products found</h6>
-          
-                <div className="row">
+
+                {spinnerLoading ? <Spinner /> : <div className="row">
+                    <h6 className='text-center'>{products?.length} products found</h6>
                     <div className="d-flex flex-wrap justify-content-center">
                         {products?.map(p => (
                             <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
@@ -60,7 +65,7 @@ const CatagoryProduct = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div>}
             </div>
         </Layout>
     );

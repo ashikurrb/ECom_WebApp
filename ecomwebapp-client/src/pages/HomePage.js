@@ -110,6 +110,9 @@ const HomePage = () => {
         } catch (error) {
             console.log(error);
         }
+        finally {
+            setSpinnerLoading(false)
+        }
     }
 
     return (
@@ -139,13 +142,13 @@ const HomePage = () => {
             <div className="container">
                 <div className="row m-3 ">
                     <div className="col-md-3">
-                       <div className="text-center d-md-none border rounded mb-3">
-                       <button className='btn ' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
-                            <i className="fa-solid fa-bars"> </i>  <b>&nbsp; View Filters</b>
-                        </button>
-                       </div>
+                        <div className="text-center d-md-none border rounded mb-3">
+                            <button className='btn ' data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample" >
+                                <i className="fa-solid fa-bars"> </i>  <b>&nbsp; View Filters</b>
+                            </button>
+                        </div>
                         <div className='collapse d-md-block' id="collapseExample">
-                            <h5 className="text-center"> Filter by Catagory</h5>
+                            <h5 className="text-center my-3"> Filter by Catagory</h5>
                             <div className="d-flex flex-column ">
                                 {catagories?.map(c => (
                                     <Checkbox
@@ -177,26 +180,27 @@ const HomePage = () => {
                         <h3 className="text-center my-3">
                             All Products
                         </h3>
-                        {spinnerLoading ? <Spinner /> : <div><div className="d-flex flex-wrap justify-content-center">
-                            {products?.map(p => (
-                                <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
-                                    <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
-                                    <div className="card-body">
-                                        <h5 className="card-title">{p.name}</h5>
-                                        <p className="card-text">{p.description.substring(0, 50)}...</p>
-                                        <h6 className="card-text">Price: ${p.price}</h6>
-                                        <button className='btn btn-primary m-1 ' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                        <button className='btn btn-secondary m-1 '
-                                            onClick={() => {
-                                                setCart([...cart, p])
-                                                localStorage.setItem('cart', JSON.stringify([...cart, p]))
-                                                toast.success(`${p.name} Added to Cart`)
-                                            }}>
-                                            Add to Cart </button>
+                        {spinnerLoading ? <Spinner /> : <div>
+                            <div className="d-flex flex-wrap justify-content-center">
+                                {products?.map(p => (
+                                    <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
+                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
+                                        <div className="card-body">
+                                            <h5 className="card-title">{p.name}</h5>
+                                            <p className="card-text">{p.description.substring(0, 50)}...</p>
+                                            <h6 className="card-text">Price: ${p.price}</h6>
+                                            <button className='btn btn-primary m-1 ' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
+                                            <button className='btn btn-secondary m-1 '
+                                                onClick={() => {
+                                                    setCart([...cart, p])
+                                                    localStorage.setItem('cart', JSON.stringify([...cart, p]))
+                                                    toast.success(`${p.name} Added to Cart`)
+                                                }}>
+                                                Add to Cart </button>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
-                        </div>
+                                ))}
+                            </div>
                             <div className="m-2 p-3 text-center">
                                 {products && products.length < total && (
                                     <button
@@ -209,7 +213,8 @@ const HomePage = () => {
                                         {loading ? "Loading ..." : "Load More"}
                                     </button>
                                 )}
-                            </div></div>}
+                            </div>
+                        </div>}
                     </div>
                 </div>
             </div>
