@@ -7,7 +7,6 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/context/cart';
 import toast from 'react-hot-toast';
 import FloatingCartButton from '../components/FloatingCartButton';
-import Spinner from '../components/Spinner';
 
 
 const HomePage = () => {
@@ -20,17 +19,6 @@ const HomePage = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
-    const [spinnerLoading, setSpinnerLoading] = useState(true);
-
-
-    useEffect(() => {
-        // Simulating a loading delay
-        const timer = setTimeout(() => {
-            setSpinnerLoading(false);
-        }, 1000);
-
-        return () => clearTimeout(timer);
-    }, [products]);
 
     //get all catagory
     const getAllCatagory = async () => {
@@ -181,7 +169,6 @@ const HomePage = () => {
                         <h3 className="text-center my-3">
                             All Products
                         </h3>
-                      {spinnerLoading?<Spinner/>: <div>
                         <div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
@@ -214,7 +201,7 @@ const HomePage = () => {
                                     {loading ? "Loading ..." : "Load More"}
                                 </button>
                             )}
-                        </div></div>}
+                        </div>
                     </div>
                 </div>
             </div>
