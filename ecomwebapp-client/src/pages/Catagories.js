@@ -4,9 +4,11 @@ import useCatagory from '../hooks/useCatagory';
 import { Link } from 'react-router-dom';
 import GoBackButton from '../components/GoBackButton';
 import FloatingCartButton from '../components/FloatingCartButton';
+import Spinner from '../components/Spinner';
 
 const Catagories = () => {
-    const catagories = useCatagory();
+    const {catagories,loading} = useCatagory();
+    
     return (
         <Layout title={"All Categories"}>
             <div className="container">
@@ -19,7 +21,7 @@ const Catagories = () => {
                     </div>
                 </div>
 
-                <div className="row">
+               {loading?<Spinner/>: <div className="row">
                     <div className="d-flex flex-wrap justify-content-center">
                         {catagories.map(c => (
                             <div className="col-md-2 card catagory-btn border-dark p-3 m-2" key={c._id}>
@@ -27,7 +29,7 @@ const Catagories = () => {
                             </div>
                         ))}
                     </div>
-                </div>
+                </div>}
             </div>
             <FloatingCartButton />
         </Layout>

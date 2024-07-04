@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { useCart } from '../components/context/cart';
 import toast from 'react-hot-toast';
 import FloatingCartButton from '../components/FloatingCartButton';
+import Spinner from '../components/Spinner';
 
 
 const HomePage = () => {
@@ -19,6 +20,7 @@ const HomePage = () => {
     const [total, setTotal] = useState(0);
     const [page, setPage] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
 
     //get all catagory
     const getAllCatagory = async () => {
@@ -29,6 +31,8 @@ const HomePage = () => {
             }
         } catch (error) {
             console.log(error);
+        } finally {
+            setSpinnerLoading(false)
         }
     }
 
@@ -47,6 +51,8 @@ const HomePage = () => {
         } catch (error) {
             setLoading(false);
             console.log(error);
+        } finally {
+            setSpinnerLoading(false)
         }
     }
 
@@ -138,7 +144,7 @@ const HomePage = () => {
                         <p className="text-center fw-bold fs-5 " data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample"> Filter 🔽 </p>
                         <div className=' collapse show' id="collapseExample">
                             <h5 className="text-center"> Filter by Catagory</h5>
-                            <div className="d-flex flex-column ">
+                            {spinnerLoading ? <Spinner /> : <div className="d-flex flex-column ">
                                 {catagories?.map(c => (
                                     <Checkbox
                                         key={c._id}
@@ -147,7 +153,7 @@ const HomePage = () => {
                                         {c.name}
                                     </Checkbox>
                                 ))}
-                            </div>
+                            </div>}
                             <h5 className="text-center"> Filter by Price</h5>
                             <div className="d-flex flex-column">
                                 <Radio.Group onChange={e => setRadio(e.target.value)}>
@@ -169,7 +175,7 @@ const HomePage = () => {
                         <h3 className="text-center my-3">
                             All Products
                         </h3>
-                        <div className="d-flex flex-wrap justify-content-center">
+                        {spinnerLoading ? <Spinner /> : <div><div className="d-flex flex-wrap justify-content-center">
                             {products?.map(p => (
                                 <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
                                     <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
@@ -189,23 +195,23 @@ const HomePage = () => {
                                 </div>
                             ))}
                         </div>
-                        <div className="m-2 p-3 text-center">
-                            {products && products.length < total && (
-                                <button
-                                    className="btn btn-warning"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setPage(page + 1);
-                                    }}
-                                >
-                                    {loading ? "Loading ..." : "Load More"}
-                                </button>
-                            )}
-                        </div>
+                            <div className="m-2 p-3 text-center">
+                                {products && products.length < total && (
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setPage(page + 1);
+                                        }}
+                                    >
+                                        {loading ? "Loading ..." : "Load More"}
+                                    </button>
+                                )}
+                            </div></div>}
                     </div>
                 </div>
             </div>
-            <FloatingCartButton/>
+            <FloatingCartButton />
         </Layout >
     );
 };

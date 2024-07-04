@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 
 export default function useCatagory() {
     const [catagories, setCatagories] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     //get catagory
     const getCatagories = async () => {
@@ -13,10 +14,13 @@ export default function useCatagory() {
         } catch (error) {
             console.log(error);
         }
-    } 
+        finally {
+            setLoading(false)
+        }
+    }
     useEffect(() => {
         getCatagories();
     }, [])
 
-    return catagories;
+    return { catagories, loading };
 }
