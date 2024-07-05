@@ -46,6 +46,7 @@ const Footer = () => {
                 </div>
             </div>
             <h4 className='text-center'>All Rights Reserved &copy; ashikurrb</h4>
+           
         </div>
     );
 };

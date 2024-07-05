@@ -38,6 +38,7 @@ export const registerController = async (req, res) => {
 
         //register User
         const hashedPassword = await hashPassword(password)
+
         //save
         const user = await new userModel({ name, email, phone, address, password: hashedPassword, answer }).save();
         res.status(201).send({
@@ -65,15 +66,20 @@ export const loginController = async (req, res) => {
                 success: false,
                 message: "Invalid Email or Password" //don't declare specifically which is wrong , email or password. for security.//
             })
+            
         }
         //check user
         const user = await userModel.findOne({ email })
+        
+        //valid
         if (!user) {
             return res.status(404).send({
                 success: false,
                 message: 'Email not registered'
             })
         }
+
+        //compare password
         const match = await comparePassword(password, user.password)
         if (!match) {
             return res.status(200).send({
@@ -227,10 +233,10 @@ export const deleteUserController = async (req, res) => {
 export const getOrdersController = async (req, res) => {
     try {
         const orders = await orderModel
-        .find({ buyer: req.user._id })
-        .populate("products", "-photo")
-        .populate("buyer", "name")
-        .sort({ createdAt: -1 });
+            .find({ buyer: req.user._id })
+            .populate("products", "-photo")
+            .populate("buyer", "name")
+            .sort({ createdAt: -1 });
         res.json(orders)
     } catch (error) {
         console.log(error);
@@ -269,8 +275,8 @@ export const orderStatusController = async (req, res) => {
         const { orderId } = req.params;
         const { status } = req.body;
         const orders = await orderModel
-            .findByIdAndUpdate(orderId, { status },{ new: true })
-            res.json(orders)
+            .findByIdAndUpdate(orderId, { status }, { new: true })
+        res.json(orders)
     } catch (error) {
         console.log(error);
         res.status(500).send({

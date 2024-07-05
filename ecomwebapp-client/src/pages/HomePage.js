@@ -9,7 +9,6 @@ import toast from 'react-hot-toast';
 import FloatingCartButton from '../components/FloatingCartButton';
 import Spinner from '../components/Spinner';
 
-
 const HomePage = () => {
     const navigate = useNavigate();
     const [cart, setCart] = useCart();

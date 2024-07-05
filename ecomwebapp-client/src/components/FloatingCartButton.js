@@ -28,7 +28,6 @@ const FloatingCartButton = () => {
 
     return (
         <div>
-
             {showCheckoutButton && (
                 <button
                     className="btn btn-danger floating-checkout-button"
