@@ -100,7 +100,9 @@ const AdminOrder = () => {
                                                             </Select>
                                                         </td>
                                                         <td data-bs-toggle="collapse" href={`#${o?._id}`}>
-                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp; {o?.buyer?.name}
+                                                            {
+                                                                o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
+                                                            }
                                                         </td>
                                                         <td>{moment(o?.createdAt).fromNow()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>

@@ -115,7 +115,7 @@ const UpdateProduct = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h3 className='text-center mb-4'>Update Product</h3>
+                        <h3 className='text-center my-3'>Update Product</h3>
                         <div className="m-1 w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"

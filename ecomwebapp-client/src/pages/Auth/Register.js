@@ -46,8 +46,8 @@ const Register = () => {
     return (
         <Layout title={"Register"}>
             <div className="form-container">
-                {spinnerLoading ? <Spinner /> : ""}
-                <div className="container">
+            {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
+            <div className="container">
                     <div className="row">
                         <div className="col-md-6">
                             <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
