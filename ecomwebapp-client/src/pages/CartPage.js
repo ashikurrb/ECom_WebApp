@@ -112,7 +112,7 @@ const CartPage = () => {
                         </div>
                         <h5 className='text-center my-4'>
                             {uniqueCartItems.length
-                                ? `You have ${uniqueCartItems.length} items of ${cart.length} pieces in your cart. 
+                                ? `You have  ${cart.length} pieces of ${uniqueCartItems.length} items in your cart. 
                                 ${auth?.token ? "" : "Please Log in to Checkout"}`
                                 : "Your Cart is Empty"}
                         </h5>
@@ -134,7 +134,7 @@ const CartPage = () => {
                                         <div className='d-flex flex-wrap'>
                                             <div className='me-auto'>
                                                 <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
-                                                <span className='mx-1'><b>{p.count}</b></span>
+                                                <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
                                                 <button className='btn btn-secondary m-1 '
                                                     onClick={() => {
                                                         setCart([...cart, p])
