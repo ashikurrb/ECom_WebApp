@@ -13,21 +13,20 @@ const Order = () => {
   const navigate = useNavigate();
   const [spinnerLoading, setSpinnerLoading] = useState(true);
 
-
   const getOrders = async () => {
     try {
-      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`)
-      setOrders(data)
+      const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/orders`);
+      setOrders(data);
     } catch (error) {
       console.log(error);
     } finally {
-      setSpinnerLoading(false)
+      setSpinnerLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (auth?.token) getOrders();
-  }, [auth?.token])
+  }, [auth?.token]);
 
   return (
     <Layout title={"Dashboard - Your Orders"}>
@@ -39,11 +38,25 @@ const Order = () => {
           <div className="col-md-9">
             <h2 className="text-center my-3">All Orders ({orders.length})</h2>
             {spinnerLoading ? <Spinner /> : <>
-              {orders?.length < 1 ? <h5 className='text-center'>You don't have any pending. Visit <Link to="/">Home</Link> to order.</h5> : <>
-                {orders?.map((o, i) => {
+              {orders?.length < 1 ? (
+                <h5 className='text-center'>
+                  You don't have any pending orders. Visit <Link to="/">Home</Link> to order.
+                </h5>
+              ) : (
+                orders?.map((o, i) => {
+                  const productQuantities = o.products.reduce((acc, product) => {
+                    acc[product._id] = (acc[product._id] || 0) + 1;
+                    return acc;
+                  }, {});
+
+                  const uniqueProducts = o.products.filter(
+                    (product, index, self) =>
+                      index === self.findIndex((p) => p._id === product._id)
+                  );
+
                   return (
-                    <div className="card mt-3 p-4 table-container">
-                      <table data-bs-toggle="collapse" href={`#${o?._id}`} className="table">
+                    <div className="card mt-3 p-4 table-container" key={o._id}>
+                      <table data-bs-toggle="collapse" href={`#${o._id}`} className="table">
                         <thead className='table-dark'>
                           <tr>
                             <th scope="col">#</th>
@@ -57,23 +70,21 @@ const Order = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope='row'>{i + 1}&nbsp;<i class="fa-solid fa-chevron-down"></i> </th>
-                            <td>
-                              {o?.status}
+                            <th scope='row'>{i + 1}&nbsp;<i className="fa-solid fa-chevron-down"></i> </th>
+                            <td>{o.status}</td>
+                            <td>{moment(o.createdAt).fromNow()}</td>
+                            <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
+                              {o.payment.success ? "Success" : "Failed"}
                             </td>
-                            <td>{moment(o?.createdAt).fromNow()}</td>
-                            <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
-                              {o?.payment.success ? "Success" : "Failed"}
-                            </td>
-                            <td><b>{o?.payment?.transaction?.id}</b></td>
-                            <td>Tk. {o?.payment?.transaction?.amount}</td>
-                            <td>{o?.products?.length}</td>
+                            <td><b>{o.payment?.transaction?.id}</b></td>
+                            <td>Tk. {o.payment?.transaction?.amount}</td>
+                            <td>{o.products.length}</td>
                           </tr>
                         </tbody>
                       </table>
-                      <div className="container collapse show" id={o?._id}>
+                      <div className="container collapse show" id={o._id}>
                         <div className="d-flex flex-wrap">
-                          {o?.products?.map((p, i) => (
+                          {uniqueProducts.map((p) => (
                             <div className="row m-2 p-3 card flex-row" key={p._id} onClick={() => navigate(`/product/${p.slug}`)}>
                               <div className="col-md-4">
                                 <img
@@ -85,7 +96,9 @@ const Order = () => {
                                 />
                               </div>
                               <div className="col-md-8">
-                                <p><b>{p.name}</b></p>
+                                <p className='m-2'><b>{p.name}</b> &nbsp;
+                                  <span class="badge rounded-pill text-bg-primary fs-6"> {productQuantities[p._id]}</span>
+                                </p>
                                 <p>{p.description.substring(0, 30)}</p>
                                 <p>Price : {p.price}</p>
                               </div>
@@ -95,8 +108,9 @@ const Order = () => {
                       </div>
                     </div>
                   );
-                })}
-              </>}</>}
+                })
+              )}
+            </>}
           </div>
         </div>
       </div>

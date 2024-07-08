@@ -73,6 +73,16 @@ const AdminOrder = () => {
                         {spinnerLoading ? <Spinner /> : <>
                             {orders?.length < 1 ? <h5 className='text-center'>No Pending Order</h5> : <>
                                 {orders?.map((o, i) => {
+                                    const productQuantities = o.products.reduce((acc, product) => {
+                                        acc[product._id] = (acc[product._id] || 0) + 1;
+                                        return acc;
+                                    }, {});
+
+                                    const uniqueProducts = o.products.filter(
+                                        (product, index, self) =>
+                                            index === self.findIndex((p) => p._id === product._id)
+                                    );
+
                                     return (
                                         <div className="border m-2 table-container">
                                             <table className="table">
@@ -100,7 +110,7 @@ const AdminOrder = () => {
                                                             </Select>
                                                         </td>
                                                         <td data-bs-toggle="collapse" href={`#${o?._id}`}>
-                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp; {o?.buyer?.name}
+                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp; <b>{o?.buyer?.name}</b>
                                                         </td>
                                                         <td>{moment(o?.createdAt).fromNow()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
@@ -108,7 +118,9 @@ const AdminOrder = () => {
                                                         </td>
                                                         <td><b>{o?.payment?.transaction?.id}</b></td>
                                                         <td>Tk. {o?.payment?.transaction?.amount} </td>
-                                                        <td>{o?.products?.length}</td>
+                                                        <td>
+                                                            <span class="badge rounded-pill text-bg-warning fs-6">{o?.products?.length}</span>
+                                                        </td>
                                                         <td>
                                                             <button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button>
                                                         </td>
@@ -127,10 +139,11 @@ const AdminOrder = () => {
                                                                 <th>Photo</th>
                                                                 <th>Name</th>
                                                                 <th>Price</th>
+                                                                <th>Quantity</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            {o?.products?.map((p, i) => (
+                                                            {uniqueProducts.map((p, i) => (
                                                                 <tr>
                                                                     <td>{i + 1}</td>
                                                                     <td onClick={() => navigate(`/product/${p.slug}`)}>
@@ -144,6 +157,9 @@ const AdminOrder = () => {
                                                                     </td>
                                                                     <td>{p?.name}</td>
                                                                     <td>{p?.price}</td>
+                                                                    <td>
+                                                                        <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
+                                                                    </td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
