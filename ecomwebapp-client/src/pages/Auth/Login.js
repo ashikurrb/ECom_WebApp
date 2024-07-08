@@ -20,7 +20,7 @@ const Login = () => {
         setSpinnerLoading(true)
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, { email, password });
-            setSpinnerLoading(true)
+            setSpinnerLoading(false)
             if (res && res.data.success) {
                 toast.success(res.data && res.data.message);
                 setAuth({
@@ -43,7 +43,7 @@ const Login = () => {
     return (
         <Layout title={"Log In"}>
             <div className="form-container">
-                {spinnerLoading ? <Spinner /> : ""}
+                {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
                 <div className="container d-md-flex">
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
