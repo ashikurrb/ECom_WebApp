@@ -179,7 +179,8 @@ const HomePage = () => {
                         <h3 className="text-center my-3">
                             All Products
                         </h3>
-                        {spinnerLoading ? <Spinner /> : <div>
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "20vh" }}><Spinner /></div> : <div>
+
                             <div className="d-flex flex-wrap justify-content-center">
                                 {products?.map(p => (
                                     <div className="card m-2" style={{ width: '18rem' }} key={p._id}>

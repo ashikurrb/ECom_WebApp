@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import '../../style/AuthStyle.css';
+import Spinner from '../../components/Spinner';
 
 const Register = () => {
     const [name, setName] = useState("");
@@ -12,11 +13,13 @@ const Register = () => {
     const [phone, setPhone] = useState("");
     const [address, setAddress] = useState("");
     const [answer, setAnswer] = useState("");
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const navigate = useNavigate();
 
     //Form Submission_handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSpinnerLoading(true);
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/register`, {
                 name,
@@ -26,6 +29,7 @@ const Register = () => {
                 address,
                 answer
             });
+            setSpinnerLoading(false);
             if (res && res.data.success) {
                 toast.success(res.data && res.data.message);
                 navigate('/login')
@@ -35,13 +39,15 @@ const Register = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
+            setSpinnerLoading(false);
         }
     }
 
     return (
         <Layout title={"Register"}>
-            <div className="form-container p-2 ">
-                <div className="container">
+            <div className="form-container">
+            {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
+            <div className="container">
                     <div className="row">
                         <div className="col-md-6">
                             <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
@@ -68,8 +74,7 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='What is your favorite food?' required />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">REGISTER</button>
-                                </div>
+                                    <button type="submit" className="btn btn-primary">REGISTER </button>                                </div>
                                 <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
                             </form>
                         </div>

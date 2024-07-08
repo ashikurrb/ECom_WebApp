@@ -44,7 +44,10 @@ const CatagoryProduct = () => {
                     </div>
                 </div>
 
-                {spinnerLoading ? <Spinner /> : <div className="row">
+                {spinnerLoading ?
+                    <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
+                        <Spinner />
+                    </div> : <div className="row">
                     <h6 className='text-center'>{products?.length} products found</h6>
                     <div className="d-flex flex-wrap justify-content-center">
                         {products?.map(p => (

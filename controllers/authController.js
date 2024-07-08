@@ -66,11 +66,11 @@ export const loginController = async (req, res) => {
                 success: false,
                 message: "Invalid Email or Password" //don't declare specifically which is wrong , email or password. for security.//
             })
-            
+
         }
         //check user
         const user = await userModel.findOne({ email })
-        
+
         //valid
         if (!user) {
             return res.status(404).send({
@@ -206,9 +206,6 @@ export const getAllUsersController = async (req, res) => {
     }
 };
 
-
-
-
 //delete user controller
 export const deleteUserController = async (req, res) => {
     try {
@@ -269,7 +266,6 @@ export const getAllOrdersController = async (req, res) => {
 };
 
 //order status
-
 export const orderStatusController = async (req, res) => {
     try {
         const { orderId } = req.params;

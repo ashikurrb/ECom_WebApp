@@ -30,7 +30,7 @@ const FloatingCartButton = () => {
         <div>
             {showCheckoutButton && (
                 <button
-                    className="btn btn-danger floating-checkout-button"
+                    className="btn btn-warning floating-checkout-button"
                     onClick={() => navigate('/cart')}
                 > <i className="fa-solid fa-cart-shopping"></i> {totalPrice()}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">

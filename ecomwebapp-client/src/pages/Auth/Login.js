@@ -3,6 +3,7 @@ import Layout from '../../components/Layout/Layout';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Spinner from '../../components/Spinner'
 import '../../style/AuthStyle.css';
 import { useAuth } from '../../components/context/auth';
 
@@ -10,14 +11,16 @@ const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [auth, setAuth] = useAuth();
-
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setSpinnerLoading(true)
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, { email, password });
+            setSpinnerLoading(false)
             if (res && res.data.success) {
                 toast.success(res.data && res.data.message);
                 setAuth({
@@ -33,12 +36,14 @@ const Login = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
+            setSpinnerLoading(false)
         }
     }
 
     return (
         <Layout title={"Log In"}>
             <div className="form-container">
+                {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
                 <div className="container d-md-flex">
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">

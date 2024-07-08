@@ -70,7 +70,7 @@ const AdminOrder = () => {
                     </div>
                     <div className="col-md-9">
                         <h2 className="text-center my-3">All Orders ({orders.length})</h2>
-                        {spinnerLoading ? <Spinner /> : <>
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <>
                             {orders?.length < 1 ? <h5 className='text-center'>No Pending Order</h5> : <>
                                 {orders?.map((o, i) => {
                                     const productQuantities = o.products.reduce((acc, product) => {
@@ -111,6 +111,9 @@ const AdminOrder = () => {
                                                         </td>
                                                         <td data-bs-toggle="collapse" href={`#${o?._id}`}>
                                                             <i class="fa-solid fa-chevron-down"></i> &nbsp; <b>{o?.buyer?.name}</b>
+                                                            {
+                                                              o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
+                                                            }
                                                         </td>
                                                         <td>{moment(o?.createdAt).fromNow()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>

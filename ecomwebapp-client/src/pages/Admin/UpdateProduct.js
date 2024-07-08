@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 const { Option } = Select;
 
 const UpdateProduct = () => {
@@ -20,11 +21,14 @@ const UpdateProduct = () => {
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
     const [id, setId] = useState("");
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [spinnerProdLoading, setSpinnerProdLoading] = useState(false);
 
     //get single product
     const getSingleProduct = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/get-product/${params.slug}`);
+            setSpinnerProdLoading(false)
             setName(data.product.name);
             setId(data.product._id);
             setDescription(data.product.description);
@@ -38,6 +42,7 @@ const UpdateProduct = () => {
     }
     useEffect(() => {
         getSingleProduct();
+        setSpinnerProdLoading(true)
         //eslint-disable-next 
 
     }, [])
@@ -60,9 +65,10 @@ const UpdateProduct = () => {
 
     }, [])
 
-    //create product function
+    //update product function
     const handleUpdate = async (e) => {
         e.preventDefault();
+        setSpinnerLoading(true)
         try {
             const productData = new FormData();
             productData.append("name", name);
@@ -72,9 +78,10 @@ const UpdateProduct = () => {
             productData.append("shipping", shipping);
             photo && productData.append("photo", photo);
             productData.append("catagory", catagory);
-
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/product/update-product/${id}`, productData);
+            setSpinnerLoading(true);
             if (data?.success) {
+                setSpinnerLoading(false)
                 toast.success(data?.message);
                 navigate('/dashboard/admin/products')
             } else {
@@ -84,13 +91,14 @@ const UpdateProduct = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
+            setSpinnerLoading(false)
         }
     }
 
     //Delete Product
     const handleDelete = async () => {
         try {
-            let answer = window.prompt("Are you sure want to delete this product?")
+            let answer = window.confirm("Are you sure want to delete this product?")
             if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/product/delete-product/${id}`);
             toast.success("Product Deleted Successfully");
@@ -107,7 +115,7 @@ const UpdateProduct = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h3 className='text-center mb-4'>Update Product</h3>
+                        <h3 className='text-center my-3'>Update Product</h3>
                         <div className="m-1 w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
@@ -119,6 +127,21 @@ const UpdateProduct = () => {
                                 ))}
                             </Select>
                             <div className="mb-3">
+                                <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
+                                <div className="m-2">
+                                    {spinnerProdLoading ? <Spinner /> : ""}
+                                </div>
+                                {photo ? (
+                                    <div className="text-center">
+                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
+                                    </div>
+                                ) : (
+                                    <div className="text-center ">
+                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${id}`} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">
                                     {photo ? photo.name : "Upload Photo"}
                                     <input
@@ -129,17 +152,6 @@ const UpdateProduct = () => {
                                         hidden
                                     />
                                 </label>
-                            </div>
-                            <div className="mb-3">
-                                {photo ? (
-                                    <div className="text-center">
-                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
-                                    </div>
-                                ) : (
-                                    <div className="text-center ">
-                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${id}`} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
-                                    </div>
-                                )}
                             </div>
                             <div className="mb-3">
                                 <input
@@ -188,11 +200,12 @@ const UpdateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
+                            {spinnerLoading ? <Spinner /> : ""}
                             <div className="d-flex">
                                 <button className="btn btn-primary m-1" onClick={handleUpdate}>
                                     Update Product
                                 </button>
-                            
+
                                 <button className="btn btn-danger m-1" onClick={handleDelete}>
                                     Delete Product
                                 </button>

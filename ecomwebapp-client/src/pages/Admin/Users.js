@@ -53,17 +53,17 @@ const Users = () => {
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h2 className='text-center my-3'>All User's List ({users?.length})</h2>
-                        {spinnerLoading ? <Spinner /> : <div className="table-container">
+                        <h3 className='text-center my-3'>All User's List ({users?.length})</h3>
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <div className="table-container">
                             <table className='table'>
-                                <thead>
+                                <thead className='table-dark'>
                                     <tr>
                                         <th scope='col'>#</th>
                                         <th scope='col'>Name</th>
                                         <th scope='col'>Email</th>
                                         <th scope='col'>Phone</th>
                                         <th scope='col'>Address</th>
-                                        <th scope='col'>Security Ans</th>
+                                        <th scope='col'>Answer</th>
                                         <th scope='col'>Role</th>
                                         <th scope='col'>Time</th>
                                         <th scope='col'>Action</th>
@@ -81,11 +81,13 @@ const Users = () => {
                                                     <td>{u.phone}</td>
                                                     <td>{u.address}</td>
                                                     <td>{u.answer}</td>
-                                                    <td >{u.role}</td>
+                                                    <td > {
+                                                        u.role === 0 ? <span class="badge text-bg-primary">User</span> : u.role === 1 ? <span class="badge text-bg-warning">Admin</span> : <span class="badge text-bg-danger">{u.role}</span>
+                                                    }</td>
                                                     <td>{moment(u?.createdAt).fromNow()}</td>
                                                     <td>
                                                         {
-                                                            u.role == "1" ? "Admin" : (
+                                                            u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
                                                                 <button className="btn btn-danger ms-1" onClick={() => handleDelete(u._id)}>Delete</button>
                                                             )
                                                         }

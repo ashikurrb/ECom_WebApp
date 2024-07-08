@@ -27,7 +27,7 @@ const Products = () => {
         } catch (error) {
             setLoading(false);
             console.log(error);
-        }finally{
+        } finally {
             setSpinnerLoading(false)
         }
     }
@@ -74,43 +74,43 @@ const Products = () => {
                         <AdminMenu></AdminMenu>
                     </div>
                     <div className="col-md-9">
-                        <h2 className="text-center my-3">All Products({total})</h2>
-                       {spinnerLoading?<Spinner/>:<>
-                        <div className="d-flex flex-wrap justify-content-center">
-                            {products?.map(p => (
-                                <Link
-                                    key={p._id}
-                                    to={`/dashboard/admin/product/${p.slug}`}
-                                    className="product-link"
-                                >
-                                    <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
-                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="card-img-top cardImg" alt={p.name} />
-                                        <div className="card-body">
-                                            <h5 className="card-title">{p.name}</h5>
-                                            <p className="card-text">{p.description.substring(0, 30)}</p>
-                                            <h6 className="card-text">Price: ${p.price}</h6>
-                                            <p className="card-text">Stock: {p.quantity} unit</p>
-                                            <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
-                                            <p className="card-text fw-bold">Created: {moment(p?.createdAt).fromNow()} </p>
-                                            <p className="card-text fw-bold">Updated: {moment(p?.updatedAt).fromNow()}</p>
+                        <h2 className="text-center my-3">All Products ({total})</h2>
+                        {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <>
+                            <div className="d-flex flex-wrap justify-content-center">
+                                {products?.map(p => (
+                                    <Link
+                                        key={p._id}
+                                        to={`/dashboard/admin/product/${p.slug}`}
+                                        className="product-link"
+                                    >
+                                        <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
+                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="card-img-top cardImg" alt={p.name} />
+                                            <div className="card-body">
+                                                <h5 className="card-title">{p.name}</h5>
+                                                <p className="card-text">{p.description.substring(0, 30)}</p>
+                                                <h6 className="card-text">Price: ${p.price}</h6>
+                                                <p className="card-text">Stock: {p.quantity} unit</p>
+                                                <p className="card-text">Free Shipping: {p.shipping ? "Yes" : "No"} </p>
+                                                <p className="card-text fw-bold">Created: {moment(p?.createdAt).fromNow()} </p>
+                                                <p className="card-text fw-bold">Updated: {moment(p?.updatedAt).fromNow()}</p>
+                                            </div>
                                         </div>
-                                    </div>
-                                </Link>
-                            ))}
-                        </div>
-                        <div className="m-2 p-3 text-center">
-                            {products && products.length < total && (
-                                <button
-                                    className="btn btn-warning"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        setPage(page + 1);
-                                    }}
-                                >
-                                    {loading ? "Loading ..." : "Load More"}
-                                </button>
-                            )}
-                        </div></>}
+                                    </Link>
+                                ))}
+                            </div>
+                            <div className="m-2 p-3 text-center">
+                                {products && products.length < total && (
+                                    <button
+                                        className="btn btn-warning"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            setPage(page + 1);
+                                        }}
+                                    >
+                                        {loading ? "Loading ..." : "Load More"}
+                                    </button>
+                                )}
+                            </div></>}
                     </div>
                 </div>
             </div>

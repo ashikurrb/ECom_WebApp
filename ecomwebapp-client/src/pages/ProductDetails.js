@@ -56,7 +56,10 @@ const ProductDetails = () => {
                         <h4 className="mb-0 me-5 p-3 text-center">Product Details</h4>
                     </div>
                 </div>
-                {spinnerLoading ? <Spinner /> : <div className="row mt-5">
+                {spinnerLoading ?
+                    <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
+                        <Spinner />
+                    </div> : <div className="row mt-5">
                     <div className="col-md-4">
                         <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
                     </div>
