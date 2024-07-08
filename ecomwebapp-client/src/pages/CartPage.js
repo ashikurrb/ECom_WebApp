@@ -30,7 +30,7 @@ const CartPage = () => {
         }
     };
 
-    const removeCartItem = (pid) => {
+    const decreaseCartItem = (pid) => {
         try {
             let myCart = [...cart];
             let index = myCart.findIndex(item => item._id === pid);
@@ -42,6 +42,17 @@ const CartPage = () => {
         }
     };
 
+    const removeCartItem = (pid) => {
+        try {
+            let myCart = cart.filter(item => item._id !== pid); // Remove all items with the matching _id
+            setCart(myCart);
+            localStorage.setItem('cart', JSON.stringify(myCart));
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    
+    
     const getToken = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/braintree/token`);
@@ -80,9 +91,9 @@ const CartPage = () => {
             return {
                 ...item,
                 count: cart.filter(cartItem => cartItem._id === id).length,
+
             };
         });
-    console.log(uniqueCartItems);
 
     return (
         <Layout>
@@ -121,7 +132,15 @@ const CartPage = () => {
                                         <h5>TK. {p.price}</h5>
                                         <p className="card-text">{p.description.substring(0, 100)}...</p>
                                         <p>Total Added: {p.count}</p>
+                                        <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
+                                        <button className='btn btn-secondary m-1 '
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                localStorage.setItem('cart', JSON.stringify([...cart, p]))
+                                            }}>
+                                            +</button>
                                         <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}>Remove</button>
+
                                     </div>
                                 </div>
                             ))}
