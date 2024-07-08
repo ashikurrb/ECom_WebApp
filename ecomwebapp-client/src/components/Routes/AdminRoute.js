@@ -20,5 +20,5 @@ export default function AdminRoute() {
         if (auth?.token) authCheck();
     }, [auth?.token]);
 
-    return ok ? <Outlet /> : "";
+    return ok ? <Outlet /> : <AuthSpinner path=""/>;
 }
