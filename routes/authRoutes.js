@@ -29,14 +29,14 @@ router.get('/admin-auth', requireSignIn, isAdmin, (req, res) => {
   res.status(200).send({ ok: true });
 });
 
-//update profile
-router.put('/profile-update', requireSignIn, updateProfileController)
-
 //all user list
 router.get("/all-users", requireSignIn, isAdmin, getAllUsersController)
 
 //delete user by admin
 router.delete('/delete-user/:id', requireSignIn, isAdmin, deleteUserController)
+
+//update profile
+router.put('/profile-update', requireSignIn, updateProfileController)
 
 //order
 router.get("/orders", requireSignIn, getOrdersController)
