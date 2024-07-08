@@ -51,8 +51,8 @@ const CartPage = () => {
             console.log(error);
         }
     };
-    
-    
+
+
     const getToken = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/braintree/token`);
@@ -131,16 +131,22 @@ const CartPage = () => {
                                         <h5 className="card-title">{p.name}</h5>
                                         <h5>TK. {p.price}</h5>
                                         <p className="card-text">{p.description.substring(0, 100)}...</p>
-                                        <p>Total Added: {p.count}</p>
-                                        <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
-                                        <button className='btn btn-secondary m-1 '
-                                            onClick={() => {
-                                                setCart([...cart, p])
-                                                localStorage.setItem('cart', JSON.stringify([...cart, p]))
-                                            }}>
-                                            +</button>
-                                        <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}>Remove</button>
+                                        <div className='d-flex flex-wrap'>
+                                            <div className='me-auto'>
+                                                <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
+                                                <span className='mx-1'><b>{p.count}</b></span>
+                                                <button className='btn btn-secondary m-1 '
+                                                    onClick={() => {
+                                                        setCart([...cart, p])
+                                                        localStorage.setItem('cart', JSON.stringify([...cart, p]))
+                                                    }}>
+                                                    +</button>
+                                            </div>
+                                            <div className='ms-auto'>
+                                                <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i class="fa-solid fa-trash-can"></i></button>
+                                            </div>
 
+                                        </div>
                                     </div>
                                 </div>
                             ))}
