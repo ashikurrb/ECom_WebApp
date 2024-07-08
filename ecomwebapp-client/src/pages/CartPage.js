@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Layout from '../components/Layout/Layout';
 import { useCart } from '../components/context/cart';
 import { useAuth } from '../components/context/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import DropIn from "braintree-web-drop-in-react";
 import axios from 'axios';
 import toast from 'react-hot-toast';
@@ -123,9 +123,11 @@ const CartPage = () => {
                     <div className="col-md-8">
                         <div className="row mb-2">
                             {uniqueCartItems.map(p => (
-                                <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id}>
+                                <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id} >
                                     <div className="col-md-4">
-                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit card-img-top" alt={p.name} width={"30px"} height={"100px"} />
+                                        <Link to={`/product/${p.slug}`}>
+                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit card-img-top" alt={p.name} width={"30px"} height={"100px"} />
+                                        </Link>
                                     </div>
                                     <div className="col-md-8">
                                         <h5 className="card-title">{p.name}</h5>

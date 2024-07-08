@@ -110,7 +110,7 @@ const AdminOrder = () => {
                                                             </Select>
                                                         </td>
                                                         <td data-bs-toggle="collapse" href={`#${o?._id}`}>
-                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp; 
+                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp;
                                                             {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
@@ -143,13 +143,15 @@ const AdminOrder = () => {
                                                                 <th>Name</th>
                                                                 <th>Price</th>
                                                                 <th>Quantity</th>
+                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {uniqueProducts.map((p, i) => (
                                                                 <tr>
                                                                     <td>{i + 1}</td>
-                                                                    <td onClick={() => navigate(`/product/${p.slug}`)}>
+                                                                    <td>
+                                                                    <Link to={`/product/${p.slug}`}>
                                                                         <img
                                                                             src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                                                                             className="img-thumbnail"
@@ -157,12 +159,14 @@ const AdminOrder = () => {
                                                                             width="100px"
                                                                             height={"100px"}
                                                                         />
+                                                                        </Link>
                                                                     </td>
                                                                     <td>{p?.name}</td>
-                                                                    <td>{p?.price}</td>
+                                                                    <td>${p?.price}</td>
                                                                     <td>
                                                                         <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
                                                                     </td>
+                                                                    <td>${p.price*productQuantities[p._id]}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>

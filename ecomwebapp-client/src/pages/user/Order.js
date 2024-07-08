@@ -37,7 +37,7 @@ const Order = () => {
           </div>
           <div className="col-md-9">
             <h2 className="text-center my-3">All Orders ({orders.length})</h2>
-            {spinnerLoading ? <Spinner /> : <>
+            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <>
               {orders?.length < 1 ? (
                 <h5 className='text-center'>
                   You don't have any pending orders. Visit <Link to="/">Home</Link> to order.
@@ -85,8 +85,9 @@ const Order = () => {
                       <div className="container collapse show" id={o._id}>
                         <div className="d-flex flex-wrap">
                           {uniqueProducts.map((p) => (
-                            <div className="row m-2 p-3 card flex-row" key={p._id} onClick={() => navigate(`/product/${p.slug}`)}>
+                            <div className="row m-2 p-3 card flex-row" key={p._id}>
                               <div className="col-md-4">
+                              <Link to={`/product/${p.slug}`}>
                                 <img
                                   src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
                                   className="card-img-top"
@@ -94,6 +95,7 @@ const Order = () => {
                                   width="100px"
                                   height={"100px"}
                                 />
+                                </Link>
                               </div>
                               <div className="col-md-8">
                                 <p className='m-2'><b>{p.name}</b> &nbsp;
