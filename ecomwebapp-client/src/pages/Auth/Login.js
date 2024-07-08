@@ -20,7 +20,7 @@ const Login = () => {
         setSpinnerLoading(true)
         try {
             const res = await axios.post(`${process.env.REACT_APP_API}/api/v1/auth/login`, { email, password });
-            setSpinnerLoading(false)
+            setSpinnerLoading(true)
             if (res && res.data.success) {
                 toast.success(res.data && res.data.message);
                 setAuth({

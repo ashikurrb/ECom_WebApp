@@ -5,6 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import Spinner from '../../components/Spinner';
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -17,6 +18,7 @@ const CreateProduct = () => {
     const [shipping, setShipping] = useState('');
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
+    const [spinnerLoading, setSpinnerLoading] = useState(false);
 
     //get call catagory
     const getAllCatagory = async () => {
@@ -39,6 +41,7 @@ const CreateProduct = () => {
     //create product function
     const handleCreate = async (e) => {
         e.preventDefault();
+        setSpinnerLoading(true);
         try {
             const productData = new FormData();
             productData.append("name", name);
@@ -48,9 +51,10 @@ const CreateProduct = () => {
             productData.append("shipping", shipping);
             productData.append("photo", photo);
             productData.append("catagory", catagory);
- 
+
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-product`, productData);
             if (data?.success) {
+                setSpinnerLoading(false);
                 toast.success(data?.message);
                 navigate("/dashboard/admin/products");
             } else {
@@ -60,6 +64,7 @@ const CreateProduct = () => {
         } catch (error) {
             console.log(error);
             toast.error('Something went wrong')
+            setSpinnerLoading(false)
         }
     }
 
@@ -80,6 +85,14 @@ const CreateProduct = () => {
                                 ))}
                             </Select>
                             <div className="mb-3">
+                                <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
+                                {photo && (
+                                    <div className="text-center">
+                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">
                                     {photo ? photo.name : "Upload Photo"}
                                     <input
@@ -90,13 +103,6 @@ const CreateProduct = () => {
                                         hidden
                                     />
                                 </label>
-                            </div>
-                            <div className="mb-3">
-                                {photo && (
-                                    <div className="text-center">
-                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
-                                    </div>
-                                )}
                             </div>
                             <div className="mb-3">
                                 <input
@@ -144,6 +150,7 @@ const CreateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
+                            {spinnerLoading ? <Spinner /> : ""}
                             <div className="mb-3 text-center">
                                 <button className="btn btn-warning fw-bold " onClick={handleCreate}>
                                     Create Product

@@ -27,7 +27,7 @@ const CreateCatagory = () => {
             }
         } catch (error) {
             console.log(error);
-            toast.error("Somethng wrong in Input Form")
+            toast.error("Something wrong in Input Form")
         }
     }
 
@@ -71,6 +71,8 @@ const CreateCatagory = () => {
     //delete catagory
     const handleDelete = async (pId) => {
         try {
+            let answer = window.confirm(`Are you sure to delete this catagory?`)
+            if (!answer) return;
             const { data } = await axios.delete(`${process.env.REACT_APP_API}/api/v1/catagory/delete-catagory/${pId}`);
             if (data.success) {
                 toast.success(`Catagory deleted successfully`);
