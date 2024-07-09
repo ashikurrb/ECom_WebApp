@@ -14,9 +14,9 @@ const CartPage = () => {
     const [clientToken, setClientToken] = useState("");
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
-
     const navigate = useNavigate();
 
+    //total pricing
     const totalPrice = () => {
         try {
             let total = 0;
@@ -25,6 +25,16 @@ const CartPage = () => {
                 style: "currency",
                 currency: "USD"
             });
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    // Increase adn Decrease Cart Item
+    const increaseCartItem = (item) => {
+        try {
+            setCart([...cart, item]);
+            localStorage.setItem('cart', JSON.stringify([...cart, item]));
         } catch (error) {
             console.log(error);
         }
@@ -44,15 +54,7 @@ const CartPage = () => {
         }
     };
 
-    const increaseCartItem = (item) => {
-        try {
-            setCart([...cart, item]);
-            localStorage.setItem('cart', JSON.stringify([...cart, item]));
-        } catch (error) {
-            console.log(error);
-        }
-    };
-
+    //remove cart item
     const removeCartItem = (pid) => {
         try {
             let myCart = cart.filter(item => item._id !== pid);
@@ -63,6 +65,17 @@ const CartPage = () => {
         }
     };
 
+    //show each product for one time with required quantity, avoid duplication in cart
+    const uniqueCartItems = Array.from(new Set(cart.map(item => item._id)))
+        .map(id => {
+            const item = cart.find(item => item._id === id);
+            return {
+                ...item,
+                count: cart.filter(cartItem => cartItem._id === id).length,
+            };
+        });
+
+    //get token for authentication
     const getToken = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/product/braintree/token`);
@@ -76,6 +89,7 @@ const CartPage = () => {
         getToken();
     }, [auth?.token]);
 
+    //payment handling 
     const handlePayment = async () => {
         try {
             setLoading(true);
@@ -94,15 +108,6 @@ const CartPage = () => {
             setLoading(false);
         }
     };
-
-    const uniqueCartItems = Array.from(new Set(cart.map(item => item._id)))
-        .map(id => {
-            const item = cart.find(item => item._id === id);
-            return {
-                ...item,
-                count: cart.filter(cartItem => cartItem._id === id).length,
-            };
-        });
 
     return (
         <Layout>
