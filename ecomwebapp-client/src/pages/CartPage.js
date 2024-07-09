@@ -34,9 +34,20 @@ const CartPage = () => {
         try {
             let myCart = [...cart];
             let index = myCart.findIndex(item => item._id === pid);
-            myCart.splice(index, 1);
-            setCart(myCart);
-            localStorage.setItem('cart', JSON.stringify(myCart));
+            if (index !== -1) {
+                myCart.splice(index, 1);
+                setCart(myCart);
+                localStorage.setItem('cart', JSON.stringify(myCart));
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const increaseCartItem = (item) => {
+        try {
+            setCart([...cart, item]);
+            localStorage.setItem('cart', JSON.stringify([...cart, item]));
         } catch (error) {
             console.log(error);
         }
@@ -44,14 +55,13 @@ const CartPage = () => {
 
     const removeCartItem = (pid) => {
         try {
-            let myCart = cart.filter(item => item._id !== pid); // Remove all items with the matching _id
+            let myCart = cart.filter(item => item._id !== pid);
             setCart(myCart);
             localStorage.setItem('cart', JSON.stringify(myCart));
         } catch (error) {
             console.log(error);
         }
     };
-
 
     const getToken = async () => {
         try {
@@ -91,14 +101,13 @@ const CartPage = () => {
             return {
                 ...item,
                 count: cart.filter(cartItem => cartItem._id === id).length,
-
             };
         });
 
     return (
         <Layout>
             <div className="container">
-                <div className="row ">
+                <div className="row">
                     <div className="col-md-12">
                         <div className="row align-items-center bg-light my-2">
                             <div className="col-auto">
@@ -112,8 +121,7 @@ const CartPage = () => {
                         </div>
                         <h5 className='text-center my-4'>
                             {uniqueCartItems.length
-                                ? `You have  ${cart.length} pieces of ${uniqueCartItems.length} items in your cart. 
-                                ${auth?.token ? "" : "Please Log in to Checkout"}`
+                                ? `You have ${cart.length} pieces of ${uniqueCartItems.length} items in your cart. ${auth?.token ? "" : "Please Log in to Checkout"}`
                                 : "Your Cart is Empty"}
                         </h5>
                     </div>
@@ -123,7 +131,7 @@ const CartPage = () => {
                     <div className="col-md-8">
                         <div className="row mb-2">
                             {uniqueCartItems.map(p => (
-                                <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id} >
+                                <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id}>
                                     <div className="col-md-4">
                                         <Link to={`/product/${p.slug}`}>
                                             <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit card-img-top" alt={p.name} width={"30px"} height={"100px"} />
@@ -137,17 +145,11 @@ const CartPage = () => {
                                             <div className='me-auto'>
                                                 <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
                                                 <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
-                                                <button className='btn btn-secondary m-1 '
-                                                    onClick={() => {
-                                                        setCart([...cart, p])
-                                                        localStorage.setItem('cart', JSON.stringify([...cart, p]))
-                                                    }}>
-                                                    +</button>
+                                                <button className='btn btn-secondary m-1' onClick={() => increaseCartItem(p)}>+</button>
                                             </div>
                                             <div className='ms-auto'>
-                                                <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i class="fa-solid fa-trash-can"></i></button>
+                                                <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -162,20 +164,16 @@ const CartPage = () => {
                             <h6>Total Item: {uniqueCartItems.length}</h6>
                             <h6>Total Quantity: {cart.length}</h6>
                             {auth?.user?.address ? (
-                                <>
-                                    <div className="mb-3">
-                                        <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
-                                        <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
-                                    </div>
-                                </>
+                                <div className="mb-3">
+                                    <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
+                                    <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                </div>
                             ) : (
                                 <div className="mb-3">
                                     {auth?.token ? (
                                         <button className='btn btn-outline-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
                                     ) : (
-                                        <button className='btn btn-warning' onClick={() => navigate("/login", {
-                                            state: "/cart"
-                                        })}>Please Login to Checkout</button>
+                                        <button className='btn btn-warning' onClick={() => navigate("/login", { state: "/cart" })}>Please Login to Checkout</button>
                                     )}
                                 </div>
                             )}
@@ -186,9 +184,7 @@ const CartPage = () => {
                                         <DropIn
                                             options={{
                                                 authorization: clientToken,
-                                                paypal: {
-                                                    flow: "vault",
-                                                },
+                                                paypal: { flow: "vault" },
                                             }}
                                             onInstance={(instance) => setInstance(instance)}
                                         />
