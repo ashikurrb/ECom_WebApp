@@ -12,6 +12,11 @@ const Order = () => {
   const [orders, setOrders] = useState([]);
   const navigate = useNavigate();
   const [spinnerLoading, setSpinnerLoading] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(true);
+
+  const toggleCollapse = () => {
+      setIsCollapsed(!isCollapsed);
+  };
 
   const getOrders = async () => {
     try {
@@ -70,7 +75,7 @@ const Order = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope='row'>{i + 1}&nbsp;<i className="fa-solid fa-chevron-down"></i> </th>
+                            <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
                             <td>{o.status}</td>
                             <td>{moment(o.createdAt).fromNow()}</td>
                             <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
@@ -90,16 +95,16 @@ const Order = () => {
                               <Link to={`/product/${p.slug}`}>
                                 <img
                                   src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                  className="card-img-top"
+                                  className="imgFit card-img-top"
                                   alt={p.name}
-                                  width="100px"
+                                  width={"100px"}
                                   height={"100px"}
                                 />
                                 </Link>
                               </div>
                               <div className="col-md-8">
-                                <p className='m-2'><b>{p.name}</b> &nbsp;
-                                  <span class="badge rounded-pill text-bg-primary fs-6"> {productQuantities[p._id]}</span>
+                                <p className='my-2'><b>{p.name}</b> &nbsp;
+                                  <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
                                 </p>
                                 <p>{p.description.substring(0, 30)}</p>
                                 <p>Price : {p.price}</p>

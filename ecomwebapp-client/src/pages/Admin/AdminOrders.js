@@ -101,7 +101,9 @@ const AdminOrder = () => {
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <th scope='row'>{i + 1}</th>
+                                                        <th scope='row' data-bs-toggle="collapse" href={`#${o?._id}`}>
+                                                            <i class="btn fa-solid fa-chevron-down"></i> {i + 1}
+                                                        </th>
                                                         <td>
                                                             <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
                                                                 {status.map((s, i) => (
@@ -109,8 +111,7 @@ const AdminOrder = () => {
                                                                 ))}
                                                             </Select>
                                                         </td>
-                                                        <td data-bs-toggle="collapse" href={`#${o?._id}`}>
-                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp;
+                                                        <td>
                                                             {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
@@ -151,14 +152,14 @@ const AdminOrder = () => {
                                                                 <tr>
                                                                     <td>{i + 1}</td>
                                                                     <td>
-                                                                    <Link to={`/product/${p.slug}`}>
-                                                                        <img
-                                                                            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                                                            className="img-thumbnail"
-                                                                            alt={p.name}
-                                                                            width="100px"
-                                                                            height={"100px"}
-                                                                        />
+                                                                        <Link to={`/product/${p.slug}`}>
+                                                                            <img
+                                                                                src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                                                                className="img-thumbnail"
+                                                                                alt={p.name}
+                                                                                width="100px"
+                                                                                height={"100px"}
+                                                                            />
                                                                         </Link>
                                                                     </td>
                                                                     <td>{p?.name}</td>
@@ -166,7 +167,7 @@ const AdminOrder = () => {
                                                                     <td>
                                                                         <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
                                                                     </td>
-                                                                    <td>${p.price*productQuantities[p._id]}</td>
+                                                                    <td>${p.price * productQuantities[p._id]}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
