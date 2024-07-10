@@ -4,19 +4,18 @@ import { GiShoppingCart } from 'react-icons/gi'
 import { useAuth } from '../context/auth';
 import { toast } from 'react-hot-toast';
 import SearchInput from '../Form/SearchInput';
-import useCatagory from '../../hooks/useCatagory';
 import { useCart } from '../context/cart';
+import Cookies from 'js-cookie';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
     const [cart] = useCart();
-    const catagories = useCatagory();
 
     const handleLogout = () => {
         setAuth({
             ...auth, user: null, token: ''
         })
-        localStorage.removeItem('auth');
+        Cookies.remove('auth'); // Remove the auth cookie
         toast.success('Logout Successfully');
     }
 

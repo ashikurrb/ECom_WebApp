@@ -316,8 +316,6 @@ export const productCatagoryController = async (req, res) => {
 }
 
 
-
-
 //payment gateway api
 //token
 export const braintreeTokenController = async (req, res) => {
