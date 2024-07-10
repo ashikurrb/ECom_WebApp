@@ -3,9 +3,10 @@ import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import { Select } from 'antd';
+
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -19,6 +20,7 @@ const CreateProduct = () => {
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [serch, setSearch] = useState(false);
 
     //get call catagory
     const getAllCatagory = async () => {
@@ -79,9 +81,10 @@ const CreateProduct = () => {
                             <Select bordered={false}
                                 placeholder="Select a catagory"
                                 size='large' showSearch
+                                onSearch={(value) => { setSearch(value) }}
                                 className='form-select mb-3' onChange={(value) => { setCatagory(value) }}>
                                 {catagories?.map(c => (
-                                    <Option key={c._id} value={c._id}>{c.name}</Option>
+                                    <Option key={c._id} value={c.name}>{c.name}</Option>
                                 ))}
                             </Select>
                             <div className="mb-3">
@@ -140,7 +143,6 @@ const CreateProduct = () => {
                                     bordered={false}
                                     placeholder="Select Shipping "
                                     size="large"
-                                    showSearch
                                     className="form-select mb-3"
                                     onChange={(value) => {
                                         setShipping(value);
