@@ -127,7 +127,7 @@ const CartPage = () => {
                         <h5 className='text-center my-4'>
                             {uniqueCartItems.length
                                 ? `You have ${cart.length} pieces of ${uniqueCartItems.length} items in your cart. ${auth?.token ? "" : "Please Log in to Checkout"}`
-                                : "Your Cart is Empty"}
+                                : <>Your Cart is Empty. Visit {<Link to="/">Home</Link> } to order.</>}
                         </h5>
                     </div>
                 </div>

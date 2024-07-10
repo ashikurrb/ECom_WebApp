@@ -4,19 +4,13 @@ import UserMenu from '../../components/Layout/UserMenu';
 import axios from 'axios';
 import { useAuth } from '../../components/context/auth';
 import moment from "moment";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 
 const Order = () => {
   const [auth, setAuth] = useAuth();
   const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
   const [spinnerLoading, setSpinnerLoading] = useState(true);
-  const [isCollapsed, setIsCollapsed] = useState(true);
-
-  const toggleCollapse = () => {
-      setIsCollapsed(!isCollapsed);
-  };
 
   const getOrders = async () => {
     try {

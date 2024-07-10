@@ -13,11 +13,9 @@ const { Option } = Select;
 
 const AdminOrder = () => {
     const [status, setStatus] = useState(["Not Process", "Processing", "Shipped", "Delivered", "Canceled"]);
-    const [changeStatus, setChangeStatus] = useState("");
     const [auth, setAuth] = useAuth();
     const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-    const navigate = useNavigate();
 
     const getOrders = async () => {
         try {
