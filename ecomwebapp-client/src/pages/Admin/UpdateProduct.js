@@ -6,10 +6,10 @@ import axios from 'axios';
 import { Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+
 const { Option } = Select;
 
 const UpdateProduct = () => {
-
     const navigate = useNavigate();
     const params = useParams();
     const [catagories, setCatagories] = useState([]);
@@ -21,6 +21,7 @@ const UpdateProduct = () => {
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
     const [id, setId] = useState("");
+    const [search, setSearch] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [spinnerProdLoading, setSpinnerProdLoading] = useState(false);
 
@@ -62,7 +63,6 @@ const UpdateProduct = () => {
 
     useEffect(() => {
         getAllCatagory();
-
     }, [])
 
     //update product function
@@ -120,6 +120,7 @@ const UpdateProduct = () => {
                             <Select bordered={false}
                                 placeholder="Select a catagory"
                                 size='large' showSearch
+                                onSearch={(value) => { setSearch(value) }}
                                 className='form-select mb-3' onChange={(value) => { setCatagory(value) }}
                                 value={catagory}>
                                 {catagories?.map(c => (

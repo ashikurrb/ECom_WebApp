@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import SearchInput from '../Form/SearchInput';
 import { useCart } from '../context/cart';
 import Cookies from 'js-cookie';
+import DarkModeButton from '../DarkModeButton';
 
 const Header = () => {
     const [auth, setAuth] = useAuth();
@@ -84,6 +85,7 @@ const Header = () => {
                                     }
                                 </NavLink>
                             </li>
+                            <li><DarkModeButton/></li>
                         </ul>
                     </div>
                 </div>
