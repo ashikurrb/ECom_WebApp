@@ -118,7 +118,6 @@ const CartPage = () => {
                         </h5>
                     </div>
                 </div>
-
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row mb-2">
