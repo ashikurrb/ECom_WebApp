@@ -112,15 +112,21 @@ const CartPage = () => {
                         </div>
                         <h5 className='text-center my-4'>
                             {uniqueCartItems.length
+<<<<<<< Updated upstream
                                 ? `You have ${uniqueCartItems.length} items of ${cart.length} pieces in your cart. 
                                 ${auth?.token ? "" : "Please Log in to Checkout"}`
                                 : "Your Cart is Empty"}
+=======
+                                ? `You have ${cart.length} pieces of ${uniqueCartItems.length} items in your cart. ${auth?.token ? "" : "Please Log in to Checkout"}`
+                                : <>Your Cart is Empty. Visit {<Link to="/">Home</Link>} to order.</>}
+>>>>>>> Stashed changes
                         </h5>
                     </div>
                 </div>
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row mb-2">
+<<<<<<< Updated upstream
                             {uniqueCartItems.map(p => (
                                 <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id}>
                                     <div className="col-md-4">
@@ -149,6 +155,50 @@ const CartPage = () => {
                                     </div>
                                 </div>
                             ))}
+=======
+                            <div className="table-container">
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Price</th>
+                                        <th>Qty</th>
+                                        <th>Remove</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        uniqueCartItems.map((p, i) => (
+                                            <tr key={p._id}>
+                                                <td>{i + 1}</td>
+                                                <td>
+                                                    <Link to={`/product/${p.slug}`}>
+                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} />
+                                                    </Link>
+                                                </td>
+                                                <td>{p.name}</td>
+                                                <td>{p.price}</td>
+                                                <td>
+                                               <div className="d-flex">
+                                               <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
+                                                    <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
+                                                    <button className='btn btn-secondary' onClick={() => increaseCartItem(p)}>+</button>
+                                               </div>
+                                                </td>
+                                                <td>
+                                                    <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
+
+                                                </td>
+                                            </tr>
+                                        ))
+                                    }
+
+                                </tbody>
+                            </table>
+                            </div>
+>>>>>>> Stashed changes
                         </div>
                     </div>
                     <div className="col-md-4">
@@ -201,7 +251,7 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </Layout >
     );
 };
 
