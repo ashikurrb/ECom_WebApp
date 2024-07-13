@@ -220,7 +220,7 @@ const HomePage = () => {
                     </div>
                 </div>
             </div>
-            <FloatingCartButton />
+            <FloatingCartButton/>
         </Layout >
     );
 };

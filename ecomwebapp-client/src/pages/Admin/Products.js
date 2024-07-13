@@ -15,8 +15,6 @@ const Products = () => {
     const [loading, setLoading] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
 
-
-
     //get all products
     const getAllProducts = async () => {
         try {
