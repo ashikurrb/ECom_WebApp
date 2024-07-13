@@ -125,32 +125,55 @@ const FloatingCartButton = () => {
                                 </div>
                             </div>
                             <div className="row">
-                                <div className="col-md-8">
-                                    <div className="row mb-2">
-                                        {uniqueCartItems.map(p => (
-                                            <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id}>
-                                                <div className="col-md-4">
-                                                    <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit card-img-top" alt={p.name} width={"30px"} height={"100px"} />
-                                                </div>
-                                                <div className="col-md-8">
-                                                    <h5 className="card-title">{p.name}</h5>
-                                                    <h5>TK. {p.price}</h5>
-                                                    <p className="card-text">{p.description.substring(0, 100)}...</p>
-                                                    <div className='d-flex flex-wrap'>
-                                                        <div className='me-auto'>
+                            <div className="col-md-8">
+                        <div className="row mb-2">
+                            <div className="table-container">
+                                <table className="table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th>
+                                            <th>Photo</th>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Qty</th>
+                                            <th>Total</th>
+                                            <th>Remove</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            uniqueCartItems.map((p, i) => (
+                                                <tr>
+                                                    <td>{i + 1}</td>
+                                                    <td>
+                                                        <Link to={`/product/${p.slug}`}>
+                                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} />
+                                                        </Link>
+                                                    </td>
+                                                    <td>{p.name}</td>
+                                                    <td>{p.price}</td>
+                                                    <td>
+                                                        <div className="d-flex">
                                                             <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
                                                             <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
-                                                            <button className='btn btn-secondary m-1' onClick={() => increaseCartItem(p)}>+</button>
+                                                            <button className='btn btn-secondary' onClick={() => increaseCartItem(p)}>+</button>
                                                         </div>
-                                                        <div className='ms-auto'>
-                                                            <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
+                                                    </td>
+                                                    <td>
+                                                       $ {p.price * p.count}
+                                                    </td>
+                                                    <td>
+                                                        <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        }
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
                                 <div className="col-md-4">
                                     <div className="card p-4 mb-3">
                                         <h3 className='text-center'>Cart Summary</h3>
