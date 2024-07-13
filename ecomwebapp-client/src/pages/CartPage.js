@@ -126,7 +126,6 @@ const CartPage = () => {
                 <div className="row">
                     <div className="col-md-8">
                         <div className="row mb-2">
-<<<<<<< Updated upstream
                             {uniqueCartItems.map(p => (
                                 <div className="row p-3 mb-2 card flex-row" style={{ width: '540rem' }} key={p._id}>
                                     <div className="col-md-4">
