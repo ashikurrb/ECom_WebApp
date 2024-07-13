@@ -9,6 +9,7 @@ const Search = () => {
     const navigate = useNavigate();
     const [cart, setCart] = useCart();
     const [values, setValues] = useSearch();
+    
     return (
         <Layout title={'Search Result'}>
             <div className="container">
@@ -29,7 +30,7 @@ const Search = () => {
                                                 setCart([...cart, p])
                                                 toast.success(`${p.name} Added to Cart`)
                                             }}>
-                                            Add to Cart </button>
+                                           <i className="fa-solid fa-plus"></i>  Add Cart </button>
                                 </div>
                             </div>
                         ))}

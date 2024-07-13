@@ -5,9 +5,11 @@ import { Helmet } from 'react-helmet';
 import { Toaster } from 'react-hot-toast';
 
 const Layout = ({ children, title, description, keywords, author }) => {
+
     useEffect(() => {
         window.scrollTo(0, 0);
-      }, []);
+    }, []);
+    
     return (
         <div>
             <Helmet>
@@ -19,7 +21,7 @@ const Layout = ({ children, title, description, keywords, author }) => {
             </Helmet>
             <Header />
             <main style={{ minHeight: '73vh' }}>
-                <Toaster/>
+                <Toaster />
                 {children}
             </main>
             <Footer />

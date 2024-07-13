@@ -93,8 +93,9 @@ const FloatingCartButton = () => {
             {showCheckoutButton && (
                 <button
                     className="btn btn-warning floating-checkout-button"
-                    data-bs-toggle="modal" data-bs-target="#exampleModal"
-                > <i className="fa-solid fa-cart-shopping"></i> {totalPrice()}
+                    data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i className="fa-solid fa-cart-shopping"></i>
+                    {totalPrice()}
                     <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {cart.length}
                     </span>
@@ -190,7 +191,8 @@ const FloatingCartButton = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button className='btn btn-warning' onClick={() => navigate("/login")}>Cart Address</button>                        </div>
+                            <button className='btn btn-warning' onClick={() => navigate("/login")}>Cart Address</button>
+                        </div>
                     </div>
                 </div>
             </div>

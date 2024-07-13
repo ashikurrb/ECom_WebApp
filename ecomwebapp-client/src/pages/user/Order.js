@@ -4,13 +4,12 @@ import UserMenu from '../../components/Layout/UserMenu';
 import axios from 'axios';
 import { useAuth } from '../../components/context/auth';
 import moment from "moment";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 
 const Order = () => {
   const [auth, setAuth] = useAuth();
   const [orders, setOrders] = useState([]);
-  const navigate = useNavigate();
   const [spinnerLoading, setSpinnerLoading] = useState(true);
 
   const getOrders = async () => {
@@ -36,8 +35,8 @@ const Order = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <h2 className="text-center my-3">All Orders ({orders.length})</h2>
-            {spinnerLoading ? <Spinner /> : <>
+            <h2 className="text-center my-3"><i class="fa-solid fa-box"></i> All Orders ({orders.length})</h2>
+            {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <>
               {orders?.length < 1 ? (
                 <h5 className='text-center'>
                   You don't have any pending orders. Visit <Link to="/">Home</Link> to order.
@@ -61,7 +60,8 @@ const Order = () => {
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Time</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col">Created</th>
                             <th scope="col">Payment</th>
                             <th scope="col">Trx ID</th>
                             <th scope="col">Amount</th>
@@ -70,8 +70,9 @@ const Order = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope='row'>{i + 1}&nbsp;<i className="fa-solid fa-chevron-down"></i> </th>
+                            <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
                             <td>{o.status}</td>
+                            <td>{moment(o.updatedAt).fromNow()}</td>
                             <td>{moment(o.createdAt).fromNow()}</td>
                             <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
                               {o.payment.success ? "Success" : "Failed"}
@@ -85,19 +86,21 @@ const Order = () => {
                       <div className="container collapse show" id={o._id}>
                         <div className="d-flex flex-wrap">
                           {uniqueProducts.map((p) => (
-                            <div className="row m-2 p-3 card flex-row" key={p._id} onClick={() => navigate(`/product/${p.slug}`)}>
+                            <div className="row m-2 p-3 card flex-row" key={p._id}>
                               <div className="col-md-4">
+                              <Link to={`/product/${p.slug}`}>
                                 <img
                                   src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                  className="card-img-top"
+                                  className="imgFit card-img-top"
                                   alt={p.name}
-                                  width="100px"
+                                  width={"100px"}
                                   height={"100px"}
                                 />
+                                </Link>
                               </div>
                               <div className="col-md-8">
-                                <p className='m-2'><b>{p.name}</b> &nbsp;
-                                  <span class="badge rounded-pill text-bg-primary fs-6"> {productQuantities[p._id]}</span>
+                                <p className='my-2'><b>{p.name}</b> &nbsp;
+                                  <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
                                 </p>
                                 <p>{p.description.substring(0, 30)}</p>
                                 <p>Price : {p.price}</p>

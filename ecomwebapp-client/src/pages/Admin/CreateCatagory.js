@@ -17,6 +17,7 @@ const CreateCatagory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         getAllCatagory();
+        
         try {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/catagory/create-catagory`, { name });
             if (data?.success) {
@@ -110,8 +111,8 @@ const CreateCatagory = () => {
                                             <tr>
                                                 <td key={c._id}>{c.name}</td>
                                                 <td className='d-flex'>
-                                                    <button className="btn btn-primary ms-1" onClick={() => { setVisible(true); setUpdatedName(c.name); setSelected(c); }}>Edit</button>
-                                                    <button className="btn btn-danger ms-1" onClick={() => { handleDelete(c._id) }}>Delete</button>
+                                                    <button className="btn btn-primary ms-1" onClick={() => { setVisible(true); setUpdatedName(c.name); setSelected(c); }}><i class="fa-solid fa-pen-to-square"></i> Edit</button>
+                                                    <button className="btn btn-danger ms-1" onClick={() => { handleDelete(c._id) }}><i class="fa-solid fa-trash-can"></i> Delete</button>
                                                 </td>
                                             </tr>
                                         </>

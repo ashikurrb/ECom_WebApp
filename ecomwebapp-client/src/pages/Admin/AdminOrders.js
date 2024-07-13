@@ -13,11 +13,9 @@ const { Option } = Select;
 
 const AdminOrder = () => {
     const [status, setStatus] = useState(["Not Process", "Processing", "Shipped", "Delivered", "Canceled"]);
-    const [changeStatus, setChangeStatus] = useState("");
     const [auth, setAuth] = useAuth();
     const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-    const navigate = useNavigate();
 
     const getOrders = async () => {
         try {
@@ -91,7 +89,8 @@ const AdminOrder = () => {
                                                         <th scope="col">#</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Buyer</th>
-                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Updated</th>
+                                                        <th scope="col">Created</th>
                                                         <th scope="col">Payment</th>
                                                         <th scope="col">Trx Id</th>
                                                         <th scope="col">Amount</th>
@@ -101,7 +100,9 @@ const AdminOrder = () => {
                                                 </thead>
                                                 <tbody>
                                                     <tr>
-                                                        <th scope='row'>{i + 1}</th>
+                                                        <th scope='row' data-bs-toggle="collapse" href={`#${o?._id}`}>
+                                                            <i class="btn fa-solid fa-chevron-down"></i> {i + 1}
+                                                        </th>
                                                         <td>
                                                             <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
                                                                 {status.map((s, i) => (
@@ -109,12 +110,12 @@ const AdminOrder = () => {
                                                                 ))}
                                                             </Select>
                                                         </td>
-                                                        <td data-bs-toggle="collapse" href={`#${o?._id}`}>
-                                                            <i class="fa-solid fa-chevron-down"></i> &nbsp; <b>{o?.buyer?.name}</b>
+                                                        <td>
                                                             {
-                                                              o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
+                                                                o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
                                                         </td>
+                                                        <td>{moment(o?.updatedAt).fromNow()}</td>
                                                         <td>{moment(o?.createdAt).fromNow()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                             {o?.payment.success ? "Success" : "Failed"}
@@ -143,26 +144,30 @@ const AdminOrder = () => {
                                                                 <th>Name</th>
                                                                 <th>Price</th>
                                                                 <th>Quantity</th>
+                                                                <th>Total</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
                                                             {uniqueProducts.map((p, i) => (
                                                                 <tr>
                                                                     <td>{i + 1}</td>
-                                                                    <td onClick={() => navigate(`/product/${p.slug}`)}>
-                                                                        <img
-                                                                            src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                                                            className="img-thumbnail"
-                                                                            alt={p.name}
-                                                                            width="100px"
-                                                                            height={"100px"}
-                                                                        />
+                                                                    <td>
+                                                                        <Link to={`/product/${p.slug}`}>
+                                                                            <img
+                                                                                src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                                                                className="img-thumbnail"
+                                                                                alt={p.name}
+                                                                                width="100px"
+                                                                                height={"100px"}
+                                                                            />
+                                                                        </Link>
                                                                     </td>
                                                                     <td>{p?.name}</td>
-                                                                    <td>{p?.price}</td>
+                                                                    <td>${p?.price}</td>
                                                                     <td>
                                                                         <span class="badge rounded-pill text-bg-dark fs-6"> {productQuantities[p._id]}</span>
                                                                     </td>
+                                                                    <td>${p.price * productQuantities[p._id]}</td>
                                                                 </tr>
                                                             ))}
                                                         </tbody>
