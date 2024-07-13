@@ -72,8 +72,8 @@ const Order = () => {
                           <tr>
                             <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
                             <td>{o.status}</td>
-                            <td>{moment(o.updatedAt).fromNow()}</td>
-                            <td>{moment(o.createdAt).fromNow()}</td>
+                            <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
+                            <td>{moment(o?.createdAt).calendar()}</td>
                             <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
                               {o.payment.success ? "Success" : "Failed"}
                             </td>
@@ -88,14 +88,14 @@ const Order = () => {
                           {uniqueProducts.map((p) => (
                             <div className="row m-2 p-3 card flex-row" key={p._id}>
                               <div className="col-md-4">
-                              <Link to={`/product/${p.slug}`}>
-                                <img
-                                  src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
-                                  className="imgFit card-img-top"
-                                  alt={p.name}
-                                  width={"100px"}
-                                  height={"100px"}
-                                />
+                                <Link to={`/product/${p.slug}`}>
+                                  <img
+                                    src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                    className="imgFit card-img-top"
+                                    alt={p.name}
+                                    width={"100px"}
+                                    height={"100px"}
+                                  />
                                 </Link>
                               </div>
                               <div className="col-md-8">

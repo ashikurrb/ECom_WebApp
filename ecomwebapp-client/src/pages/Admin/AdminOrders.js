@@ -115,8 +115,8 @@ const AdminOrder = () => {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
                                                         </td>
-                                                        <td>{moment(o?.updatedAt).fromNow()}</td>
-                                                        <td>{moment(o?.createdAt).fromNow()}</td>
+                                                        <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() :"--"}</td>
+                                                        <td>{moment(o?.createdAt).calendar()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                             {o?.payment.success ? "Success" : "Failed"}
                                                         </td>
