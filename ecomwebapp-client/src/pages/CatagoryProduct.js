@@ -63,7 +63,7 @@ const CatagoryProduct = () => {
                                             setCart([...cart, p])
                                             toast.success(`${p.name} Added to Cart`)
                                         }}>
-                                        Add to Cart </button>
+                                        <i className="fa-solid fa-plus"></i>  Add Cart </button>
                                 </div>
                             </div>
                         ))}

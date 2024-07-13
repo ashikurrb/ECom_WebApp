@@ -15,8 +15,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-
-
+    
     //initial p data
     useEffect(() => {
         if (params?.slug) getProduct();
@@ -45,6 +44,10 @@ const ProductDetails = () => {
         }
     }
 
+    useEffect(() => {
+        window.scrollTo(0, 0);
+    }, [navigate]);
+
     return (
         <Layout>
             <div className="container">
@@ -60,49 +63,52 @@ const ProductDetails = () => {
                     <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}>
                         <Spinner />
                     </div> : <div className="row mt-5">
-                    <div className="col-md-4">
-                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
-                    </div>
-                    <div className="col-md-8">
-                        <div className="card-body">
-                            <h2>{product.name}</h2>
-                            <p className="card-text">{product.description}</p>
-                            <p className="card-text">Category: {product?.catagory?.name}</p>
-                            <h6 className="card-text">Price: ${product.price}</h6>
-                            <p className="card-text">Stock: {product.quantity} unit</p>
-                            <p className="card-text">Free Shipping: {product.shipping ? "Yes" : "No"} </p>
+                        <div className="col-md-4">
+                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
                         </div>
-                        <button className='btn btn-secondary m-1'
-                            onClick={() => {
-                                setCart([...cart, product])
-                                toast.success(`${product.name} added to Cart`)
-                            }}>
-                            Add to Cart </button>
-                    </div>
-                </div>}
+                        <div className="col-md-8">
+                            <div className="card-body">
+                                <h2>{product.name}</h2>
+                                <p className="card-text">{product.description}</p>
+                                <p className="card-text">Category: {product?.catagory?.name}</p>
+                                <h6 className="card-text">Price: ${product.price}</h6>
+                                <p className="card-text">Stock: {product.quantity} unit</p>
+                                <p className="card-text">Free Shipping: {product.shipping ? "Yes" : "No"} </p>
+                            </div>
+                            <button className='btn btn-secondary m-1'
+                                onClick={() => {
+                                    setCart([...cart, product])
+                                    toast.success(`${product.name} added to Cart`)
+                                }}>
+                               <i className="fa-solid fa-plus"></i>  Add Cart </button>
+                        </div>
+                    </div>}
                 <hr />
                 <div className="row">
-                    <h3>Similar Products</h3>
-                    {relatedProducts?.length < 1 && (<p className="text-center">No Similar Product Found</p>)}
-                    <div className="d-flex flex-wrap justify-content-md-start justify-content-center">
-                        {relatedProducts?.map(p => (
-                            <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
-                                <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
-                                <div className="card-body">
-                                    <h5 className="card-title">{p.name}</h5>
-                                    <p className="card-text">{p.description.substring(0, 50)}...</p>
-                                    <h6 className="card-text">Price: ${p.price}</h6>
-                                    <button className='btn btn-primary m-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                    <button className='btn btn-secondary m-1'
-                                        onClick={() => {
-                                            setCart([...cart, p])
-                                            toast.success(`${p.name} Added to Cart`)
-                                        }}>
-                                        Add to Cart </button>
+                    <h3 className='text-center'>Similar Products</h3>
+                    {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
+                        {relatedProducts?.length < 1 && (<p className="text-center">No Similar Product Found</p>)}
+                        <div className="d-flex flex-wrap justify-content-md-start justify-content-center">
+                            {relatedProducts?.map(p => (
+                                <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
+                                    <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
+                                    <div className="card-body">
+                                        <h5 className="card-title">{p.name}</h5>
+                                        <p className="card-text">{p.description.substring(0, 50)}...</p>
+                                        <h6 className="card-text">Price: ${p.price}</h6>
+                                    </div>
+                                    <div className='card-footer'>
+                                        <button className='btn btn-primary m-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
+                                        <button className='btn btn-secondary m-1'
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                toast.success(`${p.name} Added to Cart`)
+                                            }}>
+                                             <i className="fa-solid fa-plus"></i>  Add Cart </button>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
-                    </div>
+                            ))}
+                        </div></>}
                 </div>
             </div>
             <FloatingCartButton />

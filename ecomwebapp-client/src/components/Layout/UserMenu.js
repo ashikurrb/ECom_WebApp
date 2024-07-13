@@ -26,10 +26,10 @@ const UserMenu = () => {
                     </div>
                     <div className='d-md-collapse show rounded' id="collapseExample">
                         <NavLink to="/dashboard/user/profile" className="list-group-item list-group-item-action">
-                            Update Profile
+                        <i class="fa-solid fa-pen-to-square"></i> Update Profile
                         </NavLink>
                         <NavLink to="/dashboard/user/orders" className="list-group-item list-group-item-action">
-                            Orders
+                        <i class="fa-solid fa-box"></i>   Orders
                         </NavLink>
                     </div>
                 </div>

@@ -35,7 +35,7 @@ const Order = () => {
             <UserMenu />
           </div>
           <div className="col-md-9">
-            <h2 className="text-center my-3">All Orders ({orders.length})</h2>
+            <h2 className="text-center my-3"><i class="fa-solid fa-box"></i> All Orders ({orders.length})</h2>
             {spinnerLoading ? <div className="d-flex flex-column align-items-center justify-content-center" style={{ height: "50vh" }}><Spinner /></div> : <>
               {orders?.length < 1 ? (
                 <h5 className='text-center'>

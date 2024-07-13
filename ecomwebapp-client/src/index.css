@@ -162,3 +162,12 @@ table {
   padding-right: 5%;
   padding-left: 5%;
 }
+
+.sliding{
+  animation-direction: alternate;
+}
+
+.card-footer{
+  border: none;
+  background-color: transparent;
+}

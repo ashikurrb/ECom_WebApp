@@ -146,8 +146,9 @@ const HomePage = () => {
                                 <i className="fa-solid fa-bars"> </i>  <b>&nbsp; View Filters</b>
                             </button>
                         </div>
+                        <h5 className='text-center d-none d-lg-block mt-3 '><i class="fa-solid fa-filter"></i> Filter</h5>
                         <div className='collapse d-md-block' id="collapseExample">
-                            <h5 className="text-center my-3"> Filter by Catagory</h5>
+                            <h5 className="text-center my-3"><i class="fa-solid fa-list"></i>&nbsp; Catagory</h5>
                             <div className="d-flex flex-column ">
                                 {catagories?.map(c => (
                                     <Checkbox
@@ -158,7 +159,7 @@ const HomePage = () => {
                                     </Checkbox>
                                 ))}
                             </div>
-                            <h5 className="text-center"> Filter by Price</h5>
+                            <h5 className="text-center mt-3"><i class="fa-solid fa-barcode"></i>&nbsp; Price</h5>
                             <div className="d-flex flex-column">
                                 <Radio.Group onChange={e => setRadio(e.target.value)}>
                                     {Prices?.map(p => (
@@ -189,15 +190,16 @@ const HomePage = () => {
                                             <h5 className="card-title">{p.name}</h5>
                                             <p className="card-text">{p.description.substring(0, 50)}...</p>
                                             <h6 className="card-text">Price: ${p.price}</h6>
-                                            <button className='btn btn-primary m-1 ' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
-                                            <button className='btn btn-secondary m-1 '
-                                                onClick={() => {
-                                                    setCart([...cart, p])
-                                                    localStorage.setItem('cart', JSON.stringify([...cart, p]))
-                                                    toast.success(`${p.name} Added to Cart`)
-                                                }}>
-                                                Add to Cart </button>
                                         </div>
+                                        <div className='card-footer'>
+                                        <button className='btn btn-primary m-1' onClick={() => navigate(`/product/${p.slug}`)}>More Details</button>
+                                        <button className='btn btn-secondary m-1'
+                                            onClick={() => {
+                                                setCart([...cart, p])
+                                                toast.success(`${p.name} Added to Cart`)
+                                            }}>
+                                            <i className="fa-solid fa-plus"></i>  Add Cart </button>
+                                    </div>
                                     </div>
                                 ))}
                             </div>

@@ -61,7 +61,7 @@ const Profile = () => {
                     <div className="col-md-9">
                         <div className="form-container ">
                             <form onSubmit={handleSubmit}>
-                                <h4 className="title">Your Profile</h4>
+                                <h4 className="title"><i class="fa-solid fa-pen-to-square"></i> Update Your Profile</h4>
                                 <div className="mb-3">
                                     <input type="text" value={name} onChange={(e) => setName(e.target.value)} className="form-control" id="exampleInputName" placeholder='Name' required />
                                 </div>

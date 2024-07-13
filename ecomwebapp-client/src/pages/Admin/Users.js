@@ -65,7 +65,7 @@ const Users = () => {
                                         <th scope='col'>Address</th>
                                         <th scope='col'>Answer</th>
                                         <th scope='col'>Role</th>
-                                        <th scope='col'>Time</th>
+                                        <th scope='col'>Created</th>
                                         <th scope='col'>Action</th>
                                     </tr>
                                 </thead>
@@ -88,7 +88,7 @@ const Users = () => {
                                                     <td>
                                                         {
                                                             u.role === 1 ? <span class="badge text-bg-info">Restricted</span> : (
-                                                                <button className="btn btn-danger ms-1" onClick={() => handleDelete(u._id)}>Delete</button>
+                                                                <button className="btn btn-danger ms-1" onClick={() => handleDelete(u._id)}><i class="fa-solid fa-trash-can"></i> Delete</button>
                                                             )
                                                         }
                                                     </td>
