@@ -20,6 +20,7 @@ const CreateProduct = () => {
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
     const [spinnerLoading, setSpinnerLoading] = useState(false);
+    const [search, setSearch] = useState(false);
 
     //get call catagory
     const getAllCatagory = async () => {
@@ -80,7 +81,8 @@ const CreateProduct = () => {
                         <div className="m-1  w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
-                                size='large'
+                                size='large' showSearch
+                                onSearch={(value) => { setSearch(value) }}
                                 className='form-select mb-3'
                                 onChange={(value) => { setCatagory(value) }}>
                                 {catagories?.map(c => (
@@ -152,7 +154,8 @@ const CreateProduct = () => {
                                 </Select>
                             </div>
                             <div className="mb-3 text-center">
-                                {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
+                                {spinnerLoading ? <Spinner /> : ""}
+
                                 <button className="btn btn-warning fw-bold " onClick={handleCreate}>
                                     Create Product
                                 </button>

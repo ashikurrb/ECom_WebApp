@@ -21,6 +21,7 @@ const UpdateProduct = () => {
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
     const [id, setId] = useState("");
+    const [search, setSearch] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [spinnerProdLoading, setSpinnerProdLoading] = useState(false);
 
@@ -118,7 +119,8 @@ const UpdateProduct = () => {
                         <div className="m-1 w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
-                                size='large'
+                                size='large' showSearch
+                                onSearch={(value) => { setSearch(value) }}
                                 className='form-select mb-3' onChange={(value) => { setCatagory(value) }}
                                 value={catagory}>
                                 {catagories?.map(c => (
@@ -188,6 +190,7 @@ const UpdateProduct = () => {
                                     bordered={false}
                                     placeholder="Select Shipping "
                                     size="large"
+                                    showSearch
                                     className="form-select mb-3"
                                     onChange={(value) => {
                                         setShipping(value);
