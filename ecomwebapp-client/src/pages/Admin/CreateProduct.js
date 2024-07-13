@@ -1,12 +1,12 @@
-
 import React, { useEffect, useState } from 'react';
 import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { Select } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
+import { Select } from 'antd';
+
 const { Option } = Select;
 
 const CreateProduct = () => {
@@ -42,7 +42,7 @@ const CreateProduct = () => {
     //create product function
     const handleCreate = async (e) => {
         e.preventDefault();
-        setSpinnerLoading(true)
+        setSpinnerLoading(true);
         try {
             const productData = new FormData();
             productData.append("name", name);
@@ -54,9 +54,8 @@ const CreateProduct = () => {
             productData.append("catagory", catagory);
 
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/create-product`, productData);
-            setSpinnerLoading(true);
             if (data?.success) {
-                setSpinnerLoading(false)
+                setSpinnerLoading(false);
                 toast.success(data?.message);
                 navigate("/dashboard/admin/products");
             } else {
@@ -71,12 +70,12 @@ const CreateProduct = () => {
     }
 
     return (
-        <Layout title={"Dashboard - Create Product"}>
+        <Layout title={"Admin - Create Product"}>
             <div className="container-fluid mt-3 p-3">
                 <div className="row">
                     <div className="col-md-3"><AdminMenu /></div>
                     <div className="col-md-9">
-                        <h3 className='text-center mb-3'>Create Product</h3>
+                        <h3 className='text-center my-2'>Create Product</h3>
                         <div className="m-1  w-75">
                             <Select bordered={false}
                                 placeholder="Select a catagory"
@@ -84,9 +83,17 @@ const CreateProduct = () => {
                                 className='form-select mb-3'
                                 onChange={(value) => { setCatagory(value) }}>
                                 {catagories?.map(c => (
-                                    <Option key={c._id} value={c._id}>{c.name}</Option>
+                                    <Option key={c._id} value={c.name}>{c.name}</Option>
                                 ))}
                             </Select>
+                            <div className="mb-3">
+                                <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
+                                {photo && (
+                                    <div className="text-center">
+                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
+                                    </div>
+                                )}
+                            </div>
                             <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">
                                     {photo ? photo.name : "Upload Photo"}
@@ -98,13 +105,6 @@ const CreateProduct = () => {
                                         hidden
                                     />
                                 </label>
-                            </div>
-                            <div className="mb-3">
-                                {photo && (
-                                    <div className="text-center">
-                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
-                                    </div>
-                                )}
                             </div>
                             <div className="mb-3">
                                 <input
@@ -151,6 +151,7 @@ const CreateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
+                            {spinnerLoading ? <Spinner /> : ""}
                             <div className="mb-3 text-center">
                                 {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
                                 <button className="btn btn-warning fw-bold " onClick={handleCreate}>
