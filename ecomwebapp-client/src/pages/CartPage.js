@@ -14,6 +14,8 @@ const CartPage = () => {
     const [clientToken, setClientToken] = useState("");
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
+    const [orders, setOrders] = useState([]);
+    const [spinnerLoading, setSpinnerLoading] = useState(true);
     const navigate = useNavigate();
 
     //total pricing
@@ -97,6 +99,7 @@ const CartPage = () => {
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, {
                 nonce, cart,
             });
+            console.log(nonce);
             setLoading(false);
             localStorage.removeItem('cart');
             setCart([]);
@@ -167,7 +170,7 @@ const CartPage = () => {
                                                         </div>
                                                     </td>
                                                     <td>
-                                                       ${p.price * p.count}
+                                                        ${p.price * p.count}
                                                     </td>
                                                     <td>
                                                         <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>

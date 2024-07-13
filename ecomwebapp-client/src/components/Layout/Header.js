@@ -56,7 +56,7 @@ const Header = () => {
                                     Register</NavLink>
                                 </li>
                                 <li className="nav-item">
-                                    <NavLink to="/login" className="nav-link"> <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
+                                    <NavLink to="/login" className="nav-link">  <i class="fa-solid fa-right-to-bracket"></i> Login</NavLink>
                                 </li>
                             </>) : (<>
                                 <li className="nav-item dropdown">

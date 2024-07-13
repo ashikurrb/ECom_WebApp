@@ -15,7 +15,7 @@ const ProductDetails = () => {
     const [product, setProduct] = useState({});
     const [relatedProducts, setRelatedProducts] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
-    
+
     //initial p data
     useEffect(() => {
         if (params?.slug) getProduct();
@@ -75,12 +75,12 @@ const ProductDetails = () => {
                                 <p className="card-text">Stock: {product.quantity} unit</p>
                                 <p className="card-text">Free Shipping: {product.shipping ? "Yes" : "No"} </p>
                             </div>
-                            <button className='btn btn-secondary m-1'
+                            <button className='btn btn-secondary my-3'
                                 onClick={() => {
                                     setCart([...cart, product])
                                     toast.success(`${product.name} added to Cart`)
                                 }}>
-                               <i className="fa-solid fa-plus"></i>  Add Cart </button>
+                                <i className="fa-solid fa-plus"></i>  Add Cart </button>
                         </div>
                     </div>}
                 <hr />
@@ -89,6 +89,7 @@ const ProductDetails = () => {
                     {spinnerLoading ? <div className='my-5'><Spinner /></div> : <>
                         {relatedProducts?.length < 1 && (<p className="text-center">No Similar Product Found</p>)}
                         <div className="d-flex flex-wrap justify-content-md-start justify-content-center">
+
                             {relatedProducts?.map(p => (
                                 <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
                                     <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top" alt={p.name} />
@@ -104,7 +105,7 @@ const ProductDetails = () => {
                                                 setCart([...cart, p])
                                                 toast.success(`${p.name} Added to Cart`)
                                             }}>
-                                             <i className="fa-solid fa-plus"></i>  Add Cart </button>
+                                            <i className="fa-solid fa-plus"></i>  Add Cart </button>
                                     </div>
                                 </div>
                             ))}

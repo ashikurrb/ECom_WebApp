@@ -129,11 +129,11 @@ const FloatingCartButton = () => {
                                                                 <td>{i + 1}</td>
                                                                 <td>
                                                                     <Link to={`/product/${p.slug}`}>
-                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} />
+                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} data-bs-dismiss="modal"/>
                                                                     </Link>
                                                                 </td>
                                                                 <td>{p.name}</td>
-                                                                <td>{p.price}</td>
+                                                                <td>${p.price}</td>
                                                                 <td>
                                                                     <div className="d-flex">
                                                                         <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
@@ -171,7 +171,7 @@ const FloatingCartButton = () => {
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             {
-                                auth.user ? <button className='btn btn-warning' data-bs-dismiss="modal" onClick={() => navigate("/cart")}>Go to Cart</button> : <button className='btn btn-warning' data-bs-dismiss="modal" onClick={() => navigate("/login")}>Login</button>
+                                auth.user ? <button className='btn btn-warning' data-bs-dismiss="modal" onClick={() => navigate("/cart")}><i className='fa-solid fa-cart-shopping'></i> Go to Cart</button> : <button className='btn btn-info fw-bold' data-bs-dismiss="modal" onClick={() => navigate("/login")}><i class="fa-solid fa-right-to-bracket"></i> Login</button>
                             }
                         </div>
                     </div>
