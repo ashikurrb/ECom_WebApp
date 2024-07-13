@@ -6,7 +6,7 @@ import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import { Select } from "antd";
 import toast from 'react-hot-toast';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 const { Option } = Select;
 
@@ -115,7 +115,7 @@ const AdminOrder = () => {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
                                                         </td>
-                                                        <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() :"--"}</td>
+                                                        <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
                                                         <td>{moment(o?.createdAt).calendar()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                             {o?.payment.success ? "Success" : "Failed"}

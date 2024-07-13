@@ -2,34 +2,17 @@ import React, { useEffect, useState } from 'react';
 import { useCart } from './context/cart';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../components/context/auth';
-import { FloatButton } from 'antd';
 
 const FloatingCartButton = () => {
     const navigate = useNavigate();
     const [cart, setCart] = useCart();
     const [auth, setAuth] = useAuth();
-    const [loading, setLoading] = useState(false);
     const [showCheckoutButton, setShowCheckoutButton] = useState(false);
 
     useEffect(() => {
         setShowCheckoutButton(cart.length > 0);
     }, [cart]);
 
-    const totalPriceBt = () => {
-        try {
-            let total = 0;
-            cart?.map((item) => { total = total + item.price })
-            return total.toLocaleString("en-US", {
-                style: "currency",
-                currency: "USD"
-            })
-        } catch (error) {
-            console.log(error);
-        }
-    }
-    totalPriceBt();
-
-    //total pricing
     const totalPrice = () => {
         try {
             let total = 0;
@@ -43,7 +26,6 @@ const FloatingCartButton = () => {
         }
     };
 
-    // Increase adn Decrease Cart Item
     const increaseCartItem = (item) => {
         try {
             setCart([...cart, item]);
@@ -67,7 +49,6 @@ const FloatingCartButton = () => {
         }
     };
 
-    //remove cart item
     const removeCartItem = (pid) => {
         try {
             let myCart = cart.filter(item => item._id !== pid);
@@ -78,7 +59,6 @@ const FloatingCartButton = () => {
         }
     };
 
-    //show each product for one time with required quantity, avoid duplication in cart
     const uniqueCartItems = Array.from(new Set(cart.map(item => item._id)))
         .map(id => {
             const item = cart.find(item => item._id === id);
@@ -95,7 +75,7 @@ const FloatingCartButton = () => {
                     className="btn btn-warning floating-checkout-button"
                     data-bs-toggle="modal" data-bs-target="#exampleModal"
                 > <i className="fa-solid fa-cart-shopping"></i> {totalPrice()}
-                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                    <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
                         {cart.length}
                     </span>
                 </button>
@@ -145,7 +125,7 @@ const FloatingCartButton = () => {
                                                 <tbody>
                                                     {
                                                         uniqueCartItems.map((p, i) => (
-                                                            <tr>
+                                                            <tr key={p._id}>
                                                                 <td>{i + 1}</td>
                                                                 <td>
                                                                     <Link to={`/product/${p.slug}`}>
@@ -162,7 +142,7 @@ const FloatingCartButton = () => {
                                                                     </div>
                                                                 </td>
                                                                 <td>
-                                                                    $ {p.price * p.count}
+                                                                    ${p.price * p.count}
                                                                 </td>
                                                                 <td>
                                                                     <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
@@ -190,11 +170,11 @@ const FloatingCartButton = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button className='btn btn-warning' onClick={() => navigate("/login")}>Cart Address</button>                        </div>
+                            <button className='btn btn-warning' onClick={() => navigate("/cart")}>Go to Cart</button>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
