@@ -104,7 +104,9 @@ const FloatingCartButton = () => {
                 <div className="modal-dialog modal-xl modal-dialog-scrollable">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h1 className="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                            <h1 className="modal-title fs-5" id="staticBackdropLabel">
+                                <i className='fa-solid fa-cart-shopping'></i> Cart View
+                            </h1>
                             <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close" />
                         </div>
                         <div className="modal-body">
@@ -125,55 +127,55 @@ const FloatingCartButton = () => {
                                 </div>
                             </div>
                             <div className="row">
-                            <div className="col-md-8">
-                        <div className="row mb-2">
-                            <div className="table-container">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>Photo</th>
-                                            <th>Name</th>
-                                            <th>Price</th>
-                                            <th>Qty</th>
-                                            <th>Total</th>
-                                            <th>Remove</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            uniqueCartItems.map((p, i) => (
-                                                <tr>
-                                                    <td>{i + 1}</td>
-                                                    <td>
-                                                        <Link to={`/product/${p.slug}`}>
-                                                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} />
-                                                        </Link>
-                                                    </td>
-                                                    <td>{p.name}</td>
-                                                    <td>{p.price}</td>
-                                                    <td>
-                                                        <div className="d-flex">
-                                                            <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
-                                                            <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
-                                                            <button className='btn btn-secondary' onClick={() => increaseCartItem(p)}>+</button>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                       $ {p.price * p.count}
-                                                    </td>
-                                                    <td>
-                                                        <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
-                                                    </td>
-                                                </tr>
-                                            ))
-                                        }
+                                <div className="col-md-8">
+                                    <div className="row mb-2">
+                                        <div className="table-container">
+                                            <table className="table">
+                                                <thead className='table-dark'>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Photo</th>
+                                                        <th>Name</th>
+                                                        <th>Price</th>
+                                                        <th>Qty</th>
+                                                        <th>Unit Total</th>
+                                                        <th>Remove</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {
+                                                        uniqueCartItems.map((p, i) => (
+                                                            <tr>
+                                                                <td>{i + 1}</td>
+                                                                <td>
+                                                                    <Link to={`/product/${p.slug}`}>
+                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} />
+                                                                    </Link>
+                                                                </td>
+                                                                <td>{p.name}</td>
+                                                                <td>{p.price}</td>
+                                                                <td>
+                                                                    <div className="d-flex">
+                                                                        <button className='btn btn-danger' onClick={() => decreaseCartItem(p._id)}>-</button>
+                                                                        <span className='mx-2 border border-warning p-2 rounded'><b>{p.count}</b></span>
+                                                                        <button className='btn btn-secondary' onClick={() => increaseCartItem(p)}>+</button>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    $ {p.price * p.count}
+                                                                </td>
+                                                                <td>
+                                                                    <button className='btn btn-danger' onClick={() => removeCartItem(p._id)}><i className="fa-solid fa-trash-can"></i></button>
+                                                                </td>
+                                                            </tr>
+                                                        ))
+                                                    }
 
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="col-md-4">
                                     <div className="card p-4 mb-3">
                                         <h3 className='text-center'>Cart Summary</h3>

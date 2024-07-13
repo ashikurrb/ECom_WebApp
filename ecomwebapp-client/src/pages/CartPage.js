@@ -137,14 +137,14 @@ const CartPage = () => {
                         <div className="row mb-2">
                             <div className="table-container">
                                 <table className="table">
-                                    <thead>
+                                    <thead className='table-dark'>
                                         <tr>
                                             <th>#</th>
                                             <th>Photo</th>
                                             <th>Name</th>
                                             <th>Price</th>
                                             <th>Qty</th>
-                                            <th>Total</th>
+                                            <th>UT</th>
                                             <th>Remove</th>
                                         </tr>
                                     </thead>
