@@ -89,7 +89,8 @@ const AdminOrder = () => {
                                                         <th scope="col">#</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Buyer</th>
-                                                        <th scope="col">Date</th>
+                                                        <th scope="col">Updated</th>
+                                                        <th scope="col">Created</th>
                                                         <th scope="col">Payment</th>
                                                         <th scope="col">Trx Id</th>
                                                         <th scope="col">Amount</th>
@@ -114,6 +115,7 @@ const AdminOrder = () => {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
                                                         </td>
+                                                        <td>{moment(o?.updatedAt).fromNow()}</td>
                                                         <td>{moment(o?.createdAt).fromNow()}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                             {o?.payment.success ? "Success" : "Failed"}

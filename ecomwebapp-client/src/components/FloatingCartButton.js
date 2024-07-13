@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useCart } from './context/cart';
 import { useNavigate } from 'react-router-dom';
-import { FloatButton } from 'antd';
 
 const FloatingCartButton = () => {
     const navigate = useNavigate();

@@ -60,7 +60,8 @@ const Order = () => {
                           <tr>
                             <th scope="col">#</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Time</th>
+                            <th scope="col">Updated</th>
+                            <th scope="col">Created</th>
                             <th scope="col">Payment</th>
                             <th scope="col">Trx ID</th>
                             <th scope="col">Amount</th>
@@ -71,6 +72,7 @@ const Order = () => {
                           <tr>
                             <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
                             <td>{o.status}</td>
+                            <td>{moment(o.updatedAt).fromNow()}</td>
                             <td>{moment(o.createdAt).fromNow()}</td>
                             <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
                               {o.payment.success ? "Success" : "Failed"}
