@@ -170,7 +170,9 @@ const FloatingCartButton = () => {
                         </div>
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button className='btn btn-warning' onClick={() => navigate("/cart")}>Go to Cart</button>
+                            {
+                                auth.user ? <button className='btn btn-warning' data-bs-dismiss="modal" onClick={() => navigate("/cart")}>Go to Cart</button> : <button className='btn btn-warning' data-bs-dismiss="modal" onClick={() => navigate("/login")}>Login</button>
+                            }
                         </div>
                     </div>
                 </div>
