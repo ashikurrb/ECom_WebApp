@@ -129,7 +129,7 @@ const FloatingCartButton = () => {
                                                                 <td>{i + 1}</td>
                                                                 <td>
                                                                     <Link to={`/product/${p.slug}`}>
-                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} data-bs-dismiss="modal"/>
+                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} data-bs-dismiss="modal" />
                                                                     </Link>
                                                                 </td>
                                                                 <td>{p.name}</td>
@@ -163,7 +163,7 @@ const FloatingCartButton = () => {
                                         <h4>Total: {totalPrice()}</h4>
                                         <h6>Total Item: {uniqueCartItems.length}</h6>
                                         <h6>Total Quantity: {cart.length}</h6>
-                                        <h6>Address: {auth?.user?.address}</h6>
+                                        <h6>Address: {auth.user ? auth?.user?.address : <span className='text text-danger'>Login to see or update address</span>}</h6>
                                     </div>
                                 </div>
                             </div>
