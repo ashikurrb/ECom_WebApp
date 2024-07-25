@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSearch } from '../components/context/search';
 import Layout from '../components/Layout/Layout';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useCart } from '../components/context/cart';
 
@@ -10,7 +10,6 @@ const Search = () => {
     const [cart, setCart] = useCart();
     const [values, setValues] = useSearch();
     const { keyword2, results } = values;
-    const location = useLocation();
 
     useEffect(() => {
         // Save results to sessionStorage whenever they change
