@@ -14,8 +14,6 @@ const CartPage = () => {
     const [clientToken, setClientToken] = useState("");
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
-    const [orders, setOrders] = useState([]);
-    const [spinnerLoading, setSpinnerLoading] = useState(true);
     const navigate = useNavigate();
 
     //total pricing

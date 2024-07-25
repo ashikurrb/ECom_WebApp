@@ -109,16 +109,16 @@ const FloatingCartButton = () => {
                             <div className="row">
                                 <div className="col-md-8">
                                     <div className="row mb-2">
-                                        <div className="table-container">
+                                        <div className="table-container table-wrapper">
                                             <table className="table">
-                                                <thead className='table-dark'>
-                                                    <tr>
+                                                <thead className='table-dark '>
+                                                    <tr className='position-relative'>
                                                         <th>#</th>
                                                         <th>Photo</th>
                                                         <th>Name</th>
                                                         <th>Price</th>
                                                         <th>Qty</th>
-                                                        <th>Unit Total</th>
+                                                        <th>UT</th>
                                                         <th>Remove</th>
                                                     </tr>
                                                 </thead>

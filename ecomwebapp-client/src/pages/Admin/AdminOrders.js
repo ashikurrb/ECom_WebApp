@@ -116,7 +116,7 @@ const AdminOrder = () => {
                                                             }
                                                         </td>
                                                         <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
-                                                        <td>{moment(o?.createdAt).calendar()}</td>
+                                                        <td>{moment(o?.createdAt).format('lll')}</td>
                                                         <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
                                                             {o?.payment.success ? "Success" : "Failed"}
                                                         </td>
@@ -126,7 +126,7 @@ const AdminOrder = () => {
                                                             <span class="badge rounded-pill text-bg-warning fs-6">{o?.products?.length}</span>
                                                         </td>
                                                         <td>
-                                                            <button className="btn btn-danger ms-1" onClick={() => handleDelete(o._id)}>Delete</button>
+                                                            <button className="btn btn-danger ms-1 fw-bold" onClick={() => handleDelete(o._id)}><i class="fa-solid fa-trash-can"></i> Delete</button>
                                                         </td>
 
                                                     </tr>

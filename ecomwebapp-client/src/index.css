@@ -171,3 +171,14 @@ table {
   border: none;
   background-color: transparent;
 }
+
+.table-wrapper {
+  max-height: 400px;
+  overflow-y: auto;
+}
+thead th {
+  position: sticky;
+  top: 0;
+  background: white;
+  z-index: 100;
+}

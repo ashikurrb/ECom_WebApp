@@ -73,7 +73,7 @@ const Order = () => {
                             <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
                             <td>{o.status}</td>
                             <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
-                            <td>{moment(o?.createdAt).calendar()}</td>
+                            <td>{moment(o?.createdAt).format('lll')}</td>
                             <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
                               {o.payment.success ? "Success" : "Failed"}
                             </td>
