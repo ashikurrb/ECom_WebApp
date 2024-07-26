@@ -83,7 +83,7 @@ const CreateProduct = () => {
                                 className='form-select mb-3'
                                 onChange={(value) => { setCatagory(value) }}>
                                 {catagories?.map(c => (
-                                    <Option key={c._id} value={c.name}>{c.name}</Option>
+                                    <Option key={c._id} value={c._id}>{c.name}</Option>
                                 ))}
                             </Select>
                             <div className="mb-3">
@@ -151,7 +151,6 @@ const CreateProduct = () => {
                                     <Option value="1">Yes</Option>
                                 </Select>
                             </div>
-                            {spinnerLoading ? <Spinner /> : ""}
                             <div className="mb-3 text-center">
                                 {spinnerLoading ? <div className='my-2'><Spinner /> </div> : ""}
                                 <button className="btn btn-warning fw-bold " onClick={handleCreate}>
