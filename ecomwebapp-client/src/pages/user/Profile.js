@@ -25,7 +25,6 @@ const Profile = () => {
         setPhone(phone);
     }, [auth?.user])
 
-    //Form Submission_handleSubmit
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {

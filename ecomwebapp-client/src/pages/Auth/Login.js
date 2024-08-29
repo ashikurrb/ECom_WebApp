@@ -45,7 +45,6 @@ const Login = () => {
     return (
         <Layout title={"Log In"}>
             <div className="form-container">
-                {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
                 <div className="container d-md-flex">
                     <div className="row m-3">
                         <div className="col-md-7 mb-5 mx-md-5">
@@ -64,7 +63,8 @@ const Login = () => {
                                 <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="exampleInputPassword1" placeholder='Password' required />
                             </div>
                             <div className="text-center">
-                                <button type="submit" className="btn btn-primary">Log In</button>
+                                <button type="submit" className="btn btn-primary">                                        {spinnerLoading ? <Spinner /> : "Log In"}
+                                </button>
                             </div>
                             <div className="text-center py-3">Forgot Password? <Link to="/forgot-password">Reset Here</Link></div>
                         </form>

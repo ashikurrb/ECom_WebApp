@@ -92,7 +92,7 @@ export const loginController = async (req, res) => {
         const token = await JWT.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '7d' });
         res.status(200).send({
             success: true,
-            message: 'Login Successfully',
+            message: 'Login Successful',
             user: {
                 name: user.name,
                 email: user.email,
@@ -265,7 +265,7 @@ export const getAllOrdersController = async (req, res) => {
     }
 };
 
-//order status
+//update order status
 export const orderStatusController = async (req, res) => {
     try {
         const { orderId } = req.params;

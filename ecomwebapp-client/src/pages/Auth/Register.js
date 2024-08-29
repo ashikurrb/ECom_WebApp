@@ -46,8 +46,7 @@ const Register = () => {
     return (
         <Layout title={"Register"}>
             <div className="form-container">
-            {spinnerLoading ? <div className='m-3'><Spinner /></div> : ""}
-            <div className="container">
+                <div className="container">
                     <div className="row">
                         <div className="col-md-6">
                             <img className='pt-5 px-5' src="/images/registerImg.png" alt="" style={{ width: "100%" }} />
@@ -74,7 +73,10 @@ const Register = () => {
                                     <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} className="form-control" id="exampleInputAddress" placeholder='What is your favorite food?' required />
                                 </div>
                                 <div className="text-center">
-                                    <button type="submit" className="btn btn-primary">REGISTER </button>                                </div>
+                                    <button type="submit" className="btn btn-primary">
+                                        {spinnerLoading ? <Spinner /> : "REGISTER"}
+                                         </button>
+                                </div>
                                 <div className="text-center py-3">Already Registered? <Link to="/login">Log In</Link></div>
                             </form>
                         </div>
