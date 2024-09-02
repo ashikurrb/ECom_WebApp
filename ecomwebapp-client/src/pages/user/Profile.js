@@ -4,6 +4,7 @@ import UserMenu from '../../components/Layout/UserMenu';
 import { useAuth } from '../../components/context/auth';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import Cookies from 'js-cookie';
 import '../../style/AuthStyle.css';
 
 const Profile = () => {
@@ -39,10 +40,10 @@ const Profile = () => {
                 toast.error(data?.error)
             } else {
                 setAuth({ ...auth, user: data?.updatedUser })
-                let ls = localStorage.getItem("auth")
+                let ls = Cookies.get("auth");
                 ls = JSON.parse(ls)
                 ls.user = data.updatedUser
-                localStorage.setItem("auth", JSON.stringify(ls))
+                Cookies.set("auth", JSON.stringify(ls));
                 toast.success(data?.message)
             }
         }
