@@ -202,7 +202,6 @@ export const productFilterController = async (req, res) => {
       products
     })
 
-
   } catch (error) {
     console.log(error);
     res.status(400).send({
@@ -235,7 +234,12 @@ export const productListController = async (req, res) => {
   try {
     const perPage = 3;
     const page = req.params.page ? req.params.page : 1;
-    const products = await productModel.find({}).select("-photo").skip((page - 1) * perPage).limit(perPage).sort({ createdAt: -1 })
+    const products = await productModel.find({})
+      .select("-photo")
+      .populate("catagory")
+      .skip((page - 1) * perPage)
+      .limit(perPage)
+      .sort({ createdAt: -1 })
     res.status(200).send({
       success: true,
       products
@@ -261,7 +265,8 @@ export const searchProductController = async (req, res) => {
           { description: { $regex: keyword, $options: "i" } },
         ],
       })
-      .select("-photo");
+      .select("-photo")
+      .populate("catagory");
     res.json(results);
   } catch (error) {
     console.log(error);
@@ -323,7 +328,7 @@ export const braintreeTokenController = async (req, res) => {
     gateway.clientToken.generate({}, function (err, response) {
       if (err) {
         res.status(500).send(err);
-       
+
       } else {
         res.send(response);
       }
@@ -342,7 +347,7 @@ export const brainTreePaymentController = async (req, res) => {
     cart.map((i) => {
       total += i.price;
     });
-   
+
     let newTransaction = gateway.transaction.sale(
       {
         amount: total,
@@ -359,7 +364,7 @@ export const brainTreePaymentController = async (req, res) => {
             buyer: req.user._id,
           }).save();
           res.json({ ok: true });
-         
+
         } else {
           res.status(500).send(error);
         }
