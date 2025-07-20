@@ -337,7 +337,7 @@ export const productCatagoryController = async (req, res) => {
     console.log(error);
     res.status(400).send({
       success: false,
-      message: "Error while getting Product",
+      message: "Error getting Product",
       error,
     });
   }
