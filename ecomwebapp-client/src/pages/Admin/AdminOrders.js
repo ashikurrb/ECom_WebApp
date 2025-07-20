@@ -154,7 +154,7 @@ const AdminOrder = () => {
                                                                     <td>
                                                                         <Link to={`/product/${p.slug}`}>
                                                                             <img
-                                                                                src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`}
+                                                                                src={p.photo}
                                                                                 className="img-thumbnail"
                                                                                 alt={p.name}
                                                                                 width="100px"

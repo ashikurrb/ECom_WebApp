@@ -19,6 +19,7 @@ const UpdateProduct = () => {
     const [shipping, setShipping] = useState('');
     const [catagory, setCatagory] = useState('');
     const [photo, setPhoto] = useState('');
+    const [productPhoto, setProductPhoto] = useState('');
     const [id, setId] = useState("");
     const [search, setSearch] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(false);
@@ -36,6 +37,7 @@ const UpdateProduct = () => {
             setQuantity(data.product.quantity);
             setShipping(data.product.shipping);
             setCatagory(data.product.catagory._id);
+            setProductPhoto(data.product.photo);
         } catch (error) {
             console.log(error);
         }
@@ -137,7 +139,7 @@ const UpdateProduct = () => {
                                     </div>
                                 ) : (
                                     <div className="text-center ">
-                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${id}`} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
+                                        <img src={productPhoto} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
                                     </div>
                                 )}
                             </div>

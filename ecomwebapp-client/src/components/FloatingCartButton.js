@@ -129,7 +129,7 @@ const FloatingCartButton = () => {
                                                                 <td>{i + 1}</td>
                                                                 <td>
                                                                     <Link to={`/product/${p.slug}`}>
-                                                                        <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} data-bs-dismiss="modal" />
+                                                                        <img src={p.photo} className="imgFit img-fluid" alt={p.name} width={"50px"} height={"100px"} data-bs-dismiss="modal" />
                                                                     </Link>
                                                                 </td>
                                                                 <td>{p.name}</td>

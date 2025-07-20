@@ -64,7 +64,7 @@ const ProductDetails = () => {
                         <Spinner />
                     </div> : <div className="row mt-5">
                         <div className="col-md-4">
-                            <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${product._id}`} className="card-img-top cardImg" alt={product.name} />
+                            <img src={product.photo} className="card-img-top cardImg" alt={product.name} />
                         </div>
                         <div className="col-md-8">
                             <div className="card-body">
@@ -92,7 +92,7 @@ const ProductDetails = () => {
 
                             {relatedProducts?.map(p => (
                                 <div className="card m-2" style={{ width: '18rem' }} key={p._id}>
-                                    <img src={`${process.env.REACT_APP_API}/api/v1/product/product-photo/${p._id}`} className="cardImg card-img-top p-2" alt={p.name} />
+                                    <img src={p.photo} className="cardImg card-img-top p-2" alt={p.name} />
                                     <div className="card-body">
                                         <h5 className="card-title">{p.name}</h5>
                                         <p className="card-text">{p.description.substring(0, 50)}...</p>
