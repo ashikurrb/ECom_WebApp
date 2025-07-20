@@ -90,7 +90,7 @@ const Order = () => {
                               <div className="col-md-4">
                                 <Link to={`/product/${p.slug}`}>
                                   <img
-                                    src={p.photo}
+                                    src={p?.photo}
                                     className="imgFit card-img-top"
                                     alt={p.name}
                                     width={"100px"}

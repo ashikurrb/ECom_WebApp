@@ -154,7 +154,7 @@ const AdminOrder = () => {
                                                                     <td>
                                                                         <Link to={`/product/${p.slug}`}>
                                                                             <img
-                                                                                src={p.photo}
+                                                                                src={p?.photo}
                                                                                 className="img-thumbnail"
                                                                                 alt={p.name}
                                                                                 width="100px"
