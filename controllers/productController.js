@@ -16,11 +16,19 @@ var gateway = new braintree.BraintreeGateway({
   privateKey: process.env.BRAINTREE_PRIVATE_KEY,
 });
 
+//Cloudinary Configuration
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
+
 export const createProductController = async (req, res) => {
   try {
-    const { name, description, price, catagory, quantity, shipping } =
-      req.fields;
-    const { photo } = req.files;
+    const { name, description, price, catagory, quantity, shipping } = req.fields;
+    const file = req.files.photo;
+
     //validation
     switch (true) {
       case !name:
@@ -33,17 +41,26 @@ export const createProductController = async (req, res) => {
         return res.status(500).send({ error: "Catagory is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
+      case !file:
+        return res.status(500).send({ error: "Photo is Required" });
     }
 
-    const products = new productModel({ ...req.fields, slug: slugify(name) });
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
+    // Initialize product
+    const productData = { name, description, price, catagory, quantity, shipping, slug: slugify(name) };
+    try {
+      const result = await cloudinary.uploader.upload(file.path, {
+        folder: 'ecom-webapp/products',
+        use_filename: true,
+        unique_filename: false
+      });
+      productData.photo = result.secure_url;
+    } catch (uploadError) {
+      console.error('Cloudinary Upload Error:', uploadError);
+      return res.status(500).send({ message: 'Upload failed', error: uploadError.message });
     }
+
+    // Create and save course
+    const products = new productModel(productData);
     await products.save();
     res.status(201).send({
       success: true,
@@ -60,25 +77,25 @@ export const createProductController = async (req, res) => {
   }
 };
 
+
 //get all products
 export const getProductController = async (req, res) => {
   try {
     const products = await productModel
       .find({})
       .populate("catagory")
-      .select("-photo")
       .sort({ createdAt: -1 });
     res.status(200).send({
       success: true,
       countTotal: products.length,
-      message: "ALlProducts ",
+      message: "Products fetched successfully",
       products,
     });
   } catch (error) {
     console.log(error);
     res.status(500).send({
       success: false,
-      message: "Error in getting products",
+      message: "Error getting products",
       error: error.message,
     });
   }
@@ -88,7 +105,6 @@ export const getSingleProductController = async (req, res) => {
   try {
     const product = await productModel
       .findOne({ slug: req.params.slug })
-      .select("-photo")
       .populate("catagory");
     res.status(200).send({
       success: true,
@@ -105,28 +121,18 @@ export const getSingleProductController = async (req, res) => {
   }
 };
 
-// get photo
-export const productPhotoController = async (req, res) => {
-  try {
-    const product = await productModel.findById(req.params.pid).select("photo");
-    if (product.photo.data) {
-      res.set("Content-type", product.photo.contentType);
-      return res.status(200).send(product.photo.data);
-    }
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      success: false,
-      message: "Error while getting photo",
-      error,
-    });
-  }
-};
 
 //delete product controller
 export const deleteProductController = async (req, res) => {
   try {
-    await productModel.findByIdAndDelete(req.params.pid).select("-photo");
+    const product = await productModel.findByIdAndDelete(req.params.pid);
+
+    // If image exists, delete it
+    if (product.photo) {
+      const publicId = product.photo.split('/').pop().split('.')[0];
+      await cloudinary.uploader.destroy(`ecom-webapp/products/${publicId}`);
+    }
+
     res.status(200).send({
       success: true,
       message: "Product Deleted successfully",
@@ -141,12 +147,13 @@ export const deleteProductController = async (req, res) => {
   }
 };
 
-//update products
+//Update products
 export const updateProductController = async (req, res) => {
   try {
-    const { name, description, price, catagory, quantity, shipping } =
-      req.fields;
-    const { photo } = req.files;
+    const { name, description, price, catagory, quantity, shipping } = req.fields;
+    const file = req.files.photo;
+    const productId = req.params.pid;
+
     //validation
     switch (true) {
       case !name:
@@ -159,26 +166,40 @@ export const updateProductController = async (req, res) => {
         return res.status(500).send({ error: "Catagory is Required" });
       case !quantity:
         return res.status(500).send({ error: "Quantity is Required" });
-      case photo && photo.size > 1000000:
-        return res
-          .status(500)
-          .send({ error: "photo is Required and should be less then 1mb" });
     }
 
-    const products = await productModel.findByIdAndUpdate(
-      req.params.pid,
-      { ...req.fields, slug: slugify(name) },
-      { new: true }
-    );
-    if (photo) {
-      products.photo.data = fs.readFileSync(photo.path);
-      products.photo.contentType = photo.type;
+    const product = await productModel.findById(productId);
+    if (!product) {
+      return res.status(404).send({ error: "Product not found" });
     }
-    await products.save();
+
+    // setup product
+    const productData = { name, description, price, catagory, quantity, shipping, slug: slugify(name) };
+
+    if (file) {
+      // If old image exists, delete it
+      if (product.photo) {
+        const publicId = product.photo.split('/').pop().split('.')[0];
+        await cloudinary.uploader.destroy(`ecom-webapp/products/${publicId}`);
+      }
+      try {
+        const result = await cloudinary.uploader.upload(file.path, {
+          folder: 'ecom-webapp/products'
+        });
+        //save photo url to database
+        productData.photo = result.secure_url;
+      } catch (uploadError) {
+        console.error('Cloudinary Upload Error:', uploadError);
+        return res.status(500).send({ message: 'Upload failed', error: uploadError.message });
+      }
+    }
+
+    const updatedProduct = await productModel.findByIdAndUpdate(productId, { ...productData }, { new: true });
+
     res.status(201).send({
       success: true,
       message: "Product Updated Successfully",
-      products,
+      updatedProduct,
     });
   } catch (error) {
     console.log(error);
@@ -190,6 +211,8 @@ export const updateProductController = async (req, res) => {
   }
 };
 
+
+//product filter
 export const productFilterController = async (req, res) => {
   try {
     const { checked, radio } = req.body;
@@ -235,7 +258,6 @@ export const productListController = async (req, res) => {
     const perPage = 3;
     const page = req.params.page ? req.params.page : 1;
     const products = await productModel.find({})
-      .select("-photo")
       .populate("catagory")
       .skip((page - 1) * perPage)
       .limit(perPage)
@@ -265,7 +287,6 @@ export const searchProductController = async (req, res) => {
           { description: { $regex: keyword, $options: "i" } },
         ],
       })
-      .select("-photo")
       .populate("catagory");
     res.json(results);
   } catch (error) {
@@ -285,7 +306,9 @@ export const relatedProductController = async (req, res) => {
     const products = await productModel.find({
       catagory: cid,
       _id: { $ne: pid },
-    }).select('-photo').limit(3).populate("catagory")
+    })
+      .limit(3)
+      .populate("catagory")
     res.status(200).send({
       success: true,
       products,
@@ -318,7 +341,7 @@ export const productCatagoryController = async (req, res) => {
       error,
     });
   }
-}
+};
 
 
 //payment gateway api
