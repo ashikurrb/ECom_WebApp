@@ -14,7 +14,6 @@ import {
     productCountController,
     productFilterController,
     productListController,
-    productPhotoController,
     relatedProductController,
     searchProductController,
     updateProductController
@@ -34,9 +33,6 @@ router.get('/get-product', getProductController);
 
 //single product
 router.get('/get-product/:slug', getSingleProductController);
-
-//get photo
-router.get('/product-photo/:pid', productPhotoController);
 
 //update-products
 router.put('/update-product/:pid', requireSignIn, isAdmin, formidable(), updateProductController);

@@ -1,7 +1,7 @@
 import productModel from "../models/productModel.js";
 import catagoryModel from "../models/catagoryModel.js";
 import orderModel from "../models/orderModel.js";
-import fs from "fs";
+import { v2 as cloudinary } from 'cloudinary';
 import slugify from "slugify";
 import braintree from "braintree";
 import dotenv from "dotenv";
