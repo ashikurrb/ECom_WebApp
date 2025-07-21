@@ -59,6 +59,17 @@ const AdminOrder = () => {
         }
     }
 
+    //url checker
+    const isUrl = (str) => {
+        try {
+            new URL(str);
+            return true;
+        } catch {
+            return false;
+        }
+    };
+
+
     return (
         <Layout title={"Admin - All Orders"}>
             <div className="container-fluid mt-3 p-3">
@@ -89,6 +100,8 @@ const AdminOrder = () => {
                                                         <th scope="col">#</th>
                                                         <th scope="col">Status</th>
                                                         <th scope="col">Buyer</th>
+                                                        <th scope="col">Note</th>
+                                                        <th scope="col">Address</th>
                                                         <th scope="col">Updated</th>
                                                         <th scope="col">Created</th>
                                                         <th scope="col">Payment</th>
@@ -115,13 +128,23 @@ const AdminOrder = () => {
                                                                 o?.buyer ? o?.buyer?.name : <span class="badge text-bg-danger">Deleted User</span>
                                                             }
                                                         </td>
+                                                        <td>{o?.orderNote === "" ? "---" : o?.orderNote}</td>
+                                                        <td>
+                                                            {isUrl(o?.orderAddress) ? (
+                                                                <a href={o?.orderAddress} target="_blank" rel="noopener noreferrer">
+                                                                    Open Map
+                                                                </a>
+                                                            ) : (
+                                                                o?.orderAddress
+                                                            )}
+                                                        </td>
                                                         <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
                                                         <td>{moment(o?.createdAt).format('lll')}</td>
-                                                        <td className={o?.payment.success ? "text-success" : "text-danger fw-bold"}>
-                                                            {o?.payment.success ? "Success" : "Failed"}
+                                                        <td className={o?.payment?.success ? "text-success" : "text-danger fw-bold"}>
+                                                            {o?.payment?.success ? "Success" : "Failed"}
                                                         </td>
-                                                        <td><b>{o?.payment?.transaction?.id}</b></td>
-                                                        <td>Tk. {o?.payment?.transaction?.amount} </td>
+                                                        <td><b>{o.payment?.transaction?.id ? o.payment?.transaction?.id : "---"}</b></td>
+                                                        <td>Tk. {o?.payment?.transaction?.amount ? o?.payment?.transaction?.amount : "---"}</td>
                                                         <td>
                                                             <span class="badge rounded-pill text-bg-warning fs-6">{o?.products?.length}</span>
                                                         </td>

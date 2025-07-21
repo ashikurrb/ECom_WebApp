@@ -27,6 +27,16 @@ const Order = () => {
     if (auth?.token) getOrders();
   }, [auth?.token]);
 
+  //url checker
+  const isUrl = (str) => {
+    try {
+      new URL(str);
+      return true;
+    } catch {
+      return false;
+    }
+  };
+
   return (
     <Layout title={"Dashboard - Your Orders"}>
       <div className="container-fluid mt-3 p-3">
@@ -66,20 +76,32 @@ const Order = () => {
                             <th scope="col">Trx ID</th>
                             <th scope="col">Amount</th>
                             <th scope="col">Quantity</th>
+                            <th scope="col">Note</th>
+                            <th scope="col">Address</th>
                           </tr>
                         </thead>
                         <tbody>
                           <tr>
                             <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
-                            <td>{o.status === 'Canceled'?<span className='text-danger fw-bold'>Canceled</span>:o.status}</td>
+                            <td>{o.status === 'Canceled' ? <span className='text-danger fw-bold'>Canceled</span> : o.status}</td>
                             <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
                             <td>{moment(o?.createdAt).format('lll')}</td>
-                            <td className={o.payment.success ? "text-success" : "text-danger fw-bold"}>
-                              {o.payment.success ? "Success" : "Failed"}
+                            <td className={o?.payment?.success ? "text-success" : "text-danger fw-bold"}>
+                              {o?.payment?.success ? "Success" : "Failed"}
                             </td>
-                            <td><b>{o.payment?.transaction?.id}</b></td>
-                            <td>Tk. {o.payment?.transaction?.amount}</td>
+                            <td><b>{o.payment?.transaction?.id ? o.payment?.transaction?.id : "---"}</b></td>
+                            <td>Tk. {o?.payment?.transaction?.amount ? o?.payment?.transaction?.amount : "---"}</td>
                             <td>{o.products.length}</td>
+                            <td>{o?.orderNote === "" ? "---" : o?.orderNote}</td>
+                            <td>
+                              {isUrl(o?.orderAddress) ? (
+                                <a href={o?.orderAddress} target="_blank" rel="noopener noreferrer">
+                                  Open Map
+                                </a>
+                              ) : (
+                                o?.orderAddress
+                              )}
+                            </td>
                           </tr>
                         </tbody>
                       </table>

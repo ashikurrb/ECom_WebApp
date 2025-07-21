@@ -7,14 +7,50 @@ import DropIn from "braintree-web-drop-in-react";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import GoBackButton from '../components/GoBackButton';
+import { Input, Spin } from 'antd';
+import { AimOutlined } from '@ant-design/icons';
 
 const CartPage = () => {
-    const [auth, setAuth] = useAuth();
+    const [auth] = useAuth();
     const [cart, setCart] = useCart();
     const [clientToken, setClientToken] = useState("");
     const [instance, setInstance] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+    const [locationLoading, setLocationLoading] = useState(false);
+    const [orderAddress, setOrderAddress] = useState(auth?.user?.address || '');
+    const [orderNote, setOrderNote] = useState("");
+    const [location, setLocation] = useState({
+        latitude: null,
+        longitude: null,
+        error: null,
+    });
+
+    //get user's current location
+    const getLocation = (e) => {
+        e.preventDefault();
+        setLocationLoading(true);
+        try {
+            navigator.geolocation.getCurrentPosition((position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                setLocation({ latitude, longitude, error: null });
+                const mapLink = `https://www.google.com/maps?q=${latitude},${longitude}`;
+                setOrderAddress(mapLink);
+                setLocationLoading(false);
+            },
+                (error) => {
+                    setLocation({ latitude: null, longitude: null, error: error.message });
+                    toast.error("Please enable your location access.");
+                    setLocationLoading(false);
+                }
+            );
+        } catch (error) {
+            toast.error("Failed: " + error.message);
+            setLocationLoading(false);
+        }
+    };
+
 
     //total pricing
     const totalPrice = () => {
@@ -95,7 +131,7 @@ const CartPage = () => {
             setLoading(true);
             const { nonce } = await instance.requestPaymentMethod();
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, {
-                nonce, cart,
+                nonce, cart, orderAddress, orderNote
             });
             console.log(nonce);
             setLoading(false);
@@ -190,14 +226,39 @@ const CartPage = () => {
                             <h6>Total Quantity: {cart.length}</h6>
                             {auth?.user?.address ? (
                                 <div className="mb-3">
-                                    <p className='fw-bold'>Current Address: {auth?.user?.address}</p>
-                                    <button className='btn btn-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
+                                    <div className="mb-3 text-center">
+                                        <Input
+                                            suffix={
+                                                (
+                                                    locationLoading ? <Spin size="small" />
+                                                        : <span onClick={getLocation} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center' }}>
+                                                            <AimOutlined />
+                                                        </span>
+                                                )
+                                            }
+                                            type="text"
+                                            placeholder='Order Address'
+                                            size="large"
+                                            className='mb-2 w-100'
+                                            value={orderAddress || auth?.user?.address}
+                                            onChange={(e) => setOrderAddress(e.target.value)}
+                                            required
+                                        />
+                                        <span className='text-secondary form-text'> Click <b><AimOutlined /></b>  to set your current location or update <Link to="/dashboard/user/profile">your address</Link> </span>
+                                    </div>
+                                    <div>
+                                        <textarea
+                                            className='form-control'
+                                            rows={3}
+                                            placeholder='Note your details address (Optional)'
+                                            value={orderNote}
+                                            onChange={(e) => setOrderNote(e.target.value)} />
+                                    </div>
                                 </div>
                             ) : (
                                 <div className="mb-3">
                                     {auth?.token ? (
-                                        <button className='btn btn-outline-warning' onClick={() => navigate("/dashboard/user/profile")}>Update Address</button>
-                                    ) : (
+                                        <></>) : (
                                         <button className='btn btn-warning' onClick={() => navigate("/login", { state: "/cart" })}>Please Login to Checkout</button>
                                     )}
                                 </div>

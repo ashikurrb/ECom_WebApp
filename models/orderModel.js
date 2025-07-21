@@ -18,6 +18,13 @@ const orderSchema = new mongoose.Schema(
             default: "Not Process",
             enum: ["Not Process", "Processing", "Shipped", "Delivered", "Canceled"],
         },
+        orderAddress: {
+            type: String,
+            required: true,
+        },
+        orderNote: {
+            type: String,
+        },
     },
     { timestamps: true }
 );
