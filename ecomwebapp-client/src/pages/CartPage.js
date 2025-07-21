@@ -251,7 +251,7 @@ const CartPage = () => {
                                         <textarea
                                             className='form-control'
                                             rows={3}
-                                            placeholder='Note your details address (Optional)'
+                                            placeholder='Add a message (Optional)'
                                             value={orderNote}
                                             onChange={(e) => setOrderNote(e.target.value)} />
                                     </div>
