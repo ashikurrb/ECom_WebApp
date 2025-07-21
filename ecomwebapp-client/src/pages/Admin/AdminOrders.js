@@ -12,11 +12,13 @@ const { Option } = Select;
 
 
 const AdminOrder = () => {
-    const [status, setStatus] = useState(["Not Process", "Processing", "Shipped", "Delivered", "Canceled"]);
-    const [auth, setAuth] = useAuth();
+    const [status] = useState(["Not Process", "Processing", "Shipped", "Delivered", "Canceled"]);
+    const [auth] = useAuth();
     const [orders, setOrders] = useState([]);
     const [spinnerLoading, setSpinnerLoading] = useState(true);
+    const [statusUpdateLoading, setStatusUpdateLoading] = useState(null);
 
+    //get all orders
     const getOrders = async () => {
         try {
             const { data } = await axios.get(`${process.env.REACT_APP_API}/api/v1/auth/all-orders`)
@@ -35,10 +37,19 @@ const AdminOrder = () => {
     //order status change
     const handleChange = async (orderId, value) => {
         try {
+            setStatusUpdateLoading(orderId);
             const { data } = await axios.put(`${process.env.REACT_APP_API}/api/v1/auth/order-status/${orderId}`, { status: value })
             getOrders();
+            toast.success(
+                <span>
+                    Order <b>{value}</b>
+                </span>
+            );
+            setStatusUpdateLoading(null);
         } catch (error) {
             console.error(error);
+            toast.error("Something went wrong");
+            setStatusUpdateLoading(null);
         }
     }
 
@@ -117,7 +128,10 @@ const AdminOrder = () => {
                                                             <i class="btn fa-solid fa-chevron-down"></i> {i + 1}
                                                         </th>
                                                         <td>
-                                                            <Select border={false} onChange={(value) => handleChange(o._id, value)} defaultValue={o?.status}>
+                                                            <Select
+                                                                loading={statusUpdateLoading === o._id}
+                                                                onChange={(value) => handleChange(o._id, value)}
+                                                                defaultValue={o?.status}>
                                                                 {status.map((s, i) => (
                                                                     <Option key={i} value={s}>{s}</Option>
                                                                 ))}
