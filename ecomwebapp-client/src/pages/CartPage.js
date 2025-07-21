@@ -7,8 +7,9 @@ import DropIn from "braintree-web-drop-in-react";
 import axios from 'axios';
 import toast from 'react-hot-toast';
 import GoBackButton from '../components/GoBackButton';
-import { Input, Spin } from 'antd';
+import { Input, Modal, Spin } from 'antd';
 import { AimOutlined } from '@ant-design/icons';
+import AnimatedTickMark from '../components/AnimatedTickMark';
 
 const CartPage = () => {
     const [auth] = useAuth();
@@ -20,6 +21,7 @@ const CartPage = () => {
     const [locationLoading, setLocationLoading] = useState(false);
     const [orderAddress, setOrderAddress] = useState(auth?.user?.address || '');
     const [orderNote, setOrderNote] = useState("");
+    const [visibleOrderModal, setVisibleOrderModal] = useState(false);
     const [location, setLocation] = useState({
         latitude: null,
         longitude: null,
@@ -137,8 +139,7 @@ const CartPage = () => {
             setLoading(false);
             localStorage.removeItem('cart');
             setCart([]);
-            navigate("/dashboard/user/orders");
-            toast.success("Payment Completed Successfully");
+            setVisibleOrderModal(true);
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -286,6 +287,20 @@ const CartPage = () => {
                     </div>
                 </div>
             </div>
+            <Modal centered width={700} onCancel={() => setVisibleOrderModal(false)} open={visibleOrderModal} footer={null}>
+                <h3 className='text-center mb-3'>Your order has been placed successfully</h3>
+                <div className="d-flex justify-content-center align-items-center my-4">
+                    <AnimatedTickMark />
+                </div>
+                <h6 className='text-center my-3'>Please check your email for the purchase details and further instructions</h6>
+                <div className="text-center">
+                    <button
+                        className="btn btn-primary fw-bold"
+                        onClick={() => navigate("/dashboard/user/orders")}>
+                        View Order
+                    </button>
+                </div>
+            </Modal>
         </Layout >
     );
 };
