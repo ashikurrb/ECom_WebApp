@@ -292,7 +292,7 @@ const CartPage = () => {
                 <div className="d-flex justify-content-center align-items-center my-4">
                     <AnimatedTickMark />
                 </div>
-                <h6 className='text-center my-3'>Please check your email for the purchase details and further instructions</h6>
+                <h6 className='text-center my-3'>Please check your email for the purchase details</h6>
                 <div className="text-center">
                     <button
                         className="btn btn-primary fw-bold"
