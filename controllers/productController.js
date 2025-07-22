@@ -366,6 +366,11 @@ export const braintreeTokenController = async (req, res) => {
 export const brainTreePaymentController = async (req, res) => {
   try {
     const { nonce, cart, orderAddress, orderNote } = req.body;
+    
+    if (!orderAddress) {
+      return res.status(400).send({ error: "Order address is required" });
+    }
+
     let total = 0;
     cart.map((i) => {
       total += i.price;

@@ -3,7 +3,7 @@ import Layout from '../../components/Layout/Layout';
 import AdminMenu from '../../components/Layout/AdminMenu';
 import toast from 'react-hot-toast';
 import axios from 'axios';
-import { Select } from 'antd';
+import { Image, Select } from 'antd';
 import { useNavigate, useParams } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
 const { Option } = Select;
@@ -21,7 +21,6 @@ const UpdateProduct = () => {
     const [photo, setPhoto] = useState('');
     const [productPhoto, setProductPhoto] = useState('');
     const [id, setId] = useState("");
-    const [search, setSearch] = useState(false);
     const [spinnerLoading, setSpinnerLoading] = useState(false);
     const [spinnerProdLoading, setSpinnerProdLoading] = useState(false);
 
@@ -128,20 +127,31 @@ const UpdateProduct = () => {
                                     <Option key={c._id} value={c._id}>{c.name}</Option>
                                 ))}
                             </Select>
-                            <div className="mb-3">
-                                <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
+                            <div className="mb-2 text-center">
                                 <div className="m-2">
                                     {spinnerProdLoading ? <Spinner /> : ""}
                                 </div>
                                 {photo ? (
                                     <div className="text-center">
-                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
+                                        <Image src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
                                     </div>
                                 ) : (
                                     <div className="text-center ">
-                                        <img src={productPhoto} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
+                                        <Image src={productPhoto} alt='products-img' height={'200px'} className='border border-primary rounded img img-responsive' />
                                     </div>
                                 )}
+                                {photo ? (
+                                    <div className="d-flex justify-content-center">
+                                        <div className='mt-3 fw-bold'>
+                                            <span> Size: {`${(photo.size / 1048576).toFixed(2)} MB`}</span>
+                                            <span>{
+                                                photo.size > 2000000 ? <p className='text-danger'>Image size should be less than 2 MB</p> : null
+                                            }</span>
+                                        </div>
+                                    </div>
+                                ) :
+                                    (<></>)
+                                }
                             </div>
                             <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">

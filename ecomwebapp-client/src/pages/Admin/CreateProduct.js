@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Spinner from '../../components/Spinner';
-import { Select } from 'antd';
+import { Image, Select } from 'antd';
 
 const { Option } = Select;
 
@@ -86,13 +86,23 @@ const CreateProduct = () => {
                                     <Option key={c._id} value={c._id}>{c.name}</Option>
                                 ))}
                             </Select>
-                            <div className="mb-3">
-                                <h6 className='text-center my-3'>Maximum Photo size is 1 MB</h6>
-                                {photo && (
-                                    <div className="text-center">
-                                        <img src={URL.createObjectURL(photo)} alt='products-img' height={'200px'} className='img img-responsive' />
-                                    </div>
-                                )}
+                        <div className="m-1 container">
+                                <div className="mb-1">
+                                    {photo && (
+                                        <div className="text-center">
+                                            <Image src={typeof photo === 'string' ? photo : URL.createObjectURL(photo)} alt='profile-img' style={{ height: "200px" }} className='img-fluid rounded'
+                                            />
+                                            <div className="d-flex justify-content-center">
+                                                <div className='mt-1 fw-bold'>
+                                                    <span> Size: {`${(photo.size / 1048576).toFixed(2)} MB`}</span>
+                                                    <span>{
+                                                        photo.size > 2000000 ? <p className='text-danger'>Image size should be less than 2 MB</p> : null
+                                                    }</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <div className="mb-3">
                                 <label className="btn btn-outline-secondary col-md-12">

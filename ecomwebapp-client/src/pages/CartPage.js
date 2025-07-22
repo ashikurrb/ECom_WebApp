@@ -130,6 +130,10 @@ const CartPage = () => {
     //payment handling 
     const handlePayment = async () => {
         try {
+            if (!orderAddress) {
+                toast.error("Please set your order address.");
+                return;
+            }
             setLoading(true);
             const { nonce } = await instance.requestPaymentMethod();
             const { data } = await axios.post(`${process.env.REACT_APP_API}/api/v1/product/braintree/payment`, {
@@ -143,6 +147,7 @@ const CartPage = () => {
         } catch (error) {
             console.log(error);
             setLoading(false);
+            toast.error("Something went wrong. Please try again.");
         }
     };
 
@@ -241,7 +246,7 @@ const CartPage = () => {
                                             placeholder='Order Address'
                                             size="large"
                                             className='mb-2 w-100'
-                                            value={orderAddress || auth?.user?.address}
+                                            value={orderAddress}
                                             onChange={(e) => setOrderAddress(e.target.value)}
                                             required
                                         />
