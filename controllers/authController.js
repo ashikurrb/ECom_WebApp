@@ -336,14 +336,10 @@ export const forgotPasswordController = async (req, res) => {
         }
         const hashed = await hashPassword(newPassword)
         await userModel.findByIdAndUpdate(user._id, { password: hashed })
-        res.status(200).send({
-            success: true,
-            message: 'Password Reset Successfully'
-        });
 
         // Find user by email or phone
         const existingUser = await userModel.findOne({ email: email });
-        
+
         //get user name
         const name = existingUser.name;
 
@@ -355,6 +351,11 @@ export const forgotPasswordController = async (req, res) => {
                 data: { name },
                 routing: { method: "single", channels: ["email"] },
             },
+        });
+
+        res.status(200).send({
+            success: true,
+            message: 'Password Reset Successfully'
         });
 
         // Delete OTP record after successful registration
