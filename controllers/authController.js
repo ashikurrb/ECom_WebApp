@@ -1,12 +1,110 @@
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
-import orderModel from "../models/orderModel.js";
-
+import otpModel from "../models/otpModel.js"
+import { CourierClient } from '@trycourier/courier';
+import crypto from 'crypto';
 import JWT from "jsonwebtoken";
 
+//courier mail token
+const courier = new CourierClient({ authorizationToken: process.env.COURIER_AUTH_TOKEN });
+
+//send otp
+export const getOtpController = async (req, res) => {
+    try {
+        const { name, email } = req.body;
+        //validation
+        if (!name) {
+            return res.send({ message: "Name is required" })
+        }
+        if (!email) {
+            return res.send({ message: "Email is required" })
+        }
+
+        // Find user by email or phone
+        const existingUser = await userModel.findOne({ email: email });
+
+        // Check existing user
+        if (existingUser) {
+            if (existingUser.email === email) {
+                return res.status(200).send({
+                    success: false,
+                    message: "Email is already registered"
+                });
+            }
+        }
+
+        // Check if there's an unexpired OTP for this email
+        const existingOtp = await otpModel.findOne({
+            email,
+            expiresAt: { $gt: Date.now() },
+        });
+
+        if (existingOtp) {
+            return res.status(200).send({
+                success: true,
+                message: "OTP already sent. Use it or try again later.",
+            });
+        }
+
+        // Generate OTP and save it temporarily
+        const otp = crypto.randomInt(100000, 999999).toString();
+        await new otpModel({ name, email, otp, type: "registration", expiresAt: Date.now() + 5 * 60 * 1000 }).save();
+
+        // Send OTP via Courier email
+        const { requestId } = await courier.send({
+            message: {
+                to: {
+                    email: email
+                },
+                template: process.env.COURIER_OTP_TEMPLATE_KEY,
+                data: {
+                    name: name,
+                    otp: otp,
+                },
+                routing: {
+                    method: "single",
+                    channels: ["email"],
+                },
+            },
+        });
+
+        res.status(200).send({
+            success: true,
+            message: "OTP sent to your email",
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error during registration",
+            error
+        })
+    }
+};
+
+//POST REGISTER
 export const registerController = async (req, res) => {
     try {
-        const { name, email, password, phone, address, answer } = req.body;
+        const { name, email, otp, password, phone, address } = req.body;
+
+        // Find if email exists in the database
+        const otpEmail = await otpModel.findOne({ email });
+        if (!otpEmail) {
+            return res.status(400).send({ success: false, message: "Email not found" });
+        }
+
+        // Check if OTP matches for the provided email
+        const otpRecord = await otpModel.findOne({ email, otp });
+        if (!otpRecord) {
+            return res.status(400).send({ success: false, message: "Invalid OTP" });
+        }
+
+        // Check if OTP is expired
+        if (otpRecord.expiresAt < Date.now()) {
+            return res.status(400).send({ success: false, message: "OTP expired" });
+        }
+
         //validation
         if (!name) {
             return res.send({ message: 'Name is Required' })
@@ -23,9 +121,7 @@ export const registerController = async (req, res) => {
         if (!address) {
             return res.send({ message: 'Address is Required' })
         }
-        if (!answer) {
-            return res.send({ message: 'Answer is Required' })
-        }
+
         //check User
         const existingUser = await userModel.findOne({ email })
         //existing User
@@ -37,10 +133,23 @@ export const registerController = async (req, res) => {
         }
 
         //register User
-        const hashedPassword = await hashPassword(password)
+        const hashedPassword = await hashPassword(password);
+
+        // Send confirmation email
+        await courier.send({
+            message: {
+                to: { email },
+                template: process.env.COURIER_WELCOME_TEMPLATE_KEY,
+                data: { name },
+                routing: { method: "single", channels: ["email"] },
+            },
+        });
+
+        // Delete OTP record after successful registration
+        await otpModel.deleteOne({ email, otp });
 
         //save
-        const user = await new userModel({ name, email, phone, address, password: hashedPassword, answer }).save();
+        const user = await new userModel({ name, email, phone, address, password: hashedPassword }).save();
         res.status(201).send({
             success: true,
             message: 'User Registered Successfully',
@@ -59,7 +168,7 @@ export const registerController = async (req, res) => {
 //POST LOGIN
 export const loginController = async (req, res) => {
     try {
-        const { email, password } = req.body
+        const { email, password } = req.body;
         //validation
         if (!email || !password) {
             return res.status(404).send({
@@ -112,28 +221,117 @@ export const loginController = async (req, res) => {
     }
 }
 
+export const getForgotPasswordOtpController = async (req, res) => {
+    try {
+        const { email } = req.body;
+        if (!email) {
+            return res.send({ message: "Email is Required" })
+        }
+
+        // Find user by email or phone
+        const existingUser = await userModel.findOne({ email: email });
+
+        // Check if user exists
+        if (!existingUser) {
+            return res.status(200).send({
+                success: false,
+                message: "User Not Found. Please Sign Up"
+            });
+        }
+
+        //get user name
+        const name = existingUser.name;
+
+        // Check if there's an unexpired OTP for this email
+        const existingOtp = await otpModel.findOne({
+            email,
+            expiresAt: { $gt: Date.now() },
+        });
+
+        if (existingOtp) {
+            return res.status(200).send({
+                success: true,
+                message: "OTP already sent. Use it or try again later.",
+            });
+        }
+
+        // Generate OTP and save it temporarily
+        const otp = crypto.randomInt(100000, 999999).toString();
+        await new otpModel({ email, name, otp, type: "password_reset", expiresAt: Date.now() + 5 * 60 * 1000 }).save();
+
+        // Send OTP via Courier email
+        const { requestId } = await courier.send({
+            message: {
+                to: {
+                    email: email
+                },
+                template: process.env.COURIER_FORGOT_PASSWORD_OTP_TEMPLATE_KEY,
+                data: {
+                    name: name,
+                    otp: otp,
+                },
+                routing: {
+                    method: "single",
+                    channels: ["email"],
+                },
+            },
+        });
+
+        res.status(200).send({
+            success: true,
+            message: "OTP sent to your email",
+        });
+
+    } catch (error) {
+        console.log(error);
+        res.status(500).send({
+            success: false,
+            message: "Error getting OTP",
+            error
+        })
+    }
+}
+
 //Forgot Password Controller
 export const forgotPasswordController = async (req, res) => {
     try {
-        const { email, answer, newPassword } = req.body;
+        const { email, otp, newPassword } = req.body;
+
+        // Find if email exists in the database
+        const otpEmail = await otpModel.findOne({ email });
+        if (!otpEmail) {
+            return res.status(400).send({ success: false, message: "Email not found" });
+        }
+
+        // Check if OTP matches for the provided email
+        const otpRecord = await otpModel.findOne({ email, otp });
+        if (!otpRecord) {
+            return res.status(400).send({ success: false, message: "Invalid OTP" });
+        }
+
+        // Check if OTP is expired
+        if (otpRecord.expiresAt < Date.now()) {
+            return res.status(400).send({ success: false, message: "OTP expired" });
+        }
+
         if (!email) {
             res.status(400).send({ message: 'Email is required' })
         }
-        if (!answer) {
-            res.status(400).send({ message: 'Answer is required' })
+        if (!otp) {
+            res.status(400).send({ message: 'OTP is required' })
         }
         if (!newPassword) {
             res.status(400).send({ message: 'New Password is required' })
         }
 
         //check
-        const user = await userModel.findOne({ email, answer })
+        const user = await otpModel.findOne({ email, otp })
 
         //validation
         if (!user) {
             return res.status(404).send({
                 success: false,
-                message: 'Wrong Email & Answer'
+                message: 'User not found'
             })
         }
         const hashed = await hashPassword(newPassword)
@@ -141,7 +339,10 @@ export const forgotPasswordController = async (req, res) => {
         res.status(200).send({
             success: true,
             message: 'Password Reset Successfully'
-        })
+        });
+
+        // Delete OTP record after successful registration
+        await otpModel.deleteOne({ email, otp });
 
     } catch (error) {
         console.log(error);
@@ -151,11 +352,6 @@ export const forgotPasswordController = async (req, res) => {
             error
         })
     }
-}
-
-//Test controller
-export const testController = (req, res) => {
-    res.send('Protected Route')
 }
 
 //update profile controller

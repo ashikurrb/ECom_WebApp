@@ -1,11 +1,12 @@
 import express from "express";
-import { deleteOrderController, deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getOrdersController, loginController, orderStatusController, registerController, testController, updateProfileController } from '../controllers/authController.js'
+import { deleteOrderController, deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getForgotPasswordOtpController, getOrdersController, getOtpController, loginController, orderStatusController, registerController, updateProfileController } from '../controllers/authController.js'
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
 const router = express.Router();
 
-//routing
+//OTP Verification
+router.post('/verify-otp', getOtpController)
 
 //REGISTER || Method: POST
 router.post('/register', registerController)
@@ -13,11 +14,11 @@ router.post('/register', registerController)
 //LOGIN || Method: POST
 router.post('/login', loginController)
 
+//Verify Forgot Password OTP 
+router.post('/verify-forgot-password', getForgotPasswordOtpController)
+
 //Forgot Password: POST
 router.post('/forgot-password', forgotPasswordController)
-
-//Test Routes
-router.get('/test', requireSignIn, isAdmin, testController)
 
 //protected route auth
 router.get('/user-auth', requireSignIn, (req, res) => {
