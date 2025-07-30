@@ -341,6 +341,22 @@ export const forgotPasswordController = async (req, res) => {
             message: 'Password Reset Successfully'
         });
 
+        // Find user by email or phone
+        const existingUser = await userModel.findOne({ email: email });
+        
+        //get user name
+        const name = existingUser.name;
+
+        // Send confirmation email
+        await courier.send({
+            message: {
+                to: { email },
+                template: process.env.COURIER_FORGOT_PASSWORD_SUCCESSFUL_TEMPLATE_KEY,
+                data: { name },
+                routing: { method: "single", channels: ["email"] },
+            },
+        });
+
         // Delete OTP record after successful registration
         await otpModel.deleteOne({ email, otp });
 
