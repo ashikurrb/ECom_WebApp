@@ -1,6 +1,7 @@
 import { comparePassword, hashPassword } from "../helpers/authHelper.js";
 import userModel from "../models/userModel.js";
 import otpModel from "../models/otpModel.js"
+import orderModel from "../models/orderModel.js"
 import { CourierClient } from '@trycourier/courier';
 import crypto from 'crypto';
 import JWT from "jsonwebtoken";
@@ -514,3 +515,37 @@ export const deleteOrderController = async (req, res) => {
         })
     }
 }
+
+
+//dashboard controller
+export const dashboardController = async (req, res) => {
+  try {
+    const pendingOrder = await orderModel.countDocuments({ status: "Not Process" });
+    const totalDelivered = await orderModel.countDocuments({ status: "Delivered" });
+
+    const totalSalesAgg = await orderModel.aggregate([
+      { $match: { status: "Delivered" } },
+      {
+        $group: {
+          _id: null,
+          total: { $sum: { $toDouble: { $ifNull: ["$payment.transaction.amount", "0"] } } }
+        }
+      }
+    ]);
+
+    const totalSales = totalSalesAgg[0]?.total || 0;
+
+    res.status(200).send({
+      success: true,
+      message: "Dashboard Data Fetched Successfully",
+      dashboardCount: { pendingOrder, totalDelivered, totalSales }
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      success: false,
+      message: "Error Fetching Dashboard Data",
+      error
+    });
+  }
+};

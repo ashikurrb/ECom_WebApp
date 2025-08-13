@@ -11,6 +11,7 @@ const Order = () => {
   const [auth, setAuth] = useAuth();
   const [orders, setOrders] = useState([]);
   const [spinnerLoading, setSpinnerLoading] = useState(true);
+  const [openOrderId, setOpenOrderId] = useState(null);
 
   const getOrders = async () => {
     try {
@@ -37,6 +38,9 @@ const Order = () => {
     }
   };
 
+  const toggleCollapse = (orderId) => {
+    setOpenOrderId(prev => (prev === orderId ? null : orderId));
+  };
   return (
     <Layout title={"Dashboard - Your Orders"}>
       <div className="container-fluid mt-3 p-3">
@@ -65,7 +69,7 @@ const Order = () => {
 
                   return (
                     <div className="card mt-3 p-4 table-container" key={o._id}>
-                      <table data-bs-toggle="collapse" href={`#${o._id}`} className="table">
+                      <table href={`#${o._id}`} className="table">
                         <thead className='table-dark'>
                           <tr>
                             <th scope="col">#</th>
@@ -82,7 +86,18 @@ const Order = () => {
                         </thead>
                         <tbody>
                           <tr>
-                            <th scope='row'>{i + 1}&nbsp;<i className="btn fa-solid fa-chevron-down"></i> </th>
+                            <th
+                              scope="row"
+                              data-bs-toggle="collapse"
+                              href={`#${o?._id}`}
+                              onClick={() => toggleCollapse(o._id)}
+                              style={{ cursor: "pointer" }}
+                            >
+                              {i + 1}&nbsp;
+                              <i
+                                className={`btn fa-solid ${openOrderId === o._id ? "fa-chevron-up" : "fa-chevron-down"}`}
+                              ></i>
+                            </th>
                             <td>{o.status === 'Canceled' ? <span className='text-danger fw-bold'>Canceled</span> : o.status}</td>
                             <td>{o.createdAt !== o.updatedAt ? moment(o?.updatedAt).fromNow() : "--"}</td>
                             <td>{moment(o?.createdAt).format('lll')}</td>
@@ -105,7 +120,7 @@ const Order = () => {
                           </tr>
                         </tbody>
                       </table>
-                      <div className="container collapse show" id={o._id}>
+                      <div className={`container collapse ${openOrderId === o._id ? "show" : ""}`} id={o?._id}>
                         <div className="d-flex flex-wrap">
                           {uniqueProducts.map((p) => (
                             <div className="row m-2 p-3 card flex-row" key={p._id}>

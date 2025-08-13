@@ -1,5 +1,5 @@
 import express from "express";
-import { deleteOrderController, deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getForgotPasswordOtpController, getOrdersController, getOtpController, loginController, orderStatusController, registerController, updateProfileController } from '../controllers/authController.js'
+import { dashboardController, deleteOrderController, deleteUserController, forgotPasswordController, getAllOrdersController, getAllUsersController, getForgotPasswordOtpController, getOrdersController, getOtpController, loginController, orderStatusController, registerController, updateProfileController } from '../controllers/authController.js'
 import { isAdmin, requireSignIn } from "../middlewares/authMiddleware.js";
 
 //router object
@@ -50,5 +50,8 @@ router.put("/order-status/:orderId", requireSignIn, isAdmin, orderStatusControll
 
 //delete order by admin
 router.delete('/delete-order/:id', requireSignIn, isAdmin, deleteOrderController)
+
+//dashboard
+router.get("/dashboard", requireSignIn, isAdmin, dashboardController);
 
 export default router;
